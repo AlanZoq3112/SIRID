@@ -1,4 +1,4 @@
 package mx.edu.utez.sirid.service.User;
 
-public class TypeService {
+public class UserService {
 }
