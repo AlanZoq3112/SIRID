@@ -1,5 +1,6 @@
 package mx.edu.utez.sirid.service.Role;
 
+import mx.edu.utez.sirid.model.Area.Area;
 import mx.edu.utez.sirid.model.Role.Role;
 import mx.edu.utez.sirid.model.Role.RoleRepository;
 import mx.edu.utez.sirid.utils.CustomResponse;
@@ -27,13 +28,11 @@ public class RoleService {
     }
 
 
-    @Transactional(readOnly = true)
+    @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<Role> getOne(Long id){
         return new CustomResponse<>(
                 this.repository.findById(id).get(),
-                false,
-                200,
-                "Ok"
+                false,200,"OK"
         );
     }
 

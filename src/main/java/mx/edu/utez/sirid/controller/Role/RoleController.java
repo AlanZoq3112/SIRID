@@ -1,6 +1,7 @@
 package mx.edu.utez.sirid.controller.Role;
 
 import mx.edu.utez.sirid.controller.Role.dtos.RoleDTO;
+import mx.edu.utez.sirid.model.Area.Area;
 import mx.edu.utez.sirid.model.Role.Role;
 import mx.edu.utez.sirid.service.Role.RoleService;
 import mx.edu.utez.sirid.utils.CustomResponse;
@@ -28,7 +29,7 @@ public class RoleController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CustomResponse<Role>> getOne(@PathVariable("id") Long id) {
+    public ResponseEntity<CustomResponse<Role>> getOne(@PathVariable("id") Long id){
         return new ResponseEntity<>(
                 this.service.getOne(id),
                 HttpStatus.OK
