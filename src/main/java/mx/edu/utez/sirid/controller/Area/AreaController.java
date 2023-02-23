@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api-sirid/area")
+@RequestMapping("/api-sirid/area/")
 @CrossOrigin(origins = {"*"})
 public class AreaController {
     @Autowired
