@@ -1,9 +1,11 @@
 package mx.edu.utez.sirid.model.Role;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mx.edu.utez.sirid.model.User.User;
 
 import javax.persistence.*;
 
@@ -19,4 +21,9 @@ public class Role {
     private Long id;
     @Column(unique = true,nullable = false, length = 20)
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id", nullable = false)
+    @JsonIgnore
+    private User user;
 }
