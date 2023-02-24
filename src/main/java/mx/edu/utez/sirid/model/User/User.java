@@ -1,4 +1,5 @@
 package mx.edu.utez.sirid.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,5 +49,7 @@ import java.util.List;
         @OneToMany
         @JoinColumn(name = "academicDivision_id", nullable = false )
         private  List<AcademicDivision> academicDivision;
-    }
+
+
+       }
 

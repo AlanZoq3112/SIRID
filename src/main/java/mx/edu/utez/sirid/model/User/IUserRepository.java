@@ -16,7 +16,7 @@ public interface IUserRepository extends JpaRepository<User, Long> {
     @Query(value = "UPDATE User set status =: status WHERE ID =: id",
     nativeQuery = true
     )
-    
+
     Boolean updateUserById(
             @Param("status") Boolean status,
             @Param("id") Long id
