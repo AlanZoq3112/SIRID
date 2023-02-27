@@ -19,6 +19,7 @@ import java.util.List;
 public class RoleController {
     @Autowired
     private RoleService service;
+
     @GetMapping("/")
     public ResponseEntity<CustomResponse<List<Role>>> getAll() {
         return new ResponseEntity<>(

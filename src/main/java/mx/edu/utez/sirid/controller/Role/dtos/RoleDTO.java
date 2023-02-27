@@ -21,7 +21,7 @@ public class RoleDTO {
     @Length(min = 1, max = 20)
     private String name;
 
-    public Role getRole(){
+    public Role getRole() {
         return new Role(
                 getId(),
                 getName()

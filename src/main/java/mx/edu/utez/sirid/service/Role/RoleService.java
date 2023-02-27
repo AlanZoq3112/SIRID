@@ -17,7 +17,7 @@ public class RoleService {
     private RoleRepository repository;
 
     @Transactional(readOnly = true)
-    public CustomResponse<List<Role>> getAll(){
+    public CustomResponse<List<Role>> getAll() {
         return new CustomResponse<>(
                 this.repository.findAll(),
                 false,
@@ -28,7 +28,7 @@ public class RoleService {
 
 
     @Transactional(readOnly = true)
-    public CustomResponse<Role> getOne(Long id){
+    public CustomResponse<Role> getOne(Long id) {
         return new CustomResponse<>(
                 this.repository.findById(id).get(),
                 false,
@@ -38,9 +38,9 @@ public class RoleService {
     }
 
 
-    @Transactional(rollbackFor =  {SQLException.class})
-    public CustomResponse<Role> insert(Role role){
-        if(this.repository.existsById(role.getId()))
+    @Transactional(rollbackFor = {SQLException.class})
+    public CustomResponse<Role> insert(Role role) {
+        if (this.repository.existsById(role.getId()))
             return new CustomResponse<>(
                     null,
                     true,
