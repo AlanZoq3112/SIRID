@@ -20,6 +20,7 @@ public class AreaService {
     public CustomResponse<List<Area>> getAll(){
         return new CustomResponse<>(
                 this.repository.findAll(),
+
                 false, 200, "OK"
         );
     }
@@ -45,4 +46,6 @@ public class AreaService {
                 "Area registrada correctamente"
         );
     }
+
+
 }

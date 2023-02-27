@@ -1,16 +1,16 @@
 package mx.edu.utez.sirid.model.Area;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import mx.edu.utez.sirid.model.Classroom.Classroom;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name = "area")
+@Table(name = "areas")
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
@@ -26,4 +26,5 @@ public class Area {
     @OneToOne(mappedBy = "area")
     @JsonIgnore
     private Classroom classroom;
+
 }

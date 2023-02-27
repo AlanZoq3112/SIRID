@@ -8,7 +8,6 @@ import lombok.Setter;
 import mx.edu.utez.sirid.model.Classroom.Classroom;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "types")
