@@ -21,5 +21,5 @@ public interface IUserRepository extends JpaRepository<User, Long> {
             @Param("status") Boolean status,
             @Param("id") Long id
     );
-    Boolean existsUsersBy(String user);
+    Boolean existsById(String user);
 }

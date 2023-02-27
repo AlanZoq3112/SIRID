@@ -38,8 +38,10 @@ public class UserDTO {
 
     private Boolean status;
 
-    private List<AcademicDivision> academicDivision;
-    private List<Role> role;
+    private Boolean changePassword;
+
+    private AcademicDivision academicDivision;
+    private Role role;
     public User getUser(){
         return new User(
                 getId(),
@@ -50,6 +52,7 @@ public class UserDTO {
                 getUid(),
                 getContraseña(),
                 getStatus(),
+                getChangePassword(),
                 getRole(),
                 getAcademicDivision()
         );

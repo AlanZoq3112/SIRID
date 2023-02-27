@@ -42,14 +42,15 @@ import java.util.List;
         @Column(nullable = false, columnDefinition = "TINYINT DEFAULT 1")
         private Boolean status;
 
-        @OneToMany
-        @JoinColumn(name = "role_id", nullable = false)
-        private List<Role> role;
+        @Column(unique = false, nullable = false, length = 0)
+        private Boolean changePassword;
 
-        @OneToMany
-        @JoinColumn(name = "academicDivision_id", nullable = false )
-        private  List<AcademicDivision> academicDivision;
+        @OneToOne
+        @JoinColumn(name = "role_id", nullable = false, referencedColumnName = "id")
+        private Role role;
 
-
+        @OneToOne
+        @JoinColumn(name = "academicDivision_id", nullable = false, referencedColumnName = "id")
+        private  AcademicDivision academicDivision;
        }
 

@@ -10,7 +10,7 @@ import mx.edu.utez.sirid.model.User.User;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "academicDivision")
+@Table(name = "academicDivisions")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -23,7 +23,7 @@ public class AcademicDivision {
     @Column(unique = true, nullable = false, length = 10)
     String name;
 
-    @ManyToOne
+    @OneToOne(mappedBy = "academicDivision")
     @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
     private User user;

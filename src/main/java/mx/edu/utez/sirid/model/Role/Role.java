@@ -10,7 +10,7 @@ import mx.edu.utez.sirid.model.User.User;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "role")
+@Table(name = "roles")
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -22,7 +22,7 @@ public class Role {
     @Column(unique = true,nullable = false, length = 20)
     private String name;
 
-    @ManyToOne
+    @OneToOne(mappedBy = "role")
     @JoinColumn(name = "role_id", nullable = false)
     @JsonIgnore
     private User user;
