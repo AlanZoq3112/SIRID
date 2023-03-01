@@ -1,9 +1,7 @@
-package mx.edu.utez.sirid.controller.Role;
-
-import mx.edu.utez.sirid.controller.Role.dtos.RoleDTO;
-import mx.edu.utez.sirid.model.Area.Area;
-import mx.edu.utez.sirid.model.Role.Role;
-import mx.edu.utez.sirid.service.Role.RoleService;
+package mx.edu.utez.sirid.controller.Status;
+import mx.edu.utez.sirid.controller.Status.dtos.StatusDTO;
+import mx.edu.utez.sirid.model.Status.Status;
+import mx.edu.utez.sirid.service.Status.StatusService;
 import mx.edu.utez.sirid.utils.CustomResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,14 +13,14 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api-sirid/role/")
+@RequestMapping("/api-sirid/status/")
 @CrossOrigin(origins = {"*"})
-public class RoleController {
+public class StatusController {
     @Autowired
-    private RoleService service;
+    private StatusService service;
 
     @GetMapping("/")
-    public ResponseEntity<CustomResponse<List<Role>>> getAll() {
+    public ResponseEntity<CustomResponse<List<Status>>> getAll() {
         return new ResponseEntity<>(
                 this.service.getAll(),
                 HttpStatus.OK
@@ -30,7 +28,7 @@ public class RoleController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CustomResponse<Role>> getOne(@PathVariable("id") Long id){
+    public ResponseEntity<CustomResponse<Status>> getOne(@PathVariable("id") Long id) {
         return new ResponseEntity<>(
                 this.service.getOne(id),
                 HttpStatus.OK
@@ -38,8 +36,8 @@ public class RoleController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<CustomResponse<Role>> insert(
-            @RequestBody RoleDTO roleDto, @Valid BindingResult result) {
+    public ResponseEntity<CustomResponse<Status>> insert(
+            @RequestBody StatusDTO statusDTO, @Valid BindingResult result) {
         if (result.hasErrors()) {
             return new ResponseEntity<>(
                     null,
@@ -47,8 +45,10 @@ public class RoleController {
             );
         }
         return new ResponseEntity<>(
-                this.service.insert(roleDto.getRole()),
+                this.service.insert(statusDTO.getStatus()),
                 HttpStatus.CREATED
         );
     }
+
+
 }

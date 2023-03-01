@@ -1,11 +1,11 @@
-package mx.edu.utez.sirid.model.Role;
+package mx.edu.utez.sirid.model.Status;
+
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RoleRepository extends JpaRepository<Role, Long> {
+public interface IStatusRepository extends JpaRepository<Status, Long>{
     boolean existsById(Long id);
 
-    boolean findById(long Id);
 }

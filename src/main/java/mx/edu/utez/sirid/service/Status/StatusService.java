@@ -1,24 +1,21 @@
-package mx.edu.utez.sirid.service.Role;
-
-import mx.edu.utez.sirid.model.Area.Area;
-import mx.edu.utez.sirid.model.Role.Role;
-import mx.edu.utez.sirid.model.Role.RoleRepository;
+package mx.edu.utez.sirid.service.Status;
+import mx.edu.utez.sirid.model.Status.Status;
+import mx.edu.utez.sirid.model.Status.IStatusRepository;
 import mx.edu.utez.sirid.utils.CustomResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.sql.SQLException;
 import java.util.List;
 
 @Service
 @Transactional
-public class RoleService {
+public class StatusService {
     @Autowired
-    private RoleRepository repository;
+    private IStatusRepository repository;
 
     @Transactional(readOnly = true)
-    public CustomResponse<List<Role>> getAll() {
+    public CustomResponse<List<Status>> getAll() {
         return new CustomResponse<>(
                 this.repository.findAll(),
                 false,
@@ -27,35 +24,30 @@ public class RoleService {
         );
     }
 
-
-<<<<<<< HEAD
     @Transactional(readOnly = true)
-    public CustomResponse<Role> getOne(Long id) {
-=======
-    @Transactional(rollbackFor = {SQLException.class})
-    public CustomResponse<Role> getOne(Long id){
->>>>>>> bda133956100d56c6e15099595aa72cdf3599592
+    public CustomResponse<Status> getOne(Long id) {
         return new CustomResponse<>(
                 this.repository.findById(id).get(),
-                false,200,"OK"
+                false,
+                200,
+                "Okey"
         );
     }
 
-
     @Transactional(rollbackFor = {SQLException.class})
-    public CustomResponse<Role> insert(Role role) {
-        if (this.repository.existsById(role.getId()))
+    public CustomResponse<Status> insert(Status status) {
+        if (this.repository.existsById(status.getId()))
             return new CustomResponse<>(
                     null,
                     true,
                     400,
-                    "The role has already been registered"
+                    "Status registradoo"
             );
         return new CustomResponse<>(
-                this.repository.saveAndFlush(role),
+                this.repository.saveAndFlush(status),
                 false,
                 200,
-                "Role registered successfully"
+                "Status registered succesfully"
         );
     }
 }

@@ -16,6 +16,7 @@ public class TypeService {
     @Autowired
     private ITypeRepository repository;
 
+<<<<<<< HEAD
     @Transactional(readOnly = true)
     public CustomResponse<List<Type>> getAll(){
         return new CustomResponse<>(
@@ -43,6 +44,27 @@ public class TypeService {
                 this.repository.saveAndFlush(type),
                 false, 200,
                 "Tipo registrado correctamente"
+=======
+
+
+    @Transactional(readOnly = true)
+    public CustomResponse<List<Type>> getAll(){
+        return  new CustomResponse<>(
+                this.repository.findAll(),
+                false,
+                200,
+                "ok"
+        );
+    }
+
+
+
+    @Transactional(rollbackFor = {SQLException.class})
+    public CustomResponse<Type> getOne(Long id){
+        return new CustomResponse<>(
+                this.repository.findById(id).get(),
+                false,200,"OK"
+>>>>>>> bda133956100d56c6e15099595aa72cdf3599592
         );
     }
 }
