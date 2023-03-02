@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import mx.edu.utez.sirid.model.AcademicDivision.AcademicDivision;
-import mx.edu.utez.sirid.model.User.User;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -21,13 +20,10 @@ public class AcademicDivisionDTO {
     @Size(min = 1, max = 100)
     private String name;
 
-    private User user;
-
     public AcademicDivision getAcademicDivision() {
-        return  new AcademicDivision(
+        return new AcademicDivision(
                 getId(),
-                getName(),
-                getUser()
+                getName()
         );
     }
 }
