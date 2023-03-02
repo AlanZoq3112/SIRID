@@ -23,7 +23,7 @@ public class RoleDTO {
     private String name;
     private User user;
 
-    public Role getRole() {
+    public Role getRole(){
         return new Role(
                 getId(),
                 getName(),

@@ -1,10 +1,10 @@
-package mx.edu.utez.sirid.controller.Area.dtos;
+package mx.edu.utez.sirid.controller.Type.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import mx.edu.utez.sirid.model.Area.Area;
+import mx.edu.utez.sirid.model.Type.Type;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
@@ -12,20 +12,20 @@ import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
 @Getter
-public class AreaDTO {
+@Setter
+
+public class TypeDto {
     private Long id;
     @NotNull
     @NotBlank
-    @Length(min=1,max=120)
-    private String name_area;
+    @Length(min = 1, max = 45)
+    private String name_aula;
 
-    public Area castToArea(){
-        return new Area(
+    public Type getType(){
+        return new Type(
                 getId(),
-                getName_area()
-
+                getName_aula()
         );
     }
 }
