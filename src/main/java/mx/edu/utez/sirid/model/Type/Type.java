@@ -1,14 +1,16 @@
 package mx.edu.utez.sirid.model.Type;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mx.edu.utez.sirid.model.Classroom.Classroom;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "type")
+@Table(name = "types")
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -19,6 +21,10 @@ public class Type {
     private Long id;
 
     @Column(unique = true,nullable = false,length = 45)
-    private String name_aula;
+    private String name;
+
+//    @OneToOne(mappedBy = "type")
+//    @JsonIgnore
+//    private Classroom classroom;
 
 }

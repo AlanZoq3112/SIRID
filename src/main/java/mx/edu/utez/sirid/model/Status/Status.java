@@ -14,8 +14,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 public class Status {
-    @Id
 
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

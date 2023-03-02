@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface ITypeRepository extends JpaRepository<Type, Long> {
     boolean findById(long Id);
+    boolean findByName(String name);
     List<Type> findAll();
 }

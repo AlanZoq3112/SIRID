@@ -22,7 +22,13 @@ public class Area {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true,nullable = false,length = 25)
-    private String name_area;
+    private String name;
+
+
+    @OneToOne(mappedBy = "area")
+    @JsonIgnore
+    private Classroom classroom;
+
 
 
 }

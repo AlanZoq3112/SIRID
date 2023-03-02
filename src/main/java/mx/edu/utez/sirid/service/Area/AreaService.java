@@ -36,7 +36,7 @@ public class AreaService {
 
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<Area> insert(Area area){
-        if (!this.repository.existsById(area.getId())){
+        if (this.repository.existsById(area.getId())){
             return new CustomResponse<>(
                     null,true,400,"Esta area ya esta registrada"
             );
