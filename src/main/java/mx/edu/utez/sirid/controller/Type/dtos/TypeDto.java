@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mx.edu.utez.sirid.model.Classroom.Classroom;
 import mx.edu.utez.sirid.model.Type.Type;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
@@ -16,16 +18,23 @@ import javax.validation.constraints.NotNull;
 @Setter
 
 public class TypeDto {
+
     private Long id;
+
+    @NotEmpty(message = "Campo obligatorio")
     @NotNull
     @NotBlank
-    @Length(min = 1, max = 45)
+    @Length(min=1,max=120)
     private String name_aula;
+
+//    private Classroom classroom;
+
 
     public Type getType(){
         return new Type(
                 getId(),
                 getName_aula()
+//                getClassroom()
         );
     }
 }
