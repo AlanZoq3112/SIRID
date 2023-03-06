@@ -38,7 +38,7 @@ public class AcademicDivisionService {
 
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<AcademicDivision> insert(AcademicDivision academicDivision) {
-        if (this.repository.existsById(academicDivision.getId()))
+        if (this.repository.existsByName(academicDivision.getName()))
         return new CustomResponse<>(
                null,
                 true,

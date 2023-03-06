@@ -82,4 +82,9 @@ public class UserService {
                 "Usuario eliminado con exito"
         );
     }
+
+    @Transactional(readOnly = true)
+        public User getUserByemail(String email){
+        return repository.findByCorreo_electronico(email);
+    }
 }

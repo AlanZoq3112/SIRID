@@ -9,6 +9,8 @@ import java.util.List;
 public interface IUserRepository extends JpaRepository<User, Long> {
     boolean findById(long id);
 
+    User findByCorreo_electronico(String email);
+
     List<User> findAll();
 
     @Query(value = "UPDATE User set status =: status WHERE ID =: id",

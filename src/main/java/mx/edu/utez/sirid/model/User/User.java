@@ -8,9 +8,11 @@ import mx.edu.utez.sirid.model.AcademicDivision.AcademicDivision;
 import mx.edu.utez.sirid.model.Role.Role;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -44,11 +46,11 @@ public class User {
     @Column(unique = false, nullable = false, length = 0)
     private Boolean changePassword;
 
-    @OneToOne
+    @ManyToMany
     @JoinColumn(name = "role_id", nullable = false, referencedColumnName = "id")
-    private Role role;
+    private Set<Role> roles;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "academicDivision_id", nullable = false, referencedColumnName = "id")
     private  AcademicDivision academicDivision;
 }

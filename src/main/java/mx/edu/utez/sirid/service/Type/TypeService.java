@@ -39,7 +39,7 @@ public class TypeService {
 
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<Type> insert(Type type) {
-        if (this.repository.existsById(type.getId()))
+        if (this.repository.existsByName(type.getName()))
             return new CustomResponse<>(
                     null, true, 400,
                     "Este tipo de Usuario ya se encuentra registrado "
