@@ -26,13 +26,13 @@ public class User {
     private String name;
 
     @Column(unique = true, nullable = false, length = 45 )
-    private String primer_apellido;
+    private String primerApellido;
 
     @Column(unique = true, nullable = false, length = 45 )
-    private String segundo_apellido;
+    private String segundoApellido;
 
     @Column(unique = true, nullable = false, length = 45 )
-    private String correo_electronico;
+    private String correoElectronico;
 
     @Column(unique = true, nullable = false, columnDefinition = "Text")
     private String uid;

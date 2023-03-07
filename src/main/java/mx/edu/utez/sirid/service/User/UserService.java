@@ -4,6 +4,7 @@ import mx.edu.utez.sirid.model.User.IUserRepository;
 import mx.edu.utez.sirid.model.User.User;
 import mx.edu.utez.sirid.utils.CustomResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.sql.SQLException;
@@ -13,6 +14,9 @@ import java.util.List;
 public class UserService {
     @Autowired
     private IUserRepository repository;
+
+    @Autowired
+    private PasswordEncoder encoder;
 
     @Transactional(readOnly = true)
     public CustomResponse<List<User>> getALll() {
@@ -34,13 +38,17 @@ public class UserService {
 
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<User> insert(User user) {
-        if (this.repository.existsById(user.getId()))
+        if (this.repository.existsById(user.getId())) {
             return new CustomResponse<>(
                     null,
                     true,
                     400,
                     "The user has already been registered"
             );
+        }
+
+//        user.setContraseña(encoder.encode(user.getContraseña())
+//        );
         return new CustomResponse<>(
                 this.repository.saveAndFlush(user),
                 false,
@@ -85,6 +93,6 @@ public class UserService {
 
     @Transactional(readOnly = true)
         public User getUserByemail(String email){
-        return repository.findByCorreo_electronico(email);
+        return repository.findByCorreoElectronico(email);
     }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 public interface IUserRepository extends JpaRepository<User, Long> {
     boolean findById(long id);
 
-    User findByCorreo_electronico(String email);
+    User findByCorreoElectronico(String email);
 
     List<User> findAll();
 

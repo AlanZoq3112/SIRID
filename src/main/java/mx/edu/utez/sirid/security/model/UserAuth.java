@@ -36,7 +36,7 @@ public class UserAuth implements UserDetails {
                         .collect(Collectors.toList());
 
         return new UserAuth(
-                user.getCorreo_electronico(),
+                user.getCorreoElectronico(),
                 user.getContraseña(),
                 user,
                 authorities

@@ -9,6 +9,7 @@ import mx.edu.utez.sirid.model.User.User;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -36,7 +37,7 @@ public class UserDTO {
 
     private AcademicDivision academicDivision;
 
-    private Role role;
+    private Set<Role> role;
     public User getUser(){
         return new User(
                 getId(),
