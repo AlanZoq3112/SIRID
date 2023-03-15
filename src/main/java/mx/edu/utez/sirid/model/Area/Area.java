@@ -5,26 +5,36 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mx.edu.utez.sirid.enums.Areas;
 import mx.edu.utez.sirid.model.Classroom.Classroom;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
-@Table(name = "areas")
+@Table(name="areas")
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
 @Getter
+@Setter
 public class Area {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true, nullable = false, length = 20)
-    private String name;
 
-    @OneToOne(mappedBy = "area")
+    @Enumerated(EnumType.STRING)
+    @Column(unique = true,nullable = false,length = 25)
+    private Areas name;
+
+    public Area(Areas name){
+        this.name=name;
+    }
+
+
+    @OneToMany(mappedBy = "area")
     @JsonIgnore
-    private Classroom classroom;
+    private Set<Classroom> classroom;
+
+
 
 }

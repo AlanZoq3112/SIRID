@@ -1,8 +1,6 @@
 package mx.edu.utez.sirid.controller.User;
 
-import mx.edu.utez.sirid.controller.Role.dtos.RoleDTO;
 import mx.edu.utez.sirid.controller.User.dtos.UserDTO;
-import mx.edu.utez.sirid.model.Role.Role;
 import mx.edu.utez.sirid.model.User.User;
 import mx.edu.utez.sirid.service.User.UserService;
 import mx.edu.utez.sirid.utils.CustomResponse;

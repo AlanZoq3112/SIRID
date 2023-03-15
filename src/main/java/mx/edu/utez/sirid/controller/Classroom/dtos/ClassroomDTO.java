@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import mx.edu.utez.sirid.model.Area.Area;
 import mx.edu.utez.sirid.model.Classroom.Classroom;
+import mx.edu.utez.sirid.model.Incidence.Incidence;
 import mx.edu.utez.sirid.model.Type.Type;
 import org.hibernate.validator.constraints.Length;
 
@@ -28,6 +29,7 @@ public class ClassroomDTO {
 
     private Type type;
     private Area area;
+    private List<Incidence> incidence;
 
     public Classroom castToClassroom(){
         return new Classroom(
@@ -35,7 +37,8 @@ public class ClassroomDTO {
                 getName(),
                 getStatus(),
                 getType(),
-                getArea()
+                getArea(),
+                getIncidence()
         );
     }
 

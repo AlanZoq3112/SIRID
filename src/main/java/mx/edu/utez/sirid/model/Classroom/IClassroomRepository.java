@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 public interface IClassroomRepository extends JpaRepository<Classroom, Long> {
 
     @Query(
-            value = "UPDATE classroom SET status = :status " +
+            value = "UPDATE incidences SET status = :status " +
                     "WHERE id = :id",
             nativeQuery = true
     )

@@ -1,13 +1,17 @@
 package mx.edu.utez.sirid.model.Classroom;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import mx.edu.utez.sirid.model.Area.Area;
 
+import mx.edu.utez.sirid.model.Incidence.Incidence;
 import mx.edu.utez.sirid.model.Type.Type;
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name = "classrooms")
@@ -25,11 +29,17 @@ public class Classroom {
     private Boolean status;
 
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "type_id", nullable = false, referencedColumnName = "id")
     private Type type;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "area_id", nullable = false, referencedColumnName = "id")
     private Area area;
+
+    @OneToMany(mappedBy = "classroom")
+    @JsonIgnore
+    private List<Incidence> incidence;
+
+
 }

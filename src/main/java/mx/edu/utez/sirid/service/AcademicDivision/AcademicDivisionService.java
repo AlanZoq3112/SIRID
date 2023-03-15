@@ -38,13 +38,13 @@ public class AcademicDivisionService {
 
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<AcademicDivision> insert(AcademicDivision academicDivision) {
-        if (this.repository.existsById(academicDivision.getId()))
-        return new CustomResponse<>(
-               null,
-                true,
-                400,
-                "Academic division has already been registered"
-        );
+        if (this.repository.existsByName(academicDivision.getName()))
+            return new CustomResponse<>(
+                    null,
+                    true,
+                    400,
+                    "Academic division has already been registered"
+            );
         return new CustomResponse<>(
                 this.repository.saveAndFlush(academicDivision),
                 false,

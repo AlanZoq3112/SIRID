@@ -27,14 +27,8 @@ public class RoleService {
         );
     }
 
-
-<<<<<<< HEAD
-    @Transactional(readOnly = true)
-    public CustomResponse<Role> getOne(Long id) {
-=======
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<Role> getOne(Long id){
->>>>>>> bda133956100d56c6e15099595aa72cdf3599592
         return new CustomResponse<>(
                 this.repository.findById(id).get(),
                 false,200,"OK"
@@ -43,8 +37,8 @@ public class RoleService {
 
 
     @Transactional(rollbackFor = {SQLException.class})
-    public CustomResponse<Role> insert(Role role) {
-        if (this.repository.existsById(role.getId()))
+    public CustomResponse<Role> insert(Role role){
+        if(this.repository.existsByName(role.getName()))
             return new CustomResponse<>(
                     null,
                     true,

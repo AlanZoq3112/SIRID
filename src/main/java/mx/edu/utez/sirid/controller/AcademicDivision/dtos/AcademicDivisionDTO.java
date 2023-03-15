@@ -4,11 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mx.edu.utez.sirid.enums.DivisionesAcademicas;
 import mx.edu.utez.sirid.model.AcademicDivision.AcademicDivision;
 import mx.edu.utez.sirid.model.User.User;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,9 +21,9 @@ public class AcademicDivisionDTO {
 
     @NotEmpty(message = "Campo obligatorio")
     @Size(min = 1, max = 100)
-    private String name;
+    private DivisionesAcademicas name;
 
-    private User user;
+    private Set<User> user;
 
     public AcademicDivision getAcademicDivision() {
         return  new AcademicDivision(

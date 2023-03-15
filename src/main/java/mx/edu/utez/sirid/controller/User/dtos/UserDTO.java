@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import mx.edu.utez.sirid.model.AcademicDivision.AcademicDivision;
+import mx.edu.utez.sirid.model.Incidence.Incidence;
 import mx.edu.utez.sirid.model.Role.Role;
 import mx.edu.utez.sirid.model.User.User;
 import org.hibernate.validator.constraints.Length;
@@ -40,8 +41,16 @@ public class UserDTO {
 
     private Boolean changePassword;
 
+
+
+    //
     private AcademicDivision academicDivision;
     private Role role;
+
+
+    private List<Incidence> incidenceDocente;
+
+    private List<Incidence> incidencePersonal;
     public User getUser(){
         return new User(
                 getId(),
@@ -54,7 +63,9 @@ public class UserDTO {
                 getStatus(),
                 getChangePassword(),
                 getRole(),
-                getAcademicDivision()
+                getAcademicDivision(),
+                getIncidenceDocente(),
+                getIncidencePersonal()
         );
     }
 }

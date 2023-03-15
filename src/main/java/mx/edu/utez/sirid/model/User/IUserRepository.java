@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface IUserRepository extends JpaRepository<User, Long> {
     boolean findById(long id);
+    User findByCorreoElectronico(String email);
 
     List<User> findAll();
 

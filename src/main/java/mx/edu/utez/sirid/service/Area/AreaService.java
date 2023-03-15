@@ -34,24 +34,8 @@ public class AreaService {
     }
 
     @Transactional(rollbackFor = {SQLException.class})
-    public CustomResponse<Area> insert(Area area) {
-        if (this.repository.existsById(area.getId()))
-            return new CustomResponse<>(
-                    null, true, 400,
-                    "El area ya se ha registrado"
-            );
-        return new CustomResponse<>(
-                this.repository.saveAndFlush(area),
-                false, 200,
-                "Area registrada correctamente"
-        );
-    }
-
-<<<<<<< HEAD
-=======
-    @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<Area> insert(Area area){
-        if (!this.repository.existsById(area.getId())){
+        if (this.repository.existsByName(area.getName())){
             return new CustomResponse<>(
                     null,true,400,"Esta area ya esta registrada"
             );
@@ -66,8 +50,5 @@ public class AreaService {
         );
     }
 
-
-
->>>>>>> bda133956100d56c6e15099595aa72cdf3599592
 
 }
