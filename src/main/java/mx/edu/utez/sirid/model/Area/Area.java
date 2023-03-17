@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mx.edu.utez.sirid.enums.Areas;
 import mx.edu.utez.sirid.model.Classroom.Classroom;
 
 import javax.persistence.*;
@@ -21,13 +22,19 @@ public class Area {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Enumerated(EnumType.STRING)
     @Column(unique = true,nullable = false,length = 25)
-    private String name;
+    private Areas name;
+
+    public Area(Areas name){
+        this.name=name;
+    }
 
 
-    @OneToOne(mappedBy = "area")
+    @OneToMany(mappedBy = "area")
     @JsonIgnore
-    private Classroom classroom;
+    private Set<Classroom> classroom;
 
 
 

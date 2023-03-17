@@ -5,9 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mx.edu.utez.sirid.enums.DivisionesAcademicas;
 import mx.edu.utez.sirid.model.User.User;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "academicDivisions")
@@ -19,12 +21,15 @@ public class AcademicDivision {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Enumerated(EnumType.STRING)
     @Column(unique = true, nullable = false, length = 10)
-    String name;
+    private DivisionesAcademicas name;
 
+    public AcademicDivision(DivisionesAcademicas name) {
+        this.name = name;
+    }
 
-    @OneToOne(mappedBy = "academicDivision")
-    @JoinColumn(name = "user_id", nullable = false)
+    @OneToMany(mappedBy = "academicDivision")
     @JsonIgnore
-    private User user;
+    private Set<User> user;
 }

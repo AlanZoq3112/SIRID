@@ -5,9 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mx.edu.utez.sirid.enums.TiposDeSalones;
 import mx.edu.utez.sirid.model.Classroom.Classroom;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "types")
@@ -20,11 +22,16 @@ public class Type {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     @Column(unique = true,nullable = false,length = 45)
-    private String name;
+    private TiposDeSalones name;
 
-//    @OneToOne(mappedBy = "type")
-//    @JsonIgnore
-//    private Classroom classroom;
+    public Type(TiposDeSalones name) {
+        this.name = name;
+    }
+
+    @OneToMany(mappedBy = "type")
+    @JsonIgnore
+    private Set<Classroom> classroom;
 
 }

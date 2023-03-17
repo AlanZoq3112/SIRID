@@ -28,12 +28,12 @@ public class Classroom {
     private Boolean status;
 
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "type_id", nullable = false, referencedColumnName = "id")
     private Type type;
 
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "area_id", nullable = false, referencedColumnName = "id")
     private Area area;
 

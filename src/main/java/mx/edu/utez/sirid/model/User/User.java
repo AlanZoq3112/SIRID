@@ -8,9 +8,11 @@ import mx.edu.utez.sirid.model.AcademicDivision.AcademicDivision;
 import mx.edu.utez.sirid.model.Role.Role;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -20,35 +22,32 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false, length = 120 )
+    @Column( nullable = false, length = 120 )
     private String name;
 
-    @Column(unique = true, nullable = false, length = 45 )
-    private String primer_apellido;
+    @Column( nullable = false, length = 45 )
+    private String primerApellido;
+
+    @Column( length = 45 )
+    private String segundoApellido;
 
     @Column(unique = true, nullable = false, length = 45 )
-    private String segundo_apellido;
+    private String correoElectronico;
 
-    @Column(unique = true, nullable = false, length = 45 )
-    private String correo_electronico;
-
-    @Column(unique = true, nullable = false, columnDefinition = "Text")
-    private String uid;
-
-    @Column(unique = true, nullable = false, length = 12)
-    private String contraseña;
+    @Column( nullable = false, length = 12)
+    private String contrasena;
 
     @Column(nullable = false, columnDefinition = "TINYINT DEFAULT 1")
     private Boolean status;
 
-    @Column(unique = false, nullable = false, length = 0)
+    @Column( nullable = false, length = 0)
     private Boolean changePassword;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "role_id", nullable = false, referencedColumnName = "id")
-    private Role role;
+    private Role roles;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "academicDivision_id", nullable = false, referencedColumnName = "id")
     private  AcademicDivision academicDivision;
 }

@@ -36,7 +36,7 @@ public class StatusService {
 
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<Status> insert(Status status) {
-        if (this.repository.existsById(status.getId()))
+        if (this.repository.existsByName(status.getName()))
             return new CustomResponse<>(
                     null,
                     true,

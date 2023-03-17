@@ -39,7 +39,7 @@ public class RoleService {
 
     @Transactional(rollbackFor =  {SQLException.class})
     public CustomResponse<Role> insert(Role role){
-        if(this.repository.existsById(role.getId()))
+        if(this.repository.existsByName(role.getName()))
             return new CustomResponse<>(
                     null,
                     true,

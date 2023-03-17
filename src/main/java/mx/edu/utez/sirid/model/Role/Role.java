@@ -5,9 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mx.edu.utez.sirid.enums.Roles;
 import mx.edu.utez.sirid.model.User.User;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "roles")
@@ -21,12 +23,16 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     @Column(unique = true,nullable = false, length = 20)
-    private String name;
+    private Roles name;
 
-    @OneToOne(mappedBy = "role")
-    @JoinColumn(name = "role_id", nullable = false)
+    public Role(Roles roles) {
+        this.name = roles;
+    }
+
+    @OneToMany(mappedBy = "roles")
     @JsonIgnore
-    private User user;
+    private Set<User> user;
 
 }
