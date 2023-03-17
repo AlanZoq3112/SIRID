@@ -27,9 +27,7 @@ public class UserDTO {
 
     private String correo_electronico;
 
-    private String uid;
-
-    private String contraseña;
+    private String contrasena;
 
     private Boolean status;
 
@@ -37,7 +35,7 @@ public class UserDTO {
 
     private AcademicDivision academicDivision;
 
-    private Set<Role> role;
+    private Role role;
     public User getUser(){
         return new User(
                 getId(),
@@ -45,8 +43,7 @@ public class UserDTO {
                 getPrimer_apellido(),
                 getSegundo_apellido(),
                 getCorreo_electronico(),
-                getUid(),
-                getContraseña(),
+                getContrasena(),
                 getStatus(),
                 getChangePassword(),
                 getRole(),

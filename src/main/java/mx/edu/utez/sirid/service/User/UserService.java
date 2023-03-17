@@ -46,9 +46,7 @@ public class UserService {
                     "The user has already been registered"
             );
         }
-
-//        user.setContraseña(encoder.encode(user.getContraseña())
-//        );
+        user.setContrasena(encoder.encode(user.getContrasena()));
         return new CustomResponse<>(
                 this.repository.saveAndFlush(user),
                 false,

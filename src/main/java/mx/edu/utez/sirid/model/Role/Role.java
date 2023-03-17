@@ -31,7 +31,7 @@ public class Role {
         this.name = roles;
     }
 
-    @ManyToMany(mappedBy = "roles")
+    @OneToMany(mappedBy = "roles")
     @JsonIgnore
     private Set<User> user;
 

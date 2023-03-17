@@ -22,33 +22,30 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false, length = 120 )
+    @Column( nullable = false, length = 120 )
     private String name;
 
-    @Column(unique = true, nullable = false, length = 45 )
+    @Column( nullable = false, length = 45 )
     private String primerApellido;
 
-    @Column(unique = true, nullable = false, length = 45 )
+    @Column( length = 45 )
     private String segundoApellido;
 
     @Column(unique = true, nullable = false, length = 45 )
     private String correoElectronico;
 
-    @Column(unique = true, nullable = false, columnDefinition = "Text")
-    private String uid;
-
-    @Column(unique = true, nullable = false, length = 12)
-    private String contraseña;
+    @Column( nullable = false, length = 12)
+    private String contrasena;
 
     @Column(nullable = false, columnDefinition = "TINYINT DEFAULT 1")
     private Boolean status;
 
-    @Column(unique = false, nullable = false, length = 0)
+    @Column( nullable = false, length = 0)
     private Boolean changePassword;
 
-    @ManyToMany
+    @ManyToOne
     @JoinColumn(name = "role_id", nullable = false, referencedColumnName = "id")
-    private Set<Role> roles;
+    private Role roles;
 
     @ManyToOne
     @JoinColumn(name = "academicDivision_id", nullable = false, referencedColumnName = "id")

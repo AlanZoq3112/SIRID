@@ -1,12 +1,12 @@
 package mx.edu.utez.sirid.security;
 
 import mx.edu.utez.sirid.security.jwt.JwtEntryPoint;
-import mx.edu.utez.sirid.security.jwt.JwtProvider;
 import mx.edu.utez.sirid.security.jwt.JwtTokenFilter;
 import mx.edu.utez.sirid.security.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -57,19 +57,20 @@ public class MainSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void  configure(HttpSecurity httpSecurity) throws  Exception{
-        /*httpSecurity.cors().and().csrf().disable()
+        httpSecurity.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/api-sirid/auth/**").permitAll()
                 .antMatchers("/api-sirid/academic/**").permitAll()
-                .antMatchers("/sirid-api/classroom/**").permitAll()
-                .antMatchers("/sirid-api/status/**").permitAll()
-                .antMatchers("/sirid-api/user/**").permitAll()
-                .antMatchers("/sirid-api/type/**").permitAll()
-                .antMatchers("/sirid-api/role/**").permitAll()
-                .antMatchers("/sirid-area/**").permitAll().anyRequest().authenticated()
+                .antMatchers("/api-sirid/status/**").permitAll()
+                .antMatchers("/api-sirid/type/**").permitAll()
+                .antMatchers("/api-sirid/role/**").permitAll()
+                .antMatchers("/api-sirid/**").permitAll()
+                .antMatchers("/api-sirid/**").permitAll()
+                .antMatchers( HttpMethod.POST, "/api-sirid/user/**").permitAll()
+                .antMatchers(HttpMethod.POST,"/api-sirid/classroom/**").permitAll().anyRequest().authenticated()
                 .and().exceptionHandling().authenticationEntryPoint(entryPoint)
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-            httpSecurity.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);*/
+            httpSecurity.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
 }
