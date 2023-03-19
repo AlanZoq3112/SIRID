@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Locale;
+
 @Service
 @Transactional
 public class UserService {
@@ -46,7 +48,10 @@ public class UserService {
                     "The user has already been registered"
             );
         }
-        user.setContrasena(encoder.encode(user.getContrasena()));
+        String firstPassword=(user.getName().substring(0,2)+user.getPrimerApellido().substring(0,2)+user.getId()).toLowerCase() ;
+        System.out.println("UserService:50 ->"+firstPassword);
+        user.setContrasena(encoder.encode(firstPassword));
+        System.out.println("UserService:50 ->"+user.getContrasena());
         return new CustomResponse<>(
                 this.repository.saveAndFlush(user),
                 false,
@@ -73,24 +78,55 @@ public class UserService {
     }
 
     @Transactional(rollbackFor = {SQLException.class})
-    public CustomResponse<Boolean> changeStatus(User user){
+    public CustomResponse<Boolean> changeStatus(User user) {
         if (!this.repository.existsById(user.getId()))
             return new CustomResponse<>(
-                    null,
-                    true,
-                    400,
+                    null, true, 400,
                     "El usuario no existe"
             );
         return new CustomResponse<>(
-                this.repository.existsById(user.getId()),
-                false,
-                200,
-                "Usuario eliminado con exito"
+                this.repository.updateUserById(
+                        user.getStatus(), user.getId()),
+                false, 200,
+                "Categoría registrada correctamente"
         );
     }
 
     @Transactional(readOnly = true)
         public User getUserByemail(String email){
         return repository.findByCorreoElectronico(email);
+    }
+
+    @Transactional(rollbackFor = {SQLException.class})
+    public CustomResponse<Integer> changePassword(User user) {
+        if (!this.repository.existsById(user.getId()))
+            return new CustomResponse<>(
+                    null, true, 400,
+                    "El usuario no existe"
+            );
+        user.setContrasena(encoder.encode(user.getContrasena()));
+        return new CustomResponse<>(
+                this.repository.changePassword(
+                        user.getContrasena(), user.getId()),
+                false, 200,
+                "Contraseña modificada correctamente"
+        );
+    }
+
+    @Transactional(rollbackFor = {SQLException.class})
+    public CustomResponse<Boolean> recoverPassword(User user) {
+        if (!this.repository.existsById(user.getId()))
+            return new CustomResponse<>(
+                    null, true, 400,
+                    "El usuario no existe"
+            );
+        String firstPassword=user.getName().substring(0,2)+user.getPrimerApellido().substring(0,2)+user.getId() ;
+        return new CustomResponse<>(
+                this.repository.recoverPassword(
+                        firstPassword, user.getId()),
+                false, 200,
+                "La contraseña fue modificada correctamente"
+        );
+
     }
 }

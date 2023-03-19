@@ -48,6 +48,9 @@ public class UserDTO {
                 getChangePassword(),
                 getRole(),
                 getAcademicDivision()
+
         );
     }
+
+
 }

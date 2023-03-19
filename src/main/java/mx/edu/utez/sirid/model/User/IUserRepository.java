@@ -22,9 +22,9 @@ public interface IUserRepository extends JpaRepository<User, Long> {
             @Param("id") Long id
     );
 
-    //query para solicitar la recuperacion de contraseña (contraseña olvidada"
+    //query para solicitar la recuperacion de contraseña (contraseña olvidada)"
     @Modifying
-    @Query(value = "UPDATE User set contrasena =:newContrasena,changeStatus=:0 WHERE id =: id",
+    @Query(value = "UPDATE User set contrasena =:newContrasena,changeStatus=:0 WHERE id =:id",
         nativeQuery = true
     )
     Boolean recoverPassword(
@@ -32,13 +32,14 @@ public interface IUserRepository extends JpaRepository<User, Long> {
             @Param("id") Long id
     );
 
-    //query para cambiar la contraseña
+    //query para cambiar la contraseña ****Ya funciona****
     @Modifying
-    @Query(value = "UPDATE User set contrasena =:newContrasena WHERE id =: id",
+    @Query(value = "UPDATE users set contrasena =:newContrasena,change_password=1 WHERE id =:id",
             nativeQuery = true
     )
-    Boolean changePassword(
-            @Param("newContrasena") String newContrasena
+    Integer changePassword(
+            @Param("newContrasena") String newContrasena,
+            @Param("id") Long id
     );
 
    //Query para ver a todos los profesores

@@ -50,4 +50,7 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "academicDivision_id", nullable = false, referencedColumnName = "id")
     private  AcademicDivision academicDivision;
+
+    //private String firstPassword=name.substring(0,2)+primerApellido.substring(0,2)+id;
+
 }
