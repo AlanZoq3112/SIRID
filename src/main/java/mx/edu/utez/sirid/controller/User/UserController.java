@@ -34,6 +34,7 @@ public class UserController {
                 HttpStatus.OK
         );
     }
+
     @PostMapping("/")
     public ResponseEntity<CustomResponse<User>> insert(
             @RequestBody UserDTO userDTO, @Valid BindingResult result) {
@@ -46,6 +47,52 @@ public class UserController {
         return new ResponseEntity<>(
                 this.service.insert(userDTO.getUser()),
                 HttpStatus.CREATED
+        );
+    }
+
+    @PutMapping("/")
+    public ResponseEntity<CustomResponse<User>> update(
+            @Valid @RequestBody UserDTO userDTO,
+            BindingResult result
+    ) {
+        return new ResponseEntity<>(
+                this.service.update(userDTO.getUser()),
+                HttpStatus.OK);
+    }
+
+    @PatchMapping("/")
+    public ResponseEntity<CustomResponse<Boolean>> changeStatus(
+            @RequestBody UserDTO userDTO
+    ) {
+        return new ResponseEntity<>(
+                this.service.changeStatus(userDTO.getUser()),
+                HttpStatus.OK
+        );
+    }
+
+    @PutMapping("/recoverPassword")
+    public ResponseEntity<CustomResponse<Boolean>> recoverpasword(
+            @Valid @RequestBody UserDTO userDTO,
+            BindingResult result
+    ) {
+        return new ResponseEntity<>(
+                this.service.recoverPassword(userDTO.getUser()),
+                HttpStatus.OK);
+    }
+
+
+    @PutMapping("/changePassword")
+    public ResponseEntity<CustomResponse<Integer>> changePassword(
+            @RequestBody UserDTO userDTO, @Valid BindingResult result) {
+        if (result.hasErrors()) {
+            return new ResponseEntity<>(
+                    null,
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+        return new ResponseEntity<>(
+                this.service.changePassword(userDTO.getUser()),
+                HttpStatus.OK
         );
     }
 }
