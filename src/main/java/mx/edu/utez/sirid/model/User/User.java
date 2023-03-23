@@ -34,7 +34,7 @@ public class User {
     @Column(unique = true, nullable = false, length = 45 )
     private String correoElectronico;
 
-    @Column( nullable = false, length = 12)
+    @Column( nullable = false)
     private String contrasena;
 
     @Column(nullable = false, columnDefinition = "TINYINT DEFAULT 1")

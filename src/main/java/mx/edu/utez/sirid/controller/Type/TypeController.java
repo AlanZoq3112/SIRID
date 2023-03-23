@@ -1,12 +1,10 @@
 package mx.edu.utez.sirid.controller.Type;
 
 
-import mx.edu.utez.sirid.controller.Status.dtos.StatusDTO;
 import mx.edu.utez.sirid.controller.Type.dtos.TypeDto;
-import mx.edu.utez.sirid.model.Status.Status;
 import mx.edu.utez.sirid.model.Type.Type;
 import mx.edu.utez.sirid.service.Type.TypeService;
-import mx.edu.utez.sirid.utils.CustomResponse;
+import mx.edu.utez.sirid.utils.inserts.CustomResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -2,7 +2,7 @@ package mx.edu.utez.sirid.service.Classroom;
 
 import mx.edu.utez.sirid.model.Classroom.Classroom;
 import mx.edu.utez.sirid.model.Classroom.IClassroomRepository;
-import mx.edu.utez.sirid.utils.CustomResponse;
+import mx.edu.utez.sirid.utils.inserts.CustomResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

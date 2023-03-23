@@ -1,10 +1,9 @@
 package mx.edu.utez.sirid.controller.Role;
 
 import mx.edu.utez.sirid.controller.Role.dtos.RoleDTO;
-import mx.edu.utez.sirid.model.Area.Area;
 import mx.edu.utez.sirid.model.Role.Role;
 import mx.edu.utez.sirid.service.Role.RoleService;
-import mx.edu.utez.sirid.utils.CustomResponse;
+import mx.edu.utez.sirid.utils.inserts.CustomResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

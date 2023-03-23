@@ -1,4 +1,4 @@
-package mx.edu.utez.sirid.utils;
+package mx.edu.utez.sirid.utils.inserts;
 
 import mx.edu.utez.sirid.enums.Areas;
 import mx.edu.utez.sirid.model.Area.Area;

@@ -2,18 +2,26 @@ package mx.edu.utez.sirid.service.User;
 
 import mx.edu.utez.sirid.model.User.IUserRepository;
 import mx.edu.utez.sirid.model.User.User;
-import mx.edu.utez.sirid.utils.CustomResponse;
+import mx.edu.utez.sirid.utils.inserts.CustomResponse;
+import mx.edu.utez.sirid.utils.messages.UserMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Locale;
 
 @Service
 @Transactional
 public class UserService {
+
+    @Autowired
+    private JavaMailSender javaMailSender;
     @Autowired
     private IUserRepository repository;
 
@@ -94,6 +102,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
         public User getUserByemail(String email){
+
         return repository.findByCorreoElectronico(email);
     }
 
@@ -105,6 +114,7 @@ public class UserService {
                     "El usuario no existe"
             );
         user.setContrasena(encoder.encode(user.getContrasena()));
+
         return new CustomResponse<>(
                 this.repository.changePassword(
                         user.getContrasena(), user.getId()),
@@ -114,18 +124,32 @@ public class UserService {
     }
 
     @Transactional(rollbackFor = {SQLException.class})
-    public CustomResponse<Boolean> recoverPassword(User user) {
+    public CustomResponse<Integer> recoverPassword(User user) throws MessagingException {
         if (!this.repository.existsById(user.getId()))
             return new CustomResponse<>(
                     null, true, 400,
                     "El usuario no existe"
             );
-        String firstPassword=user.getName().substring(0,2)+user.getPrimerApellido().substring(0,2)+user.getId() ;
+
+        int numero = (int) (Math.random() * 25) + 1;
+        String firstPassword=user.getName().substring(0,2)+user.getPrimerApellido().substring(0,2)+numero ;
+
+        MimeMessage mimeMessage=javaMailSender.createMimeMessage();
+        MimeMessageHelper messageHelper= new MimeMessageHelper(mimeMessage, true, "UTF-8");
+        UserMessage message = new UserMessage();
+        messageHelper.setTo(user.getCorreoElectronico());
+        messageHelper.setFrom("20213tn014@utez.edu.mx");
+        messageHelper.setSubject("Se ha cambiado tu contraseña");
+        messageHelper.setText(message.recoverAccount(user.getName(), firstPassword),true);
+        this.javaMailSender.send(mimeMessage);
+
+        firstPassword= encoder.encode(firstPassword);
+
         return new CustomResponse<>(
                 this.repository.recoverPassword(
                         firstPassword, user.getId()),
                 false, 200,
-                "La contraseña fue modificada correctamente"
+                "Se envio la contraseña temporal a su cuenta"
         );
 
     }

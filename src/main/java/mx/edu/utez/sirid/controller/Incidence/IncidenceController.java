@@ -3,7 +3,7 @@ package mx.edu.utez.sirid.controller.Incidence;
 import mx.edu.utez.sirid.controller.Incidence.dtos.IncidenceDTO;
 import mx.edu.utez.sirid.model.Incidence.Incidence;
 import mx.edu.utez.sirid.service.Incidence.IncidenceService;
-import mx.edu.utez.sirid.utils.CustomResponse;
+import mx.edu.utez.sirid.utils.inserts.CustomResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

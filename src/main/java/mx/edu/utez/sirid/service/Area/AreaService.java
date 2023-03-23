@@ -2,7 +2,7 @@ package mx.edu.utez.sirid.service.Area;
 
 import mx.edu.utez.sirid.model.Area.Area;
 import mx.edu.utez.sirid.model.Area.IAreaRepository;
-import mx.edu.utez.sirid.utils.CustomResponse;
+import mx.edu.utez.sirid.utils.inserts.CustomResponse;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

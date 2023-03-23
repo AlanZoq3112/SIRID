@@ -3,7 +3,7 @@ package mx.edu.utez.sirid.security.controller;
 
 import mx.edu.utez.sirid.security.controller.dto.LoginDTO;
 import mx.edu.utez.sirid.security.jwt.JwtProvider;
-import mx.edu.utez.sirid.utils.CustomResponse;
+import mx.edu.utez.sirid.utils.inserts.CustomResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
