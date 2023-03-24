@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import mx.edu.utez.sirid.enums.DivisionesAcademicas;
+
 import mx.edu.utez.sirid.model.User.User;
 
 import javax.persistence.*;
@@ -21,11 +21,11 @@ public class AcademicDivision {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Enumerated(EnumType.STRING)
-    @Column(unique = true, nullable = false, length = 10)
-    private DivisionesAcademicas name;
 
-    public AcademicDivision(DivisionesAcademicas name) {
+    @Column(unique = true, nullable = false, length = 10)
+    private String name;
+
+    public AcademicDivision(String name) {
         this.name = name;
     }
 

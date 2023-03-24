@@ -1,6 +1,5 @@
 package mx.edu.utez.sirid.utils.inserts;
 
-import mx.edu.utez.sirid.enums.Areas;
 import mx.edu.utez.sirid.model.Area.Area;
 import mx.edu.utez.sirid.service.Area.AreaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,16 +14,16 @@ public class CreateArea implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Area d1 = new Area(Areas.Docencia_1);
-        Area d2 = new Area(Areas.Docencia_2);
-        Area d3 = new Area(Areas.Docencia_3);
-        Area d4 = new Area(Areas.Docencia_4);
-        Area d5 = new Area(Areas.Docencia_5);
-        Area cedim = new Area(Areas.CEDIM);
-        Area ceviset = new Area(Areas.CEVISET);
-        Area cecadec = new Area(Areas.CECADEC);
-        Area rectoria = new Area(Areas.Rectoria);
-        Area biblioteca = new Area(Areas.Biblioteca);
+        Area d1 = new Area("Docencia 1");
+        Area d2 = new Area("Docencia 2");
+        Area d3 = new Area("Docencia 3");
+        Area d4 = new Area("Docencia 4");
+        Area d5 = new Area("Docencia 5");
+        Area cedim = new Area("CEDIM");
+        Area ceviset = new Area("CEVISET");
+        Area cecadec = new Area("CECADEC");
+        Area rectoria = new Area("Rectoria");
+        Area biblioteca = new Area("Biblioteca");
         areaService.insert(d1);
         areaService.insert(d2);
         areaService.insert(d3);

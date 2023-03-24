@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import mx.edu.utez.sirid.enums.Roles;
+
 import mx.edu.utez.sirid.model.User.User;
 
 import javax.persistence.*;
@@ -23,11 +23,11 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(unique = true,nullable = false, length = 20)
-    private Roles name;
 
-    public Role(Roles roles) {
+    @Column(unique = true,nullable = false, length = 20)
+    private String name;
+
+    public Role(String roles) {
         this.name = roles;
     }
 

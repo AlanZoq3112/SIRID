@@ -47,7 +47,7 @@ public class UserService {
     }
 
     @Transactional(rollbackFor = {SQLException.class})
-    public CustomResponse<User> insert(User user) {
+    public CustomResponse<User> insert(User user) throws MessagingException {
         if (this.repository.existsById(user.getId())) {
             return new CustomResponse<>(
                     null,
@@ -56,10 +56,22 @@ public class UserService {
                     "The user has already been registered"
             );
         }
+        //genera la contraseña por defaul para acceder por primera vez
         String firstPassword=(user.getName().substring(0,2)+user.getPrimerApellido().substring(0,2)+user.getId()).toLowerCase() ;
-        System.out.println("UserService:50 ->"+firstPassword);
+        System.out.println("UserService:insert ->"+firstPassword);
         user.setContrasena(encoder.encode(firstPassword));
-        System.out.println("UserService:50 ->"+user.getContrasena());
+        System.out.println("UserService:insert ->"+user.getContrasena());
+
+        //envio de correos electronicos
+        MimeMessage mimeMessage=javaMailSender.createMimeMessage();
+        MimeMessageHelper messageHelper= new MimeMessageHelper(mimeMessage, true, "UTF-8");
+        UserMessage message = new UserMessage();
+        messageHelper.setTo(user.getCorreoElectronico());
+        messageHelper.setFrom("20213tn014@utez.edu.mx");
+        messageHelper.setSubject("Confirmación: tu cuenta ha sido creada");
+        messageHelper.setText(message.newAccount(user.getName(), firstPassword),true);
+        this.javaMailSender.send(mimeMessage);
+
         return new CustomResponse<>(
                 this.repository.saveAndFlush(user),
                 false,

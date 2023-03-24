@@ -1,7 +1,6 @@
 package mx.edu.utez.sirid.utils.inserts;
 
 
-import mx.edu.utez.sirid.enums.Roles;
 import mx.edu.utez.sirid.model.Role.Role;
 import mx.edu.utez.sirid.service.Role.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +15,9 @@ public class CreateRoles implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Role superAdmin= new Role(null,Roles.SuperAdmin,null);
-        Role soporteTecnico = new Role(null,Roles.SoporteTecnico,null);
-        Role docente= new Role (null,Roles.Docente,null);
+        Role superAdmin= new Role(null,"SuperAdmin",null);
+        Role soporteTecnico = new Role(null,"SoporteTecnico",null);
+        Role docente= new Role (null,"Docente",null);
         roleService.insert(superAdmin);
         roleService.insert(soporteTecnico);
         roleService.insert(docente);

@@ -1,6 +1,6 @@
 package mx.edu.utez.sirid.utils.inserts;
 
-import mx.edu.utez.sirid.enums.DivisionesAcademicas;
+
 import mx.edu.utez.sirid.model.AcademicDivision.AcademicDivision;
 import mx.edu.utez.sirid.service.AcademicDivision.AcademicDivisionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +17,19 @@ public class CreateAcademicDivsion implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        System.out.println("CreateAcademicDivision -> Divisions complete!!");
-        AcademicDivision datid = new AcademicDivision(DivisionesAcademicas.DATID);
-        AcademicDivision dacea = new AcademicDivision(DivisionesAcademicas.DACEA);
-        AcademicDivision dami = new AcademicDivision(DivisionesAcademicas.DAMI);
-        AcademicDivision datefi = new AcademicDivision(DivisionesAcademicas.DATEFI);
+
+        AcademicDivision datid = new AcademicDivision("DATID");
+        AcademicDivision dacea = new AcademicDivision("DACEA");
+        AcademicDivision dami = new AcademicDivision("DAMI");
+        AcademicDivision datefi = new AcademicDivision("DATEFI");
 
 
         academicDivisionService.insert(datid);
         academicDivisionService.insert(dacea);
         academicDivisionService.insert(dami);
         academicDivisionService.insert(datefi);
+
+        System.out.println("CreateAcademicDivision -> Divisions complete!!");
 
     }
 }
