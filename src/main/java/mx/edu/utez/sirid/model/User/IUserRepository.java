@@ -1,5 +1,6 @@
 package mx.edu.utez.sirid.model.User;
 
+import mx.edu.utez.sirid.model.Role.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -9,6 +10,8 @@ import java.util.List;
 
 public interface IUserRepository extends JpaRepository<User, Long> {
     boolean findById(long id);
+    boolean existsByCorreoElectronico(String email);
+
     User findByCorreoElectronico(String email);
     List<User> findAll();
     Boolean existsById(String user);
@@ -24,10 +27,10 @@ public interface IUserRepository extends JpaRepository<User, Long> {
 
     //query para solicitar la recuperacion de contraseña (contraseña olvidada)"
     @Modifying
-    @Query(value = "UPDATE User set contrasena =:newContrasena,changeStatus=:0 WHERE id =:id",
+    @Query(value = "UPDATE users set contrasena =:newContrasena,change_password=0 WHERE id =:id",
         nativeQuery = true
     )
-    Boolean recoverPassword(
+    Integer recoverPassword(
             @Param("newContrasena") String newContrasena,
             @Param("id") Long id
     );
@@ -56,9 +59,7 @@ public interface IUserRepository extends JpaRepository<User, Long> {
     )
     List<User> lookAllSupportTeam();
 
-
-
-
+    List<User> findByRoles(Role role);
 
 }
 

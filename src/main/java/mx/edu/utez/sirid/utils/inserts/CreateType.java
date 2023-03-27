@@ -1,6 +1,6 @@
-package mx.edu.utez.sirid.utils;
+package mx.edu.utez.sirid.utils.inserts;
 
-import mx.edu.utez.sirid.enums.TiposDeSalones;
+
 import mx.edu.utez.sirid.model.Type.Type;
 import mx.edu.utez.sirid.service.Type.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +15,11 @@ public class CreateType  implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Type centroComputo= new Type(null,TiposDeSalones.CentroDeComputo,null);
-        Type compuAula = new Type(null,TiposDeSalones.CompuAula,null);
-        Type aula = new Type(null,TiposDeSalones.Aula,null);
-        Type oficina = new Type(null,TiposDeSalones.Oficina,null);
-        Type auditorio = new Type(null,TiposDeSalones.Auditorio,null);
+        Type centroComputo= new Type(null,"CentroDeComputo",null);
+        Type compuAula = new Type(null,"CompuAula",null);
+        Type aula = new Type(null,"Aula",null);
+        Type oficina = new Type(null,"Oficina",null);
+        Type auditorio = new Type(null,"Auditorio",null);
 
         typeService.insert(centroComputo);
         typeService.insert(compuAula);

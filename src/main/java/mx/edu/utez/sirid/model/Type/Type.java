@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import mx.edu.utez.sirid.enums.TiposDeSalones;
+
 import mx.edu.utez.sirid.model.Classroom.Classroom;
 
 import javax.persistence.*;
@@ -22,11 +22,11 @@ public class Type {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(unique = true,nullable = false,length = 45)
-    private TiposDeSalones name;
 
-    public Type(TiposDeSalones name) {
+    @Column(unique = true,nullable = false,length = 45)
+    private String name;
+
+    public Type(String name) {
         this.name = name;
     }
 

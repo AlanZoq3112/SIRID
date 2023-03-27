@@ -4,7 +4,7 @@ package mx.edu.utez.sirid.controller.AcademicDivision;
 import mx.edu.utez.sirid.controller.AcademicDivision.dtos.AcademicDivisionDTO;
 import mx.edu.utez.sirid.model.AcademicDivision.AcademicDivision;
 import mx.edu.utez.sirid.service.AcademicDivision.AcademicDivisionService;
-import mx.edu.utez.sirid.utils.CustomResponse;
+import mx.edu.utez.sirid.utils.inserts.CustomResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package mx.edu.utez.sirid.utils;
+package mx.edu.utez.sirid.utils.inserts;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

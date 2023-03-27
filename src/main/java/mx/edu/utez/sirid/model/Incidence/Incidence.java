@@ -11,6 +11,7 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "incidences")
@@ -23,20 +24,20 @@ public class Incidence {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true,nullable = false, length = 45)
+    @Column(nullable = false, length = 200)
     private String title;
 
-    @Column(unique = true, nullable = false, length = 200)
+    @Column( nullable = false, columnDefinition = "text")
     private String description;
 
-    @Column(unique = true, nullable = false)
-    private Timestamp created_at;
+    @Column( nullable = false)
+    private LocalDate created_at;
 
-    @Column(unique = true, nullable = false)
-    private Timestamp finish_at;
+    @Column(nullable = false)
+    private LocalDate finish_at;
 
-    @Column(unique = true, nullable = false)
-    private Timestamp last_modify;
+    @Column( nullable = false )
+    private LocalDate last_modify;
 
     @ManyToOne
     @JoinColumn(name = "id_classroom", nullable = false, referencedColumnName = "id")
@@ -47,7 +48,7 @@ public class Incidence {
     private Status status;
 
     @ManyToOne
-    @JoinColumn(name = "cerated_by", nullable = false, referencedColumnName = "id")
+    @JoinColumn(name = "created_by", nullable = false, referencedColumnName = "id")
     private User docente;
 
     @ManyToOne

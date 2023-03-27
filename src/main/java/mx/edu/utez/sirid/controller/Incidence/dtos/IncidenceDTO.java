@@ -11,6 +11,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 
 @AllArgsConstructor
@@ -23,31 +24,76 @@ public class IncidenceDTO {
     @NotBlank
     @Length(min = 1, max = 45)
     private String title;
-    @Length(min = 1, max = 200)
-    private String desription;
+    @Length(min = 1)
+    private String description;
     private Long asigned_at;
-    private Timestamp created_at;
-    private Timestamp finish_at;
-    private Timestamp last_modify;
-
-
+    private LocalDate created_at=LocalDate.now();
+    private LocalDate finish_at;
+    private LocalDate last_modify=LocalDate.now();
     private Status status;
     private Classroom classroom;
     private User docente;
     private User personalSoporte;
 
     public Incidence castToIncidence() {
+        System.out.println("fecha de creacion"+this.getCreated_at());
         return new Incidence(
                 getId(),
                 getTitle(),
-                getDesription(),
-                getCreated_at(),
+                getDescription(),
+                LocalDate.now(),
                 getFinish_at(),
-                getLast_modify(),
+                LocalDate.now(),
                 getClassroom(),
                 getStatus(),
                 getDocente(),
                 getPersonalSoporte()
         );
     }
+
+    public Incidence changeStatus() {
+        return new Incidence(
+                getId(),
+                null,
+                null,
+                null,
+                null,
+                getLast_modify(),
+                null,
+                getStatus(),
+                null,
+                null
+        );
+    }
+
+    public Incidence changePersonalSuport() {
+        return new Incidence(
+                getId(),
+                null,
+                null,
+                null,
+                null,
+                getLast_modify(),
+                null,
+                null,
+                null,
+                getPersonalSoporte()
+        );
+    }
+
+    public Incidence changeLastModify() {
+        return new Incidence(
+                getId(),
+                null,
+                null,
+                null,
+                null,
+                getLast_modify(),
+                null,
+                null,
+                null,
+                null
+        );
+    }
+
 }

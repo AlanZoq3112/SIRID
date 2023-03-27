@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import mx.edu.utez.sirid.enums.TiposDeSalones;
+
 import mx.edu.utez.sirid.model.Classroom.Classroom;
 import mx.edu.utez.sirid.model.Type.Type;
 import org.hibernate.validator.constraints.Length;
@@ -27,7 +27,7 @@ public class TypeDto {
     @NotNull
     @NotBlank
     @Length(min=1,max=120)
-    private TiposDeSalones name;
+    private String name;
 
    private Set<Classroom> classroom;
 

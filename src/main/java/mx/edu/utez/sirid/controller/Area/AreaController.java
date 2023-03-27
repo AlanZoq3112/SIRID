@@ -1,11 +1,10 @@
 package mx.edu.utez.sirid.controller.Area;
 
 
-import mx.edu.utez.sirid.controller.AcademicDivision.dtos.AcademicDivisionDTO;
 import mx.edu.utez.sirid.controller.Area.dtos.AreaDTO;
 import mx.edu.utez.sirid.model.Area.Area;
 import mx.edu.utez.sirid.service.Area.AreaService;
-import mx.edu.utez.sirid.utils.CustomResponse;
+import mx.edu.utez.sirid.utils.inserts.CustomResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

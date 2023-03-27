@@ -2,7 +2,7 @@ package mx.edu.utez.sirid.controller.Status;
 import mx.edu.utez.sirid.controller.Status.dtos.StatusDTO;
 import mx.edu.utez.sirid.model.Status.Status;
 import mx.edu.utez.sirid.service.Status.StatusService;
-import mx.edu.utez.sirid.utils.CustomResponse;
+import mx.edu.utez.sirid.utils.inserts.CustomResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

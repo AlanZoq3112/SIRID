@@ -1,12 +1,15 @@
 package mx.edu.utez.sirid.controller.Incidence;
 
 import mx.edu.utez.sirid.controller.Incidence.dtos.IncidenceDTO;
+import mx.edu.utez.sirid.controller.Status.dtos.StatusDTO;
+import mx.edu.utez.sirid.controller.User.dtos.UserDTO;
 import mx.edu.utez.sirid.model.Incidence.Incidence;
 import mx.edu.utez.sirid.service.Incidence.IncidenceService;
-import mx.edu.utez.sirid.utils.CustomResponse;
+import mx.edu.utez.sirid.utils.inserts.CustomResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +23,7 @@ public class IncidenceController {
     @Autowired
     private IncidenceService service;
 
-
+    //recuperar todas las incidencias FUNCIONA
     @GetMapping("/")
     public ResponseEntity<CustomResponse<List<Incidence>>> getAll(){
         return new ResponseEntity<>(
@@ -29,6 +32,7 @@ public class IncidenceController {
         );
     }
 
+    //recuperar una incidencia en especifico
     @GetMapping("/{id}")
     public ResponseEntity<CustomResponse<Incidence>> getOne(@PathVariable("id") Long id) {
         return new ResponseEntity<>(
@@ -37,13 +41,63 @@ public class IncidenceController {
         );
     }
 
+    //registrar una nueva incidecia
     @PostMapping("/")
-    public ResponseEntity<CustomResponse<Incidence>> insert(
-            @Valid @RequestBody IncidenceDTO incidence,
-            @Valid BindingResult result
-    ) {
+    public ResponseEntity<CustomResponse<Incidence>> insert(@Valid @RequestBody IncidenceDTO incidence, BindingResult result
+    ) {if (result.hasErrors()) {
+        return new ResponseEntity<>(
+                null,
+                HttpStatus.BAD_REQUEST
+        );
+    }
         return new ResponseEntity<>(
                 this.service.insert(incidence.castToIncidence()),
                 HttpStatus.CREATED);
     }
+
+    //Actualizar una incidencia
+    @PutMapping("/")
+    public  ResponseEntity<CustomResponse<Incidence>> update(@RequestBody IncidenceDTO incidenceDTO){
+        return new ResponseEntity<>(
+                this.service.update(incidenceDTO.castToIncidence()),
+                HttpStatus.ACCEPTED
+        );
+    }
+
+    //Cambiar status de la incidencia
+    @PatchMapping("/")
+    public  ResponseEntity<CustomResponse<Integer>> changeStatus( @RequestBody IncidenceDTO incidenceDTO){
+        return new ResponseEntity<>(
+                this.service.changeStatus(incidenceDTO.castToIncidence()),
+                HttpStatus.ACCEPTED
+        );
+    }
+
+    //ver las incidencias en las que participa el personal de soporte de acuerdo a su status
+    @GetMapping("/lookIncidenceSupport")
+    public  ResponseEntity<CustomResponse<List<Incidence>>> lookIncidenceSupport(@RequestBody IncidenceDTO incidenceDTO){
+        return  new ResponseEntity<>(
+                this.service.lookIncidenceSupport(incidenceDTO.getStatus(),incidenceDTO.getPersonalSoporte() ),
+                HttpStatus.OK
+        );
+    }
+
+    //ver las incidencias en las que participa el docente de acuerdo a su status
+    @GetMapping("/lookIncidenceTeacher")
+    public  ResponseEntity<CustomResponse<List<Incidence>>> lookIncidenceTeacher(@RequestBody IncidenceDTO incidenceDTO){
+        return  new ResponseEntity<>(
+                this.service.lookIncidenceSupport(incidenceDTO.getStatus(),incidenceDTO.getDocente() ),
+                HttpStatus.OK
+        );
+    }
+
+
+
+
+
+
+
+
+
+
 }

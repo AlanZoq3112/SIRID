@@ -1,19 +1,32 @@
 package mx.edu.utez.sirid.service.User;
 
+import mx.edu.utez.sirid.model.Role.Role;
 import mx.edu.utez.sirid.model.User.IUserRepository;
 import mx.edu.utez.sirid.model.User.User;
-import mx.edu.utez.sirid.utils.CustomResponse;
+import mx.edu.utez.sirid.security.jwt.JwtEntryPoint;
+import mx.edu.utez.sirid.utils.inserts.CustomResponse;
+import mx.edu.utez.sirid.utils.messages.UserMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Locale;
 
 @Service
 @Transactional
 public class UserService {
+    private final static Logger LOGGER = LoggerFactory.getLogger(UserService.class);
+
+    @Autowired
+    private JavaMailSender javaMailSender;
     @Autowired
     private IUserRepository repository;
 
@@ -21,7 +34,7 @@ public class UserService {
     private PasswordEncoder encoder;
 
     @Transactional(readOnly = true)
-    public CustomResponse<List<User>> getALll() {
+    public CustomResponse<List<User>> getALll(Role role) {
         return new CustomResponse<>(
                 this.repository.findAll(),
                 false,
@@ -31,16 +44,16 @@ public class UserService {
     }
 
     @Transactional(rollbackFor = {SQLException.class})
-    public CustomResponse<User> getOne(Long id) {
+    public CustomResponse<User> getOne(String email) {
         return new CustomResponse<>(
-                this.repository.findById(id).get(),
+                this.repository.findByCorreoElectronico(email),
                 false, 200, "Ok"
         );
     }
 
     @Transactional(rollbackFor = {SQLException.class})
-    public CustomResponse<User> insert(User user) {
-        if (this.repository.existsById(user.getId())) {
+    public CustomResponse<User> insert(User user) throws MessagingException {
+        if (this.repository.existsByCorreoElectronico(user.getCorreoElectronico())) {
             return new CustomResponse<>(
                     null,
                     true,
@@ -48,10 +61,22 @@ public class UserService {
                     "The user has already been registered"
             );
         }
+
+        //genera la contraseña por default para acceder por primera vez
         String firstPassword=(user.getName().substring(0,2)+user.getPrimerApellido().substring(0,2)+user.getId()).toLowerCase() ;
-        System.out.println("UserService:50 ->"+firstPassword);
+        LOGGER.debug("Password ->"+firstPassword);
         user.setContrasena(encoder.encode(firstPassword));
-        System.out.println("UserService:50 ->"+user.getContrasena());
+
+        //envio de correos electronicos
+        MimeMessage mimeMessage=javaMailSender.createMimeMessage();
+        MimeMessageHelper messageHelper= new MimeMessageHelper(mimeMessage, true, "UTF-8");
+        UserMessage message = new UserMessage();
+        messageHelper.setTo(user.getCorreoElectronico());
+        messageHelper.setFrom("20213tn014@utez.edu.mx");
+        messageHelper.setSubject("Confirmación: tu cuenta ha sido creada");
+        messageHelper.setText(message.newAccount(user.getName(), firstPassword),true);
+        this.javaMailSender.send(mimeMessage);
+
         return new CustomResponse<>(
                 this.repository.saveAndFlush(user),
                 false,
@@ -62,7 +87,7 @@ public class UserService {
 
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<User> update(User user) {
-        if (!this.repository.existsById(user.getId()))
+        if (!this.repository.existsByCorreoElectronico(user.getCorreoElectronico()))
             return new CustomResponse<>(
                     null,
                     true,
@@ -73,13 +98,13 @@ public class UserService {
                 this.repository.saveAndFlush(user),
                 false,
                 200,
-                "Usuario registrado con exito"
+                "El usuario se actualizo con exito"
         );
     }
 
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<Boolean> changeStatus(User user) {
-        if (!this.repository.existsById(user.getId()))
+        if (!this.repository.existsByCorreoElectronico(user.getCorreoElectronico()))
             return new CustomResponse<>(
                     null, true, 400,
                     "El usuario no existe"
@@ -99,12 +124,14 @@ public class UserService {
 
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<Integer> changePassword(User user) {
-        if (!this.repository.existsById(user.getId()))
+        if (!this.repository.existsByCorreoElectronico(user.getCorreoElectronico()))
             return new CustomResponse<>(
                     null, true, 400,
                     "El usuario no existe"
             );
         user.setContrasena(encoder.encode(user.getContrasena()));
+        System.out.println("new password->"+user.getContrasena());
+
         return new CustomResponse<>(
                 this.repository.changePassword(
                         user.getContrasena(), user.getId()),
@@ -114,19 +141,35 @@ public class UserService {
     }
 
     @Transactional(rollbackFor = {SQLException.class})
-    public CustomResponse<Boolean> recoverPassword(User user) {
-        if (!this.repository.existsById(user.getId()))
+    public CustomResponse<Integer> recoverPassword(User user) throws MessagingException {
+        if (!this.repository.existsByCorreoElectronico(user.getCorreoElectronico()))
             return new CustomResponse<>(
                     null, true, 400,
                     "El usuario no existe"
             );
-        String firstPassword=user.getName().substring(0,2)+user.getPrimerApellido().substring(0,2)+user.getId() ;
+
+        int numero = (int) (Math.random() * 25) + 1;
+        String newPassword=user.getName().substring(0,2)+user.getPrimerApellido().substring(0,2)+numero ;
+
+        MimeMessage mimeMessage=javaMailSender.createMimeMessage();
+        MimeMessageHelper messageHelper= new MimeMessageHelper(mimeMessage, true, "UTF-8");
+        UserMessage message = new UserMessage();
+        messageHelper.setTo(user.getCorreoElectronico());
+        messageHelper.setFrom("20213tn014@utez.edu.mx");
+        messageHelper.setSubject("Se ha cambiado tu contraseña");
+        messageHelper.setText(message.recoverAccount(user.getName(), newPassword),true);
+        this.javaMailSender.send(mimeMessage);
+
+        newPassword= encoder.encode(newPassword);
+
         return new CustomResponse<>(
                 this.repository.recoverPassword(
-                        firstPassword, user.getId()),
+                        newPassword, user.getId()),
                 false, 200,
-                "La contraseña fue modificada correctamente"
+                "Se envio la contraseña temporal a su cuenta"
         );
 
     }
+
+
 }

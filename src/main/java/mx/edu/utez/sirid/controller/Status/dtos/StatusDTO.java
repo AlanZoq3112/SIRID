@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import mx.edu.utez.sirid.enums.EStatus;
 import mx.edu.utez.sirid.model.Status.Status;
 import org.hibernate.validator.constraints.Length;
 
@@ -23,7 +22,7 @@ public class StatusDTO {
     @NotNull
     @NotBlank
     @Length(min=1,max=120)
-    private EStatus name;
+    private String name;
 
     public Status getStatus(){
         return new Status(

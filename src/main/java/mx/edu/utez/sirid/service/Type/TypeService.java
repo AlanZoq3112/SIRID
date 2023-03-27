@@ -2,7 +2,7 @@ package mx.edu.utez.sirid.service.Type;
 
 import mx.edu.utez.sirid.model.Type.ITypeRepository;
 import mx.edu.utez.sirid.model.Type.Type;
-import mx.edu.utez.sirid.utils.CustomResponse;
+import mx.edu.utez.sirid.utils.inserts.CustomResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

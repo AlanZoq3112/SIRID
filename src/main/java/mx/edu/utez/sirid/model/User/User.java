@@ -1,14 +1,17 @@
 package mx.edu.utez.sirid.model.User;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import mx.edu.utez.sirid.model.AcademicDivision.AcademicDivision;
+import mx.edu.utez.sirid.model.Incidence.Incidence;
 import mx.edu.utez.sirid.model.Role.Role;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -34,7 +37,7 @@ public class User {
     @Column(unique = true, nullable = false, length = 45 )
     private String correoElectronico;
 
-    @Column( nullable = false, length = 12)
+    @Column( nullable = false)
     private String contrasena;
 
     @Column(nullable = false, columnDefinition = "TINYINT DEFAULT 1")
@@ -51,6 +54,12 @@ public class User {
     @JoinColumn(name = "academicDivision_id", nullable = false, referencedColumnName = "id")
     private  AcademicDivision academicDivision;
 
-    //private String firstPassword=name.substring(0,2)+primerApellido.substring(0,2)+id;
+    @OneToMany(mappedBy = "docente")
+    @JsonIgnore
+    private List<Incidence> incidenceListTeacher;
+
+    @OneToMany(mappedBy = "personalSoporte")
+    @JsonIgnore
+    private List<Incidence>incidenceListSupport;
 
 }

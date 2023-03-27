@@ -31,7 +31,7 @@ public class UserAuth implements UserDetails {
 
     public static UserAuth build(User user) {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(user.getRoles().getName().name()));
+        authorities.add(new SimpleGrantedAuthority(user.getRoles().getName()));
         return new UserAuth(
                 user.getCorreoElectronico(),
                 user.getContrasena(),

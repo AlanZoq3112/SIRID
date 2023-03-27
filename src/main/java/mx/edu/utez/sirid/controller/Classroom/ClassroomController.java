@@ -2,9 +2,8 @@ package mx.edu.utez.sirid.controller.Classroom;
 
 import mx.edu.utez.sirid.controller.Classroom.dtos.ClassroomDTO;
 import mx.edu.utez.sirid.model.Classroom.Classroom;
-import mx.edu.utez.sirid.model.Role.Role;
 import mx.edu.utez.sirid.service.Classroom.ClassroomService;
-import mx.edu.utez.sirid.utils.CustomResponse;
+import mx.edu.utez.sirid.utils.inserts.CustomResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,9 +37,7 @@ public class ClassroomController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<CustomResponse<Classroom>> insert(
-            @Valid @RequestBody ClassroomDTO category,
-            @Valid BindingResult result
+    public ResponseEntity<CustomResponse<Classroom>> insert(@Valid @RequestBody ClassroomDTO category, @Valid BindingResult result
     ) {
         return new ResponseEntity<>(
                 this.service.insert(category.castToClassroom()),

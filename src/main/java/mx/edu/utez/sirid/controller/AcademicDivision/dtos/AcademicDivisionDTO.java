@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import mx.edu.utez.sirid.enums.DivisionesAcademicas;
+
 import mx.edu.utez.sirid.model.AcademicDivision.AcademicDivision;
 import mx.edu.utez.sirid.model.User.User;
 import org.hibernate.validator.constraints.Length;
@@ -26,7 +26,7 @@ public class AcademicDivisionDTO {
     @NotNull
     @NotBlank
     @Length(min=1,max=120)
-    private DivisionesAcademicas name;
+    private String name;
 
     private Set<User> user;
 

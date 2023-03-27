@@ -1,9 +1,8 @@
 package mx.edu.utez.sirid.service.Role;
 
-import mx.edu.utez.sirid.model.Area.Area;
 import mx.edu.utez.sirid.model.Role.Role;
 import mx.edu.utez.sirid.model.Role.RoleRepository;
-import mx.edu.utez.sirid.utils.CustomResponse;
+import mx.edu.utez.sirid.utils.inserts.CustomResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

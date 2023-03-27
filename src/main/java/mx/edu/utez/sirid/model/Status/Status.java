@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import mx.edu.utez.sirid.enums.EStatus;
 
 import javax.persistence.*;
 
@@ -21,11 +20,11 @@ public class Status {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(unique = true, nullable = false, length = 10)
-    private EStatus name;
 
-    public Status( EStatus name) {
+    @Column(unique = true, nullable = false, length = 10)
+    private String name;
+
+    public Status( String name) {
         this.name = name;
     }
 }
