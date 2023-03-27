@@ -37,9 +37,7 @@ public class ClassroomController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<CustomResponse<Classroom>> insert(
-            @Valid @RequestBody ClassroomDTO category,
-            @Valid BindingResult result
+    public ResponseEntity<CustomResponse<Classroom>> insert(@Valid @RequestBody ClassroomDTO category, @Valid BindingResult result
     ) {
         return new ResponseEntity<>(
                 this.service.insert(category.castToClassroom()),

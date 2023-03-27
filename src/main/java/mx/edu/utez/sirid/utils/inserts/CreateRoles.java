@@ -16,7 +16,7 @@ public class CreateRoles implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         Role superAdmin= new Role(null,"SuperAdmin",null);
-        Role soporteTecnico = new Role(null,"SoporteTecnico",null);
+        Role soporteTecnico = new Role(null,"Soporte Tecnico",null);
         Role docente= new Role (null,"Docente",null);
         roleService.insert(superAdmin);
         roleService.insert(soporteTecnico);

@@ -1,8 +1,10 @@
 package mx.edu.utez.sirid.service.Incidence;
 
-import mx.edu.utez.sirid.model.Classroom.Classroom;
 import mx.edu.utez.sirid.model.Incidence.IIncidenceRepository;
 import mx.edu.utez.sirid.model.Incidence.Incidence;
+import mx.edu.utez.sirid.model.Status.Status;
+import mx.edu.utez.sirid.model.User.IUserRepository;
+import mx.edu.utez.sirid.model.User.User;
 import mx.edu.utez.sirid.utils.inserts.CustomResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,10 @@ public class IncidenceService {
     @Autowired
     private IIncidenceRepository repository;
 
+    @Autowired
+    private IUserRepository userRepository;
+
+    //recuperar todas las incidenias
     @Transactional(readOnly = true)
     public CustomResponse<List<Incidence>> getAll() {
         return new CustomResponse<>(
@@ -25,6 +31,7 @@ public class IncidenceService {
         );
     }
 
+    //recuperar una sola incidencia
     @Transactional(readOnly = true)
     public CustomResponse<Incidence> getOne(Long id) {
         return new CustomResponse<>(
@@ -33,6 +40,7 @@ public class IncidenceService {
         );
     }
 
+    //registrar una nueva incidencia
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<Incidence> insert(Incidence incidence) {
         if (this.repository.existsById(incidence.getId()))
@@ -47,12 +55,13 @@ public class IncidenceService {
         );
     }
 
+    //actualizar una incidecnia
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<Incidence> update(Incidence incidence) {
         if (!this.repository.existsById(incidence.getId()))
             return new CustomResponse<>(
                     null, true, 400,
-                    "El incidencia no existe"
+                    "Esta incidecia no existe"
             );
         return new CustomResponse<>(
                 this.repository.saveAndFlush(incidence),
@@ -61,19 +70,69 @@ public class IncidenceService {
         );
     }
 
+    //cambiar status de una incidencia
     @Transactional(rollbackFor = {SQLException.class})
-    public CustomResponse<Boolean> changeStatus(Classroom classroom) {
-        if (!this.repository.existsById(classroom.getId()))
+    public CustomResponse<Integer> changeStatus(Incidence incidence) {
+        if (!this.repository.existsById(incidence.getId()))
             return new CustomResponse<>(
                     null, true, 400,
-                    "El incidencia no existe"
+                    "Esta incidecia no existe"
             );
         return new CustomResponse<>(
                 this.repository.updateStatusById(
-                        classroom.getStatus(), classroom.getId()),
+                        incidence.getStatus(), incidence.getId()),
                 false, 200,
-                "Incidencia registrada correctamente"
+                "Se modifico con exito el status de la incidencia"
         );
     }
+
+    //Historial de incidencias
+    @Transactional(readOnly = true)
+    public  CustomResponse<List<Incidence>> GetAllMyIncidences(User user){
+        return  new CustomResponse<>(
+                this.repository.findByPersonalSoporteOrDocente(user,user),
+                false,200,"Historial de incidencias recuperado"
+        );
+    }
+
+    //ver las incidencias en las que participa el personal de soporte de acuerdo a su status
+    @Transactional(readOnly = true)
+    public CustomResponse<List<Incidence>> lookIncidenceSupport(Status status,User soporte){
+        System.out.println("incidence -> "+soporte.getCorreoElectronico());
+        if ((!this.userRepository.existsByCorreoElectronico(soporte.getCorreoElectronico())))
+        return new CustomResponse<>(
+                null, true, 400,
+                "Este usuario no existe"
+        );
+
+        return new CustomResponse<>(
+                this.repository.lookIncidenceSupport(status,soporte),
+                false,200,"Lista de incidencias recuperado con exito"
+        );
+
+    }
+
+    //ver las incidencias en las que participa el personal de soporte de acuerdo a su status
+    @Transactional(readOnly = true)
+    public CustomResponse<List<Incidence>> lookIncidenceDocente(Status status,User docente){
+        System.out.println("incidence -> "+docente.getCorreoElectronico());
+        if ((!this.userRepository.existsByCorreoElectronico(docente.getCorreoElectronico())))
+            return new CustomResponse<>(
+                    null, true, 400,
+                    "Este usuario no existe"
+            );
+
+        return new CustomResponse<>(
+                this.repository.lookIncidenceTeacher(status, docente),
+                false,200,"Lista de incidencias recuperado con exito"
+        );
+
+    }
+
+
+
+
+
+    
 }
 

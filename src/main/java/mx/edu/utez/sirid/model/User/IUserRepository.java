@@ -1,5 +1,6 @@
 package mx.edu.utez.sirid.model.User;
 
+import mx.edu.utez.sirid.model.Role.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -9,6 +10,8 @@ import java.util.List;
 
 public interface IUserRepository extends JpaRepository<User, Long> {
     boolean findById(long id);
+    boolean existsByCorreoElectronico(String email);
+
     User findByCorreoElectronico(String email);
     List<User> findAll();
     Boolean existsById(String user);
@@ -56,9 +59,7 @@ public interface IUserRepository extends JpaRepository<User, Long> {
     )
     List<User> lookAllSupportTeam();
 
-
-
-
+    List<User> findByRoles(Role role);
 
 }
 

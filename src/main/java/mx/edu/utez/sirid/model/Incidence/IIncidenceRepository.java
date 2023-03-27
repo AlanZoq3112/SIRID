@@ -1,32 +1,47 @@
 package mx.edu.utez.sirid.model.Incidence;
 
+import mx.edu.utez.sirid.model.Status.Status;
+import mx.edu.utez.sirid.model.User.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface IIncidenceRepository extends JpaRepository<Incidence, Long> {
+    //cambio de status
+    @Modifying
     @Query(
-            value = "UPDATE incidences SET status = :status " +
-                    "WHERE id = :id",
+            value = "UPDATE incidences SET id_status =:status ,last_modify=now() WHERE id =:id",
             nativeQuery = true
     )
-    boolean updateStatusById(
-            @Param("status") Boolean status,
-            @Param("id") Long id
-    );
+    Integer updateStatusById(@Param("status") Status status, @Param("id") Long id);
 
-    /*@Query(
-            value = "UPDATE incidences SET asigned_at = :asigned_at " +
-                    "WHERE id = :id",
+    //historial de incidecnias
+    List<Incidence> findByPersonalSoporteOrDocente(User Teacher, User Suport);
+
+    //ver incidencias de acuerdo a su status y el personal de soporte involucrado
+    @Query(
+            value = "select * from incidences where id_status=:status AND asigned_at=:support",
             nativeQuery = true
     )
-    boolean updateUserByRole(
-            @Param("role_id") Long role_id
-    );*/
+    List<Incidence> lookIncidenceSupport( @Param("status") Status status, @Param("support") User soporte);
 
+    @Query(
+            value = "select * from incidences where id_status=:status AND created_at=:docente",
+            nativeQuery = true
+    )
+    List<Incidence> lookIncidenceTeacher(@Param("status") Status status, @Param("docente") User Docente);
 
+    @Modifying
+    @Query(
+            value = "Update incidences set asigned_at=:support where id=:id;",nativeQuery = true
+    )
+    Integer changePersonalSupport(@Param("support") User support, @Param("id") long id);
 
     boolean existsById(Long id);
+
 }

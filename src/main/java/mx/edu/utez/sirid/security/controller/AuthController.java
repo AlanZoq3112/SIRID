@@ -31,7 +31,6 @@ public class AuthController {
     @PostMapping("login")
     public ResponseEntity<CustomResponse<Map<String, Object>>> login(
             @Valid @RequestBody LoginDTO loginDTO) {
-        System.out.println("AuthController: LOGIN ->"+ loginDTO.getPassword());
         Authentication authentication = manager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginDTO.getEmail(),

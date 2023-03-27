@@ -37,7 +37,7 @@ public class ClassroomService {
         if (this.repository.existsById(classroom.getId()))
             return new CustomResponse<>(
                     null, true, 400,
-                    "La aula ya se ha registrado"
+                    "Esta aula ya ha sido registrada"
             );
         return new CustomResponse<>(
                 this.repository.saveAndFlush(classroom),
