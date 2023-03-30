@@ -24,4 +24,6 @@ public interface IClassroomRepository extends JpaRepository<Classroom, Long> {
 
 
     boolean existsById(Long id);
+
+    boolean existsByName(String name);
 }

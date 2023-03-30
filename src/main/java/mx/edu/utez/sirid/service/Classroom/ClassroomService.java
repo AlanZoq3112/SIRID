@@ -34,7 +34,7 @@ public class ClassroomService {
 
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<Classroom> insert(Classroom classroom) {
-        if (this.repository.existsById(classroom.getId()))
+        if (this.repository.existsByName(classroom.getName()))
             return new CustomResponse<>(
                     null, true, 400,
                     "Esta aula ya ha sido registrada"
