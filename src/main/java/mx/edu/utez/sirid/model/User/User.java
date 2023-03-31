@@ -43,8 +43,9 @@ public class User {
     @Column(nullable = false, columnDefinition = "TINYINT DEFAULT 1")
     private Boolean status;
 
-    @Column( nullable = false, length = 0)
+    @Column( nullable = false)
     private Boolean changePassword;
+
 
     @ManyToOne
     @JoinColumn(name = "role_id", nullable = false, referencedColumnName = "id")

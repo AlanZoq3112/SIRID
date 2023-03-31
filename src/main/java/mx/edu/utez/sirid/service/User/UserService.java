@@ -63,8 +63,8 @@ public class UserService {
         }
 
         //genera la contraseña por default para acceder por primera vez
-        String firstPassword=(user.getName().substring(0,2)+user.getPrimerApellido().substring(0,2)+user.getId()).toLowerCase() ;
-        LOGGER.debug("Password ->"+firstPassword);
+        int numero = (int) (Math.random() * 25) + 1;
+        String firstPassword=(user.getName().substring(0,3)+user.getPrimerApellido().substring(0,3)+numero).toLowerCase();
         user.setContrasena(encoder.encode(firstPassword));
 
         //envio de correos electronicos
@@ -94,6 +94,7 @@ public class UserService {
                     400,
                     "Este usuario no existe"
             );
+        user.setContrasena(encoder.encode(user.getContrasena()));
         return new CustomResponse<>(
                 this.repository.saveAndFlush(user),
                 false,
