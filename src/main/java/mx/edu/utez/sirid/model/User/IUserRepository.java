@@ -1,6 +1,7 @@
 package mx.edu.utez.sirid.model.User;
 
 import mx.edu.utez.sirid.model.Role.Role;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -44,6 +45,11 @@ public interface IUserRepository extends JpaRepository<User, Long> {
             @Param("newContrasena") String newContrasena,
             @Param("id") Long id
     );
+
+    /*@Modifying
+    @Query(
+          value = "Upda"
+    )*/
 
    //Query para ver a todos los profesores
    @Modifying
