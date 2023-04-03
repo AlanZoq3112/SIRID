@@ -22,7 +22,7 @@ public class AcademicDivision {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false, length = 10)
+    @Column(unique = true, nullable = false, length = 50)
     private String name;
 
     public AcademicDivision(String name) {

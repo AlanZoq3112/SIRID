@@ -12,6 +12,9 @@ import java.util.List;
 
 @Repository
 public interface IIncidenceRepository extends JpaRepository<Incidence, Long> {
+
+    boolean existsById(Long id);
+
     //cambio de status
     @Modifying
     @Query(
@@ -30,18 +33,20 @@ public interface IIncidenceRepository extends JpaRepository<Incidence, Long> {
     )
     List<Incidence> lookIncidenceSupport( @Param("status") Status status, @Param("support") User soporte);
 
+    //ver incidencias de acuerdo a su status y el docente involucrado
     @Query(
             value = "select * from incidences where id_status=:status AND created_at=:docente",
             nativeQuery = true
     )
     List<Incidence> lookIncidenceTeacher(@Param("status") Status status, @Param("docente") User Docente);
 
+    //Cambio del personal de soporte
     @Modifying
     @Query(
             value = "Update incidences set asigned_at=:support where id=:id;",nativeQuery = true
     )
     Integer changePersonalSupport(@Param("support") User support, @Param("id") long id);
 
-    boolean existsById(Long id);
+
 
 }

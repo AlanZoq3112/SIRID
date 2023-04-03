@@ -65,7 +65,6 @@ public class MainSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api-sirid/type/**").permitAll()
                 .antMatchers("/api-sirid/role/**").permitAll()
                 .antMatchers("/api-sirid/**").permitAll()
-                .antMatchers("/api-sirid/**").permitAll()
                 .antMatchers( HttpMethod.POST, "/api-sirid/user/**").permitAll()
                 .antMatchers(HttpMethod.POST,"/api-sirid/classroom/**").permitAll().anyRequest().authenticated()
                 .and().exceptionHandling().authenticationEntryPoint(entryPoint)

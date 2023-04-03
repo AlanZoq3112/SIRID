@@ -17,7 +17,6 @@ public class UserAuth implements UserDetails {
     private String email;
     private String password;
     private User user;
-
     private Collection<? extends GrantedAuthority> authorities;
 
     public UserAuth(String email, String password, User user,
@@ -43,7 +42,6 @@ public class UserAuth implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-
         return authorities;
     }
 
@@ -64,7 +62,7 @@ public class UserAuth implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return user.getStatus();
     }
 
     @Override
@@ -74,7 +72,7 @@ public class UserAuth implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return user.getStatus();
     }
 
 }

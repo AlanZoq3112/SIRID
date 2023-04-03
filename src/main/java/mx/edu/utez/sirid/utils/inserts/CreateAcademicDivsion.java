@@ -13,7 +13,6 @@ public class CreateAcademicDivsion implements CommandLineRunner {
     @Autowired
     AcademicDivisionService academicDivisionService;
 
-
     @Override
     public void run(String... args) throws Exception {
 
@@ -22,12 +21,14 @@ public class CreateAcademicDivsion implements CommandLineRunner {
         AcademicDivision dacea = new AcademicDivision("DACEA");
         AcademicDivision dami = new AcademicDivision("DAMI");
         AcademicDivision datefi = new AcademicDivision("DATEFI");
+        AcademicDivision NA = new AcademicDivision("No pertenece a ninguna division ");
 
 
         academicDivisionService.insert(datid);
         academicDivisionService.insert(dacea);
         academicDivisionService.insert(dami);
         academicDivisionService.insert(datefi);
+        academicDivisionService.insert(NA);
 
         System.out.println("CreateAcademicDivision -> Divisions complete!!");
 

@@ -13,6 +13,7 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -68,9 +69,23 @@ public class IncidenceController {
     @PatchMapping("/")
     public  ResponseEntity<CustomResponse<Integer>> changeStatus( @RequestBody IncidenceDTO incidenceDTO){
         return new ResponseEntity<>(
-                this.service.changeStatus(incidenceDTO.castToIncidence()),
+                this.service.changeStatus(incidenceDTO.finalizeIncident()),
                 HttpStatus.ACCEPTED
         );
+    }
+
+    //Cambio del Personal de Soprte
+    @PatchMapping("/changeSupport")
+    public  ResponseEntity<CustomResponse<Integer>> changePersonalsupport(@Valid @RequestBody IncidenceDTO incidenceDTO,BindingResult result) throws MessagingException {
+        if (result.hasErrors())
+            return  new ResponseEntity<>(
+                    null,HttpStatus.BAD_REQUEST
+            );
+
+            return  new ResponseEntity<>(
+                    this.service.changePersonalSupport(incidenceDTO.castToIncidence()),HttpStatus.OK
+            );
+
     }
 
     //ver las incidencias en las que participa el personal de soporte de acuerdo a su status
@@ -86,7 +101,7 @@ public class IncidenceController {
     @GetMapping("/lookIncidenceTeacher")
     public  ResponseEntity<CustomResponse<List<Incidence>>> lookIncidenceTeacher(@RequestBody IncidenceDTO incidenceDTO){
         return  new ResponseEntity<>(
-                this.service.lookIncidenceSupport(incidenceDTO.getStatus(),incidenceDTO.getDocente() ),
+                this.service.lookIncidenceDocente(incidenceDTO.getStatus(),incidenceDTO.getDocente()),
                 HttpStatus.OK
         );
     }
