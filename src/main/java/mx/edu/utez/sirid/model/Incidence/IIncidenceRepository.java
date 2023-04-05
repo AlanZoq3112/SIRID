@@ -18,7 +18,7 @@ public interface IIncidenceRepository extends JpaRepository<Incidence, Long> {
     //cambio de status
     @Modifying
     @Query(
-            value = "UPDATE incidences SET id_status =:status ,last_modify=now() WHERE id =:id",
+            value = "UPDATE incidences SET id_status =:status ,last_modify=now(),finish_at =now() WHERE id =:id",
             nativeQuery = true
     )
     Integer updateStatusById(@Param("status") Status status, @Param("id") Long id);

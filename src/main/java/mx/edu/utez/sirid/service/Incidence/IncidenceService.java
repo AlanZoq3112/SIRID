@@ -108,9 +108,10 @@ public class IncidenceService {
             return new CustomResponse<>(
                     null,true,400,"Esta incidencia no existe"
             );
+        System.out.println("Incidence 111 ->"+incidence.getFinish_at());
         return  new CustomResponse<>(
                 this.repository.updateStatusById(incidence.getStatus(), incidence.getId()),
-                false,200,"SEe finalizo la incicencia"+ incidence.getId()+": "+incidence.getTitle()
+                false,200,"Se finalizo la incicencia"+ incidence.getId()+": "+incidence.getTitle()
         );
     }
     //Historial de incidencias

@@ -88,6 +88,17 @@ public class IncidenceController {
 
     }
 
+    //finaliza la incidencia
+    @PatchMapping("/finalizeIncident")
+    public ResponseEntity<CustomResponse<Integer>> finalizeIncident(@Valid @RequestBody IncidenceDTO incidenceDTO,BindingResult result){
+        if (result.hasErrors())return   new ResponseEntity<>(
+                null,HttpStatus.BAD_REQUEST
+        );
+        return  new ResponseEntity<>(
+                this.service.finalizeIncident(incidenceDTO.finalizeIncident()), HttpStatus.ACCEPTED
+        );
+    }
+
     //ver las incidencias en las que participa el personal de soporte de acuerdo a su status
     @GetMapping("/lookIncidenceSupport")
     public  ResponseEntity<CustomResponse<List<Incidence>>> lookIncidenceSupport(@RequestBody IncidenceDTO incidenceDTO){

@@ -28,9 +28,9 @@ public class IncidenceDTO {
     @Length(min = 1)
     private String description;
     private Long asigned_at;
-    private Date created_at=new Date();
+    private Date created_at;
     private Date finish_at;
-    private Date last_modify= new Date();
+    private Date last_modify;
     private Status status;
     private Classroom classroom;
     private User docente;
@@ -104,15 +104,15 @@ public class IncidenceDTO {
         status = new Status( (long)3,"Concluida",null);
         return new Incidence(
                 getId(),
-                null,
-                null,
-                null,
+                getTitle(),
+                getDescription(),
+                getCreated_at(),
                 new Date(),
                 new Date(),
-                null,
+                getClassroom(),
                 status,
-                null,
-                null
+                getDocente(),
+                getPersonalSoporte()
         );
     }
 
