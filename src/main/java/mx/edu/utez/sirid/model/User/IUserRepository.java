@@ -23,19 +23,19 @@ public interface IUserRepository extends JpaRepository<User, Long> {
     @Query(value = "UPDATE User set status =: status WHERE ID =: id",
             nativeQuery = true
     )
-    Boolean updateUserById(
+    Integer updateUserById(
             @Param("status") Boolean status,
             @Param("id") Long id
     );
 
     //query para solicitar la recuperacion de contraseña (contraseña olvidada)"
     @Modifying
-    @Query(value = "UPDATE users set contrasena =:newContrasena,change_password=0 WHERE id =:id",
+    @Query(value = "UPDATE users set contrasena =:newContrasena,change_password=0 WHERE correo_electronico =:id",
         nativeQuery = true
     )
     Integer recoverPassword(
             @Param("newContrasena") String newContrasena,
-            @Param("id") Long id
+            @Param("id") String  id
     );
 
     //query para cambiar la contraseña

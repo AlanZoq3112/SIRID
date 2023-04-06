@@ -77,7 +77,7 @@ public class UserController {
 
     //Cambiar status del usuario
     @PatchMapping("/")
-    public ResponseEntity<CustomResponse<Boolean>> changeStatus( @RequestBody UserDTO userDTO
+    public ResponseEntity<CustomResponse<Integer>> changeStatus( @RequestBody UserDTO userDTO
     ) {
         return new ResponseEntity<>(
                 this.userService.changeStatus(userDTO.getUser()),

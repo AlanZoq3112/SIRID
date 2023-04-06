@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
+import java.util.Date;
 
 @Component
 @AllArgsConstructor
@@ -17,4 +18,6 @@ public class ReportDTO {
     private String fileName;
     private ByteArrayInputStream stream;
     private int length;
+
+
 }

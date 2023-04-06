@@ -64,5 +64,25 @@ public class ReportsService {
         return dto;
     }
 
+    @Transactional(rollbackFor = {SQLException.class})
+    public ReportDTO statisticsReportPDF(Map<String,Object> params) throws SQLException, JRException, IOException {
+        String name="ReporteDeEstadisticas";
+        String extension=".pdf";
+        ByteArrayOutputStream stream= reportManager.export(name, "pdf",params, dataSource.getConnection());
+        byte[] bytes= stream.toByteArray();
+        ReportDTO dto = new ReportDTO(name+extension, new ByteArrayInputStream(bytes) , bytes.length);
+        return dto;
+    }
+
+    @Transactional(rollbackFor = {SQLException.class})
+    public ReportDTO statisticsReportExcel(Map<String,Object> params) throws SQLException, JRException, IOException {
+        String name="ReporteDeEstadisticas";
+        String extension=".xlsx";
+        ByteArrayOutputStream stream= reportManager.export(name, "excel",params, dataSource.getConnection());
+        byte[] bytes= stream.toByteArray();
+        ReportDTO dto = new ReportDTO(name+extension, new ByteArrayInputStream(bytes) , bytes.length);
+        return dto;
+    }
+
 
 }

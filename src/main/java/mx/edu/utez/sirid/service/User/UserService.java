@@ -105,7 +105,7 @@ public class UserService {
     }
 
     @Transactional(rollbackFor = {SQLException.class})
-    public CustomResponse<Boolean> changeStatus(User user) {
+    public CustomResponse<Integer> changeStatus(User user) {
         if (!this.repository.existsByCorreoElectronico(user.getCorreoElectronico()))
             return new CustomResponse<>(
                     null, true, 400,
@@ -149,24 +149,23 @@ public class UserService {
                     null, true, 400,
                     "El usuario no existe"
             );
-
+        User user1=this.getUserByemail(user.getCorreoElectronico());
         int numero = (int) (Math.random() * 25) + 1;
-        String newPassword=user.getName().substring(0,2)+user.getPrimerApellido().substring(0,2)+numero ;
-
+        String newPassword=user1.getName().substring(0,3)+user1.getPrimerApellido().substring(0,3)+numero ;
         MimeMessage mimeMessage=javaMailSender.createMimeMessage();
         MimeMessageHelper messageHelper= new MimeMessageHelper(mimeMessage, true, "UTF-8");
         UserMessage message = new UserMessage();
         messageHelper.setTo(user.getCorreoElectronico());
         messageHelper.setFrom("20213tn014@utez.edu.mx");
         messageHelper.setSubject("Se ha cambiado tu contraseña");
-        messageHelper.setText(message.recoverAccount(user.getName(), newPassword),true);
+        messageHelper.setText(message.recoverAccount(user1.getName(), newPassword),true);
         this.javaMailSender.send(mimeMessage);
 
         newPassword= encoder.encode(newPassword);
 
         return new CustomResponse<>(
                 this.repository.recoverPassword(
-                        newPassword, user.getId()),
+                        newPassword, user.getCorreoElectronico()),
                 false, 200,
                 "Se envio la contraseña temporal a su cuenta"
         );
@@ -186,7 +185,6 @@ public class UserService {
                 this.repository.lookAllTeachers(), false,200,"Docentes Activos"
         );
     }
-
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<Boolean> requestChanges(User user) throws MessagingException {
         Role admin= new Role((long) 1,"SuperAdmin",null);
