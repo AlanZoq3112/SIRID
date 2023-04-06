@@ -16,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api-sirid/academic/")
+@CrossOrigin(origins = {"*"})
 public class AcademicDivisionController {
     @Autowired
     private AcademicDivisionService service;

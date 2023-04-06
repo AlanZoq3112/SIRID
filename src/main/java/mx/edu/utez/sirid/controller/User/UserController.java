@@ -33,14 +33,16 @@ public class UserController {
     @Autowired
     private IncidenceService incidenceService;
 
+    //Ver a todos los usuario
     @GetMapping("/")
-    public ResponseEntity<CustomResponse<List<User>>> getAll(RoleDTO roleDTO){
+    public ResponseEntity<CustomResponse<List<User>>> getAll(){
         return new ResponseEntity<>(
-                this.userService.getALll(roleDTO.getRole()),
+                this.userService.getALll(),
                 HttpStatus.OK
         );
     }
 
+    //Ver solamente un usuario
     @GetMapping("/{id}")
     public ResponseEntity<CustomResponse<User>> getOne(@PathVariable("id") String email){
         return new ResponseEntity<>(
@@ -49,6 +51,7 @@ public class UserController {
         );
     }
 
+    //Crear un usuario
     @PostMapping("/")
     public ResponseEntity<CustomResponse<User>> insert(@RequestBody UserDTO userDTO, @Valid BindingResult result) throws MessagingException {
         if (result.hasErrors()) {
@@ -63,6 +66,7 @@ public class UserController {
         );
     }
 
+    //Actualizar usuario (solo actualiza el superAdmin, para que el usuario pueda actualizar sus propios datos hacer referencia al requestchanges)
     @PutMapping("/")
     public ResponseEntity<CustomResponse<User>> update( @Valid @RequestBody UserDTO userDTO, BindingResult result
     ) {
@@ -71,8 +75,9 @@ public class UserController {
                 HttpStatus.OK);
     }
 
+    //Cambiar status del usuario
     @PatchMapping("/")
-    public ResponseEntity<CustomResponse<Boolean>> changeStatus( @RequestBody UserDTO userDTO
+    public ResponseEntity<CustomResponse<Integer>> changeStatus( @RequestBody UserDTO userDTO
     ) {
         return new ResponseEntity<>(
                 this.userService.changeStatus(userDTO.getUser()),
@@ -80,6 +85,7 @@ public class UserController {
         );
     }
 
+    //recuperar cuenta
     @PatchMapping("/recoverPassword")
     public ResponseEntity<CustomResponse<Integer>> recoverpasword( @Valid @RequestBody UserDTO userDTO, BindingResult result) throws MessagingException
     {
@@ -88,7 +94,7 @@ public class UserController {
                 HttpStatus.OK);
     }
 
-
+    //modificar contraseña
     @PatchMapping("/changePassword")
     public ResponseEntity<CustomResponse<Integer>> changePassword(@RequestBody UserDTO userDTO, @Valid BindingResult result) throws MessagingException
     {
@@ -119,6 +125,37 @@ public class UserController {
         return  new ResponseEntity<>(
                 this.incidenceService.GetAllMyIncidences(userDTO.getUser()),
                 HttpStatus.OK
+        );
+    }
+
+    //Trae a todo el personal de soporte activo(User este parea los selects o listad desplegables)
+    @GetMapping("/users/support")
+    public  ResponseEntity<CustomResponse<List<User>>> enablePersonalSupport(){
+        return  new ResponseEntity<>(
+                this.userService.enablePersonalSupport(),
+                HttpStatus.OK
+        );
+    }
+
+    //Trae a todos los docentes activos(User si es necesario e el los selects)
+    @GetMapping("/users/teachers")
+    public  ResponseEntity<CustomResponse<List<User>>> enableTeachers(){
+        return  new ResponseEntity<>(
+                this.userService.enableTeachers(),
+                HttpStatus.OK
+        );
+    }
+    //Solicitud de cambios para los usuarios(falta probar pero eso ya es en el servidor)
+    @GetMapping("/requestChanges")
+    public  ResponseEntity<CustomResponse<Boolean>> requestChanges(@Valid @RequestBody UserDTO userDTO,BindingResult result) throws MessagingException {
+        if (result.hasErrors())
+            return  new ResponseEntity<>(
+                    null,
+                    HttpStatus.BAD_REQUEST
+            );
+        return  new ResponseEntity<>(
+                this.userService.requestChanges(userDTO.getUser()),
+                HttpStatus.CREATED
         );
     }
 }

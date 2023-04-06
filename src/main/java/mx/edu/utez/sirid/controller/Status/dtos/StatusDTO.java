@@ -8,8 +8,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mx.edu.utez.sirid.model.Incidence.Incidence;
 import mx.edu.utez.sirid.model.Status.Status;
 import org.hibernate.validator.constraints.Length;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,11 +26,13 @@ public class StatusDTO {
     @NotBlank
     @Length(min=1,max=120)
     private String name;
+    private List<Incidence> incidenceList;
 
     public Status getStatus(){
         return new Status(
                 getId(),
-                getName()
+                getName(),
+                getIncidenceList()
         );
     }
 

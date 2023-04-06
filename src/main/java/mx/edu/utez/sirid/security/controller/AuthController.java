@@ -37,12 +37,20 @@ public class AuthController {
                         loginDTO.getPassword()
                 )
         );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = provider.generaToken(authentication);
         UserDetails userDetails=(UserDetails) authentication.getPrincipal();
+        System.out.println("AuthController ->"+userDetails.isEnabled());
+       /* if (!userDetails.isEnabled()){
+            return new ResponseEntity<>(
+                    new CustomResponse<>(null, true, 403, "Usuario bloqueado"),
+                    HttpStatus.OK
+            );
+        }*/
         Map<String, Object> data= new HashMap<>();
+        String token = provider.generaToken(authentication);
         data.put("token", token);
         data.put("user", userDetails);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
         return new ResponseEntity<>(
                 new CustomResponse<>(data, false, 200, "OK"),
                 HttpStatus.OK

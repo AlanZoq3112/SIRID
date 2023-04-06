@@ -12,6 +12,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.Date;
 
 
 @AllArgsConstructor
@@ -27,9 +28,9 @@ public class IncidenceDTO {
     @Length(min = 1)
     private String description;
     private Long asigned_at;
-    private LocalDate created_at=LocalDate.now();
-    private LocalDate finish_at;
-    private LocalDate last_modify=LocalDate.now();
+    private Date created_at;
+    private Date finish_at;
+    private Date last_modify;
     private Status status;
     private Classroom classroom;
     private User docente;
@@ -37,15 +38,17 @@ public class IncidenceDTO {
 
     public Incidence castToIncidence() {
         System.out.println("fecha de creacion"+this.getCreated_at());
+        System.out.println("Status de la incidencias "+status);
+        status = new Status( (long)1,"Pendiente",null);
         return new Incidence(
                 getId(),
                 getTitle(),
                 getDescription(),
-                LocalDate.now(),
+                new Date(),
                 getFinish_at(),
-                LocalDate.now(),
+                new Date(),
                 getClassroom(),
-                getStatus(),
+                status,
                 getDocente(),
                 getPersonalSoporte()
         );
@@ -67,15 +70,16 @@ public class IncidenceDTO {
     }
 
     public Incidence changePersonalSuport() {
+        status = new Status( (long)2,"Activa",null);
         return new Incidence(
                 getId(),
                 null,
                 null,
                 null,
                 null,
-                getLast_modify(),
+                new Date(),
                 null,
-                null,
+                status,
                 null,
                 getPersonalSoporte()
         );
@@ -88,12 +92,30 @@ public class IncidenceDTO {
                 null,
                 null,
                 null,
-                getLast_modify(),
+                new Date(),
                 null,
                 null,
                 null,
                 null
         );
     }
+
+    public Incidence finalizeIncident() {
+        status = new Status( (long)3,"Concluida",null);
+        return new Incidence(
+                getId(),
+                getTitle(),
+                getDescription(),
+                getCreated_at(),
+                new Date(),
+                new Date(),
+                getClassroom(),
+                status,
+                getDocente(),
+                getPersonalSoporte()
+        );
+    }
+
+
 
 }

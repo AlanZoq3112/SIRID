@@ -12,6 +12,7 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Table(name = "incidences")
@@ -31,13 +32,13 @@ public class Incidence {
     private String description;
 
     @Column( nullable = false)
-    private LocalDate created_at;
+    private Date created_at;
 
     @Column(nullable = false)
-    private LocalDate finish_at;
+    private Date finish_at;
 
     @Column( nullable = false )
-    private LocalDate last_modify;
+    private Date last_modify;
 
     @ManyToOne
     @JoinColumn(name = "id_classroom", nullable = false, referencedColumnName = "id")

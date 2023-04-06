@@ -6,10 +6,12 @@ import mx.edu.utez.sirid.model.Status.Status;
 import mx.edu.utez.sirid.model.User.IUserRepository;
 import mx.edu.utez.sirid.model.User.User;
 import mx.edu.utez.sirid.utils.inserts.CustomResponse;
+import mx.edu.utez.sirid.utils.messages.IncidenceMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.MessagingException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -86,6 +88,32 @@ public class IncidenceService {
         );
     }
 
+    //Cambiar personal de soporte
+    @Transactional(rollbackFor = {SQLException.class})
+    public CustomResponse<Integer> changePersonalSupport(Incidence incidence) throws MessagingException {
+        if (!this.repository.existsById(incidence.getId()))
+            return new CustomResponse<>(null,true,400,"Esta incidencia no existe");
+
+        IncidenceMessage message = new IncidenceMessage();
+        message.newAssignment(incidence.getPersonalSoporte(),incidence);
+        return  new CustomResponse<>(
+                this.repository.changePersonalSupport(incidence.getPersonalSoporte(), incidence.getId()),
+                false,200,"Personal de soporte modificado con exito"
+                );
+    }
+
+    @Transactional(rollbackFor = {SQLException.class})
+    public  CustomResponse<Integer> finalizeIncident(Incidence incidence){
+        if(!this.repository.existsById(incidence.getId()))
+            return new CustomResponse<>(
+                    null,true,400,"Esta incidencia no existe"
+            );
+        System.out.println("Incidence 111 ->"+incidence.getFinish_at());
+        return  new CustomResponse<>(
+                this.repository.updateStatusById(incidence.getStatus(), incidence.getId()),
+                false,200,"Se finalizo la incicencia"+ incidence.getId()+": "+incidence.getTitle()
+        );
+    }
     //Historial de incidencias
     @Transactional(readOnly = true)
     public  CustomResponse<List<Incidence>> GetAllMyIncidences(User user){
