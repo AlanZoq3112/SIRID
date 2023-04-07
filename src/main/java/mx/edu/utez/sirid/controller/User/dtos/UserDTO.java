@@ -6,6 +6,7 @@ import lombok.Setter;
 import mx.edu.utez.sirid.model.AcademicDivision.AcademicDivision;
 import mx.edu.utez.sirid.model.Incidence.Incidence;
 import mx.edu.utez.sirid.model.Role.Role;
+import mx.edu.utez.sirid.model.User.TokenMovil;
 import mx.edu.utez.sirid.model.User.User;
 import org.hibernate.validator.constraints.Length;
 
@@ -40,6 +41,7 @@ public class UserDTO {
     private Role role;
     private List<Incidence> incidenceListTeacher;
     private  List<Incidence> incidenceListSupport;
+    private List<TokenMovil> tokenMovilList;
     public User getUser(){
         return new User(
                 getId(),
@@ -53,7 +55,8 @@ public class UserDTO {
                 getRole(),
                 getAcademicDivision(),
                 getIncidenceListTeacher(),
-                getIncidenceListSupport()
+                getIncidenceListSupport(),
+                getTokenMovilList()
 
         );
     }

@@ -121,6 +121,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public User getUserByemail(String email){
+        System.out.println(email);
         return repository.findByCorreoElectronico(email);
     }
 
@@ -136,7 +137,7 @@ public class UserService {
 
         return new CustomResponse<>(
                 this.repository.changePassword(
-                        user.getContrasena(), user.getId()),
+                        user.getContrasena(), user.getCorreoElectronico()),
                 false, 200,
                 "Contraseña modificada correctamente"
         );
@@ -160,9 +161,9 @@ public class UserService {
         messageHelper.setSubject("Se ha cambiado tu contraseña");
         messageHelper.setText(message.recoverAccount(user1.getName(), newPassword),true);
         this.javaMailSender.send(mimeMessage);
-
+        System.out.println("newPassword" + newPassword);
         newPassword= encoder.encode(newPassword);
-
+        System.out.println("newPassword" + newPassword);
         return new CustomResponse<>(
                 this.repository.recoverPassword(
                         newPassword, user.getCorreoElectronico()),

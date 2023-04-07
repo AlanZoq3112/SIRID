@@ -5,14 +5,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import mx.edu.utez.sirid.model.Classroom.Classroom;
 import mx.edu.utez.sirid.model.Incidence.Incidence;
+import mx.edu.utez.sirid.model.Incidence.Resources;
 import mx.edu.utez.sirid.model.Status.Status;
 import mx.edu.utez.sirid.model.User.User;
 import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 
 @AllArgsConstructor
@@ -35,6 +35,7 @@ public class IncidenceDTO {
     private Classroom classroom;
     private User docente;
     private User personalSoporte;
+    private List<Resources> resources;
 
     public Incidence castToIncidence() {
         System.out.println("fecha de creacion"+this.getCreated_at());
@@ -50,7 +51,8 @@ public class IncidenceDTO {
                 getClassroom(),
                 status,
                 getDocente(),
-                getPersonalSoporte()
+                getPersonalSoporte(),
+                getResources()
         );
     }
 
@@ -65,6 +67,7 @@ public class IncidenceDTO {
                 null,
                 getStatus(),
                 null,
+                null,
                 null
         );
     }
@@ -73,15 +76,16 @@ public class IncidenceDTO {
         status = new Status( (long)2,"Activa",null);
         return new Incidence(
                 getId(),
-                null,
-                null,
-                null,
+                getTitle(),
+                getDescription(),
+                getCreated_at(),
                 null,
                 new Date(),
                 null,
                 status,
-                null,
-                getPersonalSoporte()
+                getDocente(),
+                getPersonalSoporte(),
+                null
         );
     }
 
@@ -97,6 +101,7 @@ public class IncidenceDTO {
                 null,
                 null,
                 null
+                ,null
         );
     }
 
@@ -112,7 +117,8 @@ public class IncidenceDTO {
                 getClassroom(),
                 status,
                 getDocente(),
-                getPersonalSoporte()
+                getPersonalSoporte(),
+                null
         );
     }
 

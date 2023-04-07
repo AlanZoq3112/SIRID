@@ -1,5 +1,6 @@
 package mx.edu.utez.sirid.model.Incidence;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,12 +8,10 @@ import lombok.Setter;
 import mx.edu.utez.sirid.model.Classroom.Classroom;
 import mx.edu.utez.sirid.model.Status.Status;
 import mx.edu.utez.sirid.model.User.User;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "incidences")
@@ -55,5 +54,11 @@ public class Incidence {
     @ManyToOne
     @JoinColumn(name = "asigned_at", referencedColumnName = "id")
     private User personalSoporte;
+
+    @OneToMany(mappedBy = "incidence")
+    private List<Resources> resourcesList;
+
+
+
 
 }

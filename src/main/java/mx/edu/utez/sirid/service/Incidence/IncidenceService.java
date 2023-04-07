@@ -7,11 +7,15 @@ import mx.edu.utez.sirid.model.User.IUserRepository;
 import mx.edu.utez.sirid.model.User.User;
 import mx.edu.utez.sirid.utils.inserts.CustomResponse;
 import mx.edu.utez.sirid.utils.messages.IncidenceMessage;
+import mx.edu.utez.sirid.utils.messages.UserMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -20,6 +24,9 @@ import java.util.List;
 public class IncidenceService {
     @Autowired
     private IIncidenceRepository repository;
+
+    @Autowired
+    private JavaMailSender javaMailSender;
 
     @Autowired
     private IUserRepository userRepository;
@@ -94,8 +101,18 @@ public class IncidenceService {
         if (!this.repository.existsById(incidence.getId()))
             return new CustomResponse<>(null,true,400,"Esta incidencia no existe");
 
-        IncidenceMessage message = new IncidenceMessage();
-        message.newAssignment(incidence.getPersonalSoporte(),incidence);
+        MimeMessage mimeMessage=javaMailSender.createMimeMessage();
+        MimeMessageHelper messageHelper= new MimeMessageHelper(mimeMessage, true, "UTF-8");
+        messageHelper.setTo(incidence.getPersonalSoporte().getCorreoElectronico());
+        messageHelper.setFrom("soportetecnicoutezmorelos@gmail.com");
+        messageHelper.setSubject("Se te ha asignado la incidencia "+incidence.getId()+":"+incidence.getTitle());
+        IncidenceMessage message1 = new IncidenceMessage();
+        String email= message1.newAssignment(incidence.getPersonalSoporte(),incidence);
+        messageHelper.setText(email,true);
+        this.javaMailSender.send(mimeMessage);
+        System.out.println(incidence.getId()+"]]]]"+incidence.getPersonalSoporte().getId());
+
+
         return  new CustomResponse<>(
                 this.repository.changePersonalSupport(incidence.getPersonalSoporte(), incidence.getId()),
                 false,200,"Personal de soporte modificado con exito"
