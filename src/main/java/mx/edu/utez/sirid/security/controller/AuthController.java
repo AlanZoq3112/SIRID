@@ -28,9 +28,10 @@ public class AuthController {
     @Autowired
     private JwtProvider provider;
 
-    @PostMapping("login")
+    @PostMapping("/login")
     public ResponseEntity<CustomResponse<Map<String, Object>>> login(
             @Valid @RequestBody LoginDTO loginDTO) {
+        System.out.println(loginDTO.getEmail()+" "+loginDTO.getPassword());
         Authentication authentication = manager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginDTO.getEmail(),
@@ -39,6 +40,7 @@ public class AuthController {
         );
         UserDetails userDetails=(UserDetails) authentication.getPrincipal();
         System.out.println("AuthController ->"+userDetails.isEnabled());
+        System.out.println("AuthController ->"+userDetails.getUsername()+" "+userDetails.getPassword());
        /* if (!userDetails.isEnabled()){
             return new ResponseEntity<>(
                     new CustomResponse<>(null, true, 403, "Usuario bloqueado"),

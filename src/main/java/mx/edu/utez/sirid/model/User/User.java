@@ -63,4 +63,12 @@ public class User {
     @JsonIgnore
     private List<Incidence>incidenceListSupport;
 
+    @OneToMany(mappedBy = "user")
+    private List<TokenMovil> tokenMovilList;
+
+
+
+
+
+
 }

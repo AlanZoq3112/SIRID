@@ -62,7 +62,7 @@ public class UserAuth implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return user.getStatus();
+        return true;
     }
 
     @Override
@@ -72,7 +72,7 @@ public class UserAuth implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return user.getStatus();
+        return true;
     }
 
 }

@@ -19,17 +19,13 @@ public class IncidenceMessage {
     private JavaMailSender javaMailSender;
 
     String email;
-    MimeMessage mimeMessage=javaMailSender.createMimeMessage();
+
 
     UserMessage message = new UserMessage();
     MimeMessageHelper messageHelper;
 
-    public void newAssignment(User personalSupport,Incidence incidence) throws MessagingException {
-        messageHelper= new MimeMessageHelper(mimeMessage, true, "UTF-8");
-        UserMessage message = new UserMessage();
-        messageHelper.setTo(personalSupport.getCorreoElectronico());
-        messageHelper.setFrom("soportetecnicoutezmorelos@gmail.com");
-        messageHelper.setSubject("Se te ha asignado la incidencia "+incidence.getId()+":"+incidence.getTitle());
+    public String newAssignment(User personalSupport,Incidence incidence) throws MessagingException {
+
         email="<!DOCTYPE html>\n" +
                 "\n" +
                 "<html lang=\"en\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:v=\"urn:schemas-microsoft-com:vml\">\n" +
@@ -342,12 +338,12 @@ public class IncidenceMessage {
                 "</body>\n" +
                 "\n" +
                 "</html>";
-        messageHelper.setText(email,true);
-        this.javaMailSender.send(mimeMessage);
+        return  email;
 
     }
 
     public void newActivity(User personalSupport,Incidence incidence) throws MessagingException {
+        MimeMessage mimeMessage=javaMailSender.createMimeMessage();
         messageHelper= new MimeMessageHelper(mimeMessage, true, "UTF-8");
         UserMessage message = new UserMessage();
         messageHelper.setTo(personalSupport.getCorreoElectronico());
@@ -670,12 +666,7 @@ public class IncidenceMessage {
 
     }
 
-    public void finalizeIncident(User personalSupport,Incidence incidence) throws MessagingException {
-        messageHelper= new MimeMessageHelper(mimeMessage, true, "UTF-8");
-        UserMessage message = new UserMessage();
-        messageHelper.setTo(personalSupport.getCorreoElectronico());
-        messageHelper.setFrom("soportetecnicoutezmorelos@gmail.com");
-        messageHelper.setSubject("Se te ha asignado la incidencia "+incidence.getId()+":"+incidence.getTitle());
+    public String  finalizeIncident(User personalSupport,Incidence incidence) throws MessagingException {
         email="<!DOCTYPE html>\n" +
                 "\n" +
                 "<html lang=\"en\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:v=\"urn:schemas-microsoft-com:vml\">\n" +
@@ -988,8 +979,7 @@ public class IncidenceMessage {
                 "</body>\n" +
                 "\n" +
                 "</html>";
-        messageHelper.setText(email,true);
-        this.javaMailSender.send(mimeMessage);
+        return  email;
 
     }
 }

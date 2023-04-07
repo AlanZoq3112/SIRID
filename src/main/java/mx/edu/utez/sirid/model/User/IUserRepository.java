@@ -40,12 +40,12 @@ public interface IUserRepository extends JpaRepository<User, Long> {
 
     //query para cambiar la contraseña
     @Modifying
-    @Query(value = "UPDATE users set contrasena =:newContrasena,change_password=1 WHERE id =:id",
+    @Query(value = "UPDATE users set contrasena =:newContrasena,change_password=1  where  correo_electronico=:id",
             nativeQuery = true
     )
     Integer changePassword(
             @Param("newContrasena") String newContrasena,
-            @Param("id") Long id
+            @Param("id") String  id
     );
 
 
@@ -56,7 +56,7 @@ public interface IUserRepository extends JpaRepository<User, Long> {
 
     //Query para ver a todos el personal de soporte
     @Modifying
-    @Query(value = "SELECT * from USERS WHERE role_id =2  and status =true", nativeQuery = true
+    @Query(value = "SELECT * from users WHERE role_id =2  and status =true", nativeQuery = true
     ) List<User> lookAllSupportTeam();
 
 

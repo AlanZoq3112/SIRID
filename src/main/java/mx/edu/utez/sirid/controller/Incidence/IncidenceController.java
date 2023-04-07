@@ -83,7 +83,7 @@ public class IncidenceController {
             );
 
             return  new ResponseEntity<>(
-                    this.service.changePersonalSupport(incidenceDTO.castToIncidence()),HttpStatus.OK
+                    this.service.changePersonalSupport(incidenceDTO.changePersonalSuport()),HttpStatus.OK
             );
 
     }
