@@ -28,6 +28,14 @@ public class ClassroomController {
         );
     }
 
+    @GetMapping("/select")
+    public ResponseEntity<CustomResponse<List<Classroom>>> select() {
+        return new ResponseEntity<>(
+                this.service.selectClassroms(),
+                HttpStatus.OK
+        );
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<CustomResponse<Classroom>> getOne(@PathVariable("id") Long id) {
         return new ResponseEntity<>(

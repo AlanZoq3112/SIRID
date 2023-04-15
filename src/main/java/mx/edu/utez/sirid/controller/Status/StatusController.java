@@ -50,5 +50,13 @@ public class StatusController {
         );
     }
 
+    @GetMapping("/select")
+    public ResponseEntity<CustomResponse<List<Status>>> select() {
+        return new ResponseEntity<>(
+                this.service.selectstatus(),
+                HttpStatus.OK
+        );
+    }
+
 
 }

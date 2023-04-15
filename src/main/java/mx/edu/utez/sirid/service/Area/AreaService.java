@@ -51,6 +51,14 @@ public class AreaService {
         );
     }
 
+    @Transactional(readOnly = true)
+    public CustomResponse<List<Area>> selectAreas(){
+        return new CustomResponse<>(
+                this.repository.selectAreas(),
+                false,200,"OK"
+        );
+    }
+
 
 
 

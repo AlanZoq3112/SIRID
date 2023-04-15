@@ -90,7 +90,7 @@ public class IncidenceController {
 
     //finaliza la incidencia
     @PatchMapping("/finalizeIncident")
-    public ResponseEntity<CustomResponse<Integer>> finalizeIncident(@Valid @RequestBody IncidenceDTO incidenceDTO,BindingResult result){
+    public ResponseEntity<CustomResponse<Integer>> finalizeIncident(@Valid @RequestBody IncidenceDTO incidenceDTO,BindingResult result) throws MessagingException {
         if (result.hasErrors())return   new ResponseEntity<>(
                 null,HttpStatus.BAD_REQUEST
         );

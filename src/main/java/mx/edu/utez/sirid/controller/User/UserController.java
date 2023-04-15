@@ -158,4 +158,14 @@ public class UserController {
                 HttpStatus.CREATED
         );
     }
+
+    @GetMapping("/select")
+    public ResponseEntity<CustomResponse<List<User>>> selectPersonalSupport(){
+        return new ResponseEntity<>(
+                this.userService.selectPersonalSupport(),
+                HttpStatus.OK
+        );
+    }
+
+
 }

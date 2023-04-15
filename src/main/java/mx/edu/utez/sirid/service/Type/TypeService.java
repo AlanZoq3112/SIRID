@@ -49,4 +49,14 @@ public class TypeService {
                 false, 200,
                 "Tipo de usuario  registrado correctamente");
     }
+
+    @Transactional(readOnly = true)
+    public CustomResponse<List<Type>> selectType(){
+        return  new CustomResponse<>(
+                this.repository.selectTypes(),
+                false,
+                200,
+                "ok"
+        );
+    }
 }

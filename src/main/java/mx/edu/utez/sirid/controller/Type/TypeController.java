@@ -52,4 +52,11 @@ public class TypeController {
         );
     }
 
+    @GetMapping("/select")
+    public  ResponseEntity<CustomResponse<List<Type>>> select(){
+        return new ResponseEntity<>(
+                this.service.selectType(),
+                HttpStatus.OK);
+    }
+
 }

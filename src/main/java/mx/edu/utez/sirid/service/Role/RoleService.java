@@ -52,4 +52,14 @@ public class RoleService {
                 "Role registered successfully"
         );
     }
+
+    @Transactional(readOnly = true)
+    public CustomResponse<List<Role>> selectRole(){
+        return new CustomResponse<>(
+                this.repository.selectRoles(),
+                false,
+                200,
+                "Ok"
+        );
+    }
 }

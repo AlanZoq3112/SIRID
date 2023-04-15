@@ -13,6 +13,11 @@ public interface IAreaRepository extends JpaRepository<Area,Long> {
 
     boolean existsByName(String name);
     List<Area> findAll();
+    @Query(
+            value = "select * from areas ORDER BY name ASC;",
+            nativeQuery = true
+    )
+    List<Area> selectAreas();
 
 
 }
