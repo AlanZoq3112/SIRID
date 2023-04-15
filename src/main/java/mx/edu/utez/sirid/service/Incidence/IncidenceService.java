@@ -128,12 +128,31 @@ public class IncidenceService {
     }
 
     @Transactional(rollbackFor = {SQLException.class})
-    public  CustomResponse<Integer> finalizeIncident(Incidence incidence){
+    public  CustomResponse<Integer> finalizeIncident(Incidence incidence) throws MessagingException {
         if(!this.repository.existsById(incidence.getId()))
             return new CustomResponse<>(
                     null,true,400,"Esta incidencia no existe"
             );
-        System.out.println("Incidence 111 ->"+incidence.getFinish_at());
+        Incidence description = repository.findIncidence(incidence.getId());
+        MimeMessage mimeMessage=javaMailSender.createMimeMessage();
+        MimeMessageHelper messageHelper= new MimeMessageHelper(mimeMessage, true, "UTF-8");
+        messageHelper.setTo(description.getDocente().getCorreoElectronico());
+        messageHelper.setFrom("soportetecnicoutezmorelos@gmail.com");
+        messageHelper.setSubject("Se ha dado por concluida la incidencia:"+incidence.getTitle());
+        IncidenceMessage message1 = new IncidenceMessage();
+        String email= message1.finalizeIncident(description.getDocente(),description);
+        messageHelper.setText(email,true);
+        this.javaMailSender.send(mimeMessage);
+
+        MimeMessage mimeMessage2=javaMailSender.createMimeMessage();
+        MimeMessageHelper messageHelper2= new MimeMessageHelper(mimeMessage2, true, "UTF-8");
+        messageHelper2.setTo(description.getPersonalSoporte().getCorreoElectronico());
+        messageHelper2.setFrom("soportetecnicoutezmorelos@gmail.com");
+        messageHelper2.setSubject("Se ha dado por concluida la incidencia:"+incidence.getTitle());
+        IncidenceMessage message2 = new IncidenceMessage();
+        String email2= message2.finalizeIncident(description.getPersonalSoporte(),description);
+        messageHelper2.setText(email2,true);
+        this.javaMailSender.send(mimeMessage2);
         return  new CustomResponse<>(
                 this.repository.updateStatusById(incidence.getStatus(), incidence.getId()),
                 false,200,"Se finalizo la incicencia: "+incidence.getTitle()

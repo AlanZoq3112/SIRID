@@ -819,7 +819,7 @@ public class IncidenceMessage {
                 "                          style=\"width:100%;text-align:center;padding-top:25px;padding-right:10px;padding-bottom:10px;padding-left:10px;\">\n" +
                 "                        <h2\n" +
                 "                                style=\"margin: 0; color: #636365; font-size: 30px; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; line-height: 120%; text-align: left; direction: ltr; font-weight: 700; letter-spacing: normal; margin-top: 0; margin-bottom: 0;\">\n" +
-                "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"tinyMce-placeholder\">¡Hola! "+personalSupport.getName()+" se te ha reasignado la incidencia "+incidence.getId()+": "+incidence.getTitle()+" </span></h2>\n" +
+                "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"tinyMce-placeholder\">¡Hola! "+personalSupport.getName()+" La incidencia : "+incidence.getTitle()+" ha sido finalizada </span></h2>\n" +
                 "                      </td>\n" +
                 "                    </tr>\n" +
                 "                  </table>\n" +
@@ -869,12 +869,6 @@ public class IncidenceMessage {
                 "                         style=\"mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;\"\n" +
                 "                         width=\"100%\">\n" +
                 "                    <tr>\n" +
-                "                      <td class=\"pad\">\n" +
-                "                        <div\n" +
-                "                                style=\"color:#101112;font-size:16px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:400;line-height:120%;text-align:left;direction:ltr;letter-spacing:0px;mso-line-height-alt:19.2px;\">\n" +
-                "                          <p style=\"margin: 0;\"><strong>Reasignacion de incidencia</strong></p>\n" +
-                "                        </div>\n" +
-                "                      </td>\n" +
                 "                    </tr>\n" +
                 "                  </table>\n" +
                 "                  <table border=\"0\" cellpadding=\"10\" cellspacing=\"0\"\n" +
@@ -885,8 +879,7 @@ public class IncidenceMessage {
                 "                      <td class=\"pad\">\n" +
                 "                        <div\n" +
                 "                                style=\"color:#101112;font-size:16px;font-family:Arial, Helvetica Neue, Helvetica, sans-serif;font-weight:400;line-height:120%;text-align:left;direction:ltr;letter-spacing:0px;mso-line-height-alt:19.2px;\">\n" +
-                "                          <p style=\"margin: 0;\"> <strong>Uno d tus compañeros te ha asignado la incidencia"+incidence.getId()+":"+incidence.getTitle()+"</strong><br> " +
-                "                               Estos son los detalles de la incidencia"+incidence.getDescription()+"    </p>\n" +
+                "                          <p style=\"margin: 0;\"> <strong>Se ha finalizado la incidencia "+incidence.getTitle()+"</strong><br> </p>\n" +
                 "                        </div>\n" +
                 "                      </td>\n" +
                 "                    </tr>\n" +
