@@ -43,10 +43,10 @@ public interface IIncidenceRepository extends JpaRepository<Incidence, Long> {
     //Cambio del personal de soporte
     @Modifying
     @Query(
-            value = "Update incidences set asigned_at=:support where id=:id;",nativeQuery = true
+            value = "Update incidences set asigned_at =:support where id =:idIncidence",nativeQuery = true
     )
-    Integer changePersonalSupport(@Param("support") User support,
-                                  @Param("id") Long id);
+    Integer changePersonalSupport(@Param("support") Long idSuport, @Param("idIncidence") Long idIncidence);
+
 
 
 

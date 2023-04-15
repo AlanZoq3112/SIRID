@@ -110,11 +110,9 @@ public class IncidenceService {
         String email= message1.newAssignment(incidence.getPersonalSoporte(),incidence);
         messageHelper.setText(email,true);
         this.javaMailSender.send(mimeMessage);
-        System.out.println(incidence.getId()+"]]]]"+incidence.getPersonalSoporte().getId());
-
 
         return  new CustomResponse<>(
-                this.repository.changePersonalSupport(incidence.getPersonalSoporte(), incidence.getId()),
+                this.repository.changePersonalSupport(incidence.getPersonalSoporte().getId(), incidence.getId()),
                 false,200,"Personal de soporte modificado con exito"
                 );
     }
