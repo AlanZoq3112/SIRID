@@ -18,6 +18,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -101,14 +102,23 @@ public class IncidenceService {
         if (!this.repository.existsById(incidence.getId()))
             return new CustomResponse<>(null,true,400,"Esta incidencia no existe");
 
+        Incidence Description = repository.findIncidence(incidence.getId());
         MimeMessage mimeMessage=javaMailSender.createMimeMessage();
         MimeMessageHelper messageHelper= new MimeMessageHelper(mimeMessage, true, "UTF-8");
         messageHelper.setTo(incidence.getPersonalSoporte().getCorreoElectronico());
         messageHelper.setFrom("soportetecnicoutezmorelos@gmail.com");
         messageHelper.setSubject("Se te ha asignado la incidencia "+incidence.getId()+":"+incidence.getTitle());
         IncidenceMessage message1 = new IncidenceMessage();
-        String email= message1.newAssignment(incidence.getPersonalSoporte(),incidence);
+        String email= message1.newAssignment(incidence.getPersonalSoporte(),Description);
         messageHelper.setText(email,true);
+        this.javaMailSender.send(mimeMessage);
+
+        messageHelper.setTo(Description.getDocente().getCorreoElectronico());
+        messageHelper.setFrom("soportetecnicoutezmorelos@gmail.com");
+        messageHelper.setSubject("Nueva actividad en la incidencia "+incidence.getId()+":"+incidence.getTitle());
+        IncidenceMessage message2 = new IncidenceMessage();
+        String email2= message2.newActivity(Description.getDocente(),Description);
+        messageHelper.setText(email2,true);
         this.javaMailSender.send(mimeMessage);
 
         return  new CustomResponse<>(
@@ -126,7 +136,7 @@ public class IncidenceService {
         System.out.println("Incidence 111 ->"+incidence.getFinish_at());
         return  new CustomResponse<>(
                 this.repository.updateStatusById(incidence.getStatus(), incidence.getId()),
-                false,200,"Se finalizo la incicencia"+ incidence.getId()+": "+incidence.getTitle()
+                false,200,"Se finalizo la incicencia: "+incidence.getTitle()
         );
     }
     //Historial de incidencias

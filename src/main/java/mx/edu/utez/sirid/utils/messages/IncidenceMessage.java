@@ -184,7 +184,7 @@ public class IncidenceMessage {
                 "                          style=\"width:100%;text-align:center;padding-top:25px;padding-right:10px;padding-bottom:10px;padding-left:10px;\">\n" +
                 "                        <h2\n" +
                 "                                style=\"margin: 0; color: #636365; font-size: 30px; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; line-height: 120%; text-align: left; direction: ltr; font-weight: 700; letter-spacing: normal; margin-top: 0; margin-bottom: 0;\">\n" +
-                "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"tinyMce-placeholder\">¡Hola! "+personalSupport.getName()+" se te ha reasignado la incidencia "+incidence.getId()+": "+incidence.getTitle()+" </span></h2>\n" +
+                "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"tinyMce-placeholder\">¡Hola! se te ha asignado la incidencia : "+incidence.getTitle()+" </span></h2>\n" +
                 "                      </td>\n" +
                 "                    </tr>\n" +
                 "                  </table>\n" +
@@ -237,7 +237,7 @@ public class IncidenceMessage {
                 "                      <td class=\"pad\">\n" +
                 "                        <div\n" +
                 "                                style=\"color:#101112;font-size:16px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:400;line-height:120%;text-align:left;direction:ltr;letter-spacing:0px;mso-line-height-alt:19.2px;\">\n" +
-                "                          <p style=\"margin: 0;\"><strong>Reasignacion de incidencia</strong></p>\n" +
+                "                          <p style=\"margin: 0;\"><strong>Asignacion de incidencia</strong></p>\n" +
                 "                        </div>\n" +
                 "                      </td>\n" +
                 "                    </tr>\n" +
@@ -250,8 +250,8 @@ public class IncidenceMessage {
                 "                      <td class=\"pad\">\n" +
                 "                        <div\n" +
                 "                                style=\"color:#101112;font-size:16px;font-family:Arial, Helvetica Neue, Helvetica, sans-serif;font-weight:400;line-height:120%;text-align:left;direction:ltr;letter-spacing:0px;mso-line-height-alt:19.2px;\">\n" +
-                "                          <p style=\"margin: 0;\"> <strong>Uno d tus compañeros te ha asignado la incidencia"+incidence.getId()+":"+incidence.getTitle()+"</strong><br> " +
-                "                               Estos son los detalles de la incidencia"+incidence.getDescription()+"    </p>\n" +
+                "                          <p style=\"margin: 0;\"> <strong>Se te ha asignado la incidencia:"+incidence.getTitle()+"</strong><br> " +
+                "                               Estos son los detalles de la incidencia:<br><strong>"+incidence.getDescription()+"</strong></p>\n" +
                 "                        </div>\n" +
                 "                      </td>\n" +
                 "                    </tr>\n" +
@@ -342,13 +342,8 @@ public class IncidenceMessage {
 
     }
 
-    public void newActivity(User personalSupport,Incidence incidence) throws MessagingException {
-        MimeMessage mimeMessage=javaMailSender.createMimeMessage();
-        messageHelper= new MimeMessageHelper(mimeMessage, true, "UTF-8");
-        UserMessage message = new UserMessage();
-        messageHelper.setTo(personalSupport.getCorreoElectronico());
-        messageHelper.setFrom("soportetecnicoutezmorelos@gmail.com");
-        messageHelper.setSubject("Se te ha asignado la incidencia "+incidence.getId()+":"+incidence.getTitle());
+    //Esta ya esta listo
+    public String newActivity(User personalSupport,Incidence incidence) throws MessagingException {
         email="<!DOCTYPE html>\n" +
                 "\n" +
                 "<html lang=\"en\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:v=\"urn:schemas-microsoft-com:vml\">\n" +
@@ -507,7 +502,7 @@ public class IncidenceMessage {
                 "                          style=\"width:100%;text-align:center;padding-top:25px;padding-right:10px;padding-bottom:10px;padding-left:10px;\">\n" +
                 "                        <h2\n" +
                 "                                style=\"margin: 0; color: #636365; font-size: 30px; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; line-height: 120%; text-align: left; direction: ltr; font-weight: 700; letter-spacing: normal; margin-top: 0; margin-bottom: 0;\">\n" +
-                "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"tinyMce-placeholder\">¡Hola! "+personalSupport.getName()+" se te ha reasignado la incidencia "+incidence.getId()+": "+incidence.getTitle()+" </span></h2>\n" +
+                "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"tinyMce-placeholder\">¡Hola! "+personalSupport.getName()+" Tienes nueva actividad en tu incidencia: "+incidence.getTitle()+" </span></h2>\n" +
                 "                      </td>\n" +
                 "                    </tr>\n" +
                 "                  </table>\n" +
@@ -573,8 +568,8 @@ public class IncidenceMessage {
                 "                      <td class=\"pad\">\n" +
                 "                        <div\n" +
                 "                                style=\"color:#101112;font-size:16px;font-family:Arial, Helvetica Neue, Helvetica, sans-serif;font-weight:400;line-height:120%;text-align:left;direction:ltr;letter-spacing:0px;mso-line-height-alt:19.2px;\">\n" +
-                "                          <p style=\"margin: 0;\"> <strong>Se te a asignado la incidencia"+incidence.getId()+":"+incidence.getTitle()+"</strong><br> " +
-                "                               Estos son los detalles de la incidencia"+incidence.getDescription()+"    </p>\n" +
+                "                          <p style=\"margin: 0;\"> Ha cambiado el status de la incidencia:"+incidence.getTitle()+"<br> y ahora un personal de soporte se esta haciendo cargo de ella<br> " +
+                "                               </p>\n" +
                 "                        </div>\n" +
                 "                      </td>\n" +
                 "                    </tr>\n" +
@@ -661,8 +656,7 @@ public class IncidenceMessage {
                 "</body>\n" +
                 "\n" +
                 "</html>";
-        messageHelper.setText(email,true);
-        this.javaMailSender.send(mimeMessage);
+        return email;
 
     }
 
