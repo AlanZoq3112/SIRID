@@ -2,6 +2,7 @@ package mx.edu.utez.sirid.controller.Area;
 
 
 import mx.edu.utez.sirid.controller.Area.dtos.AreaDTO;
+import mx.edu.utez.sirid.model.AcademicDivision.AcademicDivision;
 import mx.edu.utez.sirid.model.Area.Area;
 import mx.edu.utez.sirid.service.Area.AreaService;
 import mx.edu.utez.sirid.utils.inserts.CustomResponse;
@@ -51,6 +52,14 @@ public class AreaController {
                 HttpStatus.CREATED
         );
 
+    }
+
+    @GetMapping("/select")
+    public ResponseEntity<CustomResponse<List<Area>>> select() {
+        return new ResponseEntity<>(
+                this.service.selectAreas(),
+                HttpStatus.OK
+        );
     }
 
 

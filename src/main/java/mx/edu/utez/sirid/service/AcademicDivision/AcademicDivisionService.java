@@ -27,6 +27,16 @@ public class AcademicDivisionService {
     }
 
     @Transactional(readOnly = true)
+    public CustomResponse<List<AcademicDivision>> selectAcademic() {
+        return new CustomResponse<>(
+                this.repository.selectAcademies(),
+                false,
+                200,
+                "Okey"
+        );
+    }
+
+    @Transactional(readOnly = true)
     public CustomResponse<AcademicDivision> getOne(Long id) {
         return new CustomResponse<>(
                 this.repository.findById(id).get(),

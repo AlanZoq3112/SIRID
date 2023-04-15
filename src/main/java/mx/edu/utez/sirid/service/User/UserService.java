@@ -64,8 +64,17 @@ public class UserService {
         }
 
         //genera la contraseña por default para acceder por primera vez
-        int numero = (int) (Math.random() * 25) + 1;
-        String firstPassword=(user.getName().substring(0,3)+user.getPrimerApellido().substring(0,3)+numero).toLowerCase();
+        int numero = (int) (Math.random() * 115) + 1;
+        String letters[]={"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
+        int ramdom1 = (int) (Math.random() * 51);
+        int ramdom2 = (int) (Math.random() * 51);
+        int ramdom3 = (int) (Math.random() * 51);
+        int ramdom4 = (int) (Math.random() * 51);
+        int ramdom5 = (int) (Math.random() * 51);
+        int ramdom6 = (int) (Math.random() * 51);
+        int ramdom7 = (int) (Math.random() * 51);
+        int ramdom8 = (int) (Math.random() * 51);
+        String firstPassword=letters[ramdom1]+letters[ramdom2]+letters[ramdom3]+letters[ramdom4]+letters[ramdom5]+letters[ramdom6]+letters[ramdom7]+letters[ramdom8]+numero;
         user.setContrasena(encoder.encode(firstPassword));
 
         //envio de correos electronicos
@@ -151,8 +160,17 @@ public class UserService {
                     "El usuario no existe"
             );
         User user1=this.getUserByemail(user.getCorreoElectronico());
-        int numero = (int) (Math.random() * 25) + 1;
-        String newPassword=user1.getName().substring(0,3)+user1.getPrimerApellido().substring(0,3)+numero ;
+        int numero = (int) (Math.random() * 115) + 1;
+        String letters[]={"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
+        int ramdom1 = (int) (Math.random() * 51);
+        int ramdom2 = (int) (Math.random() * 51);
+        int ramdom3 = (int) (Math.random() * 51);
+        int ramdom4 = (int) (Math.random() * 51);
+        int ramdom5 = (int) (Math.random() * 51);
+        int ramdom6 = (int) (Math.random() * 51);
+        int ramdom7 = (int) (Math.random() * 51);
+        int ramdom8 = (int) (Math.random() * 51);
+        String newPassword=letters[ramdom1]+letters[ramdom2]+letters[ramdom3]+letters[ramdom4]+letters[ramdom5]+letters[ramdom6]+letters[ramdom7]+letters[ramdom8]+numero;
         MimeMessage mimeMessage=javaMailSender.createMimeMessage();
         MimeMessageHelper messageHelper= new MimeMessageHelper(mimeMessage, true, "UTF-8");
         UserMessage message = new UserMessage();
@@ -206,6 +224,16 @@ public class UserService {
         );
 
 
+    }
+
+    @Transactional(readOnly = true)
+    public CustomResponse<List<User>> selectPersonalSupport() {
+        return new CustomResponse<>(
+                this.repository.selectPersonalSuport(),
+                false,
+                200,
+                "Ok"
+        );
     }
 
 

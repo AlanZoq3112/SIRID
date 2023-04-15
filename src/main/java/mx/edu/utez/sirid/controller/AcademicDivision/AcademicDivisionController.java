@@ -29,6 +29,14 @@ public class AcademicDivisionController {
         );
     }
 
+    @GetMapping("/select")
+    public ResponseEntity<CustomResponse<List<AcademicDivision>>> selectAcademics() {
+        return new ResponseEntity<>(
+                this.service.selectAcademic(),
+                HttpStatus.OK
+        );
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<CustomResponse<AcademicDivision>> getOne(@PathVariable("id") Long id) {
         return new ResponseEntity<>(

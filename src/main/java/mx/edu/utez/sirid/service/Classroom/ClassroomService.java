@@ -74,4 +74,12 @@ public class ClassroomService {
                 "Estatus del Aula modificado con exito"
         );
     }
+
+    @Transactional(readOnly = true)
+    public CustomResponse<List<Classroom>> selectClassroms(){
+        return new CustomResponse<>(
+                this.repository.selectClassroms(),
+                false, 200, "OK"
+        );
+    }
 }

@@ -27,6 +27,14 @@ public class RoleController {
         );
     }
 
+    @GetMapping("/select")
+    public ResponseEntity<CustomResponse<List<Role>>> select() {
+        return new ResponseEntity<>(
+                this.service.selectRole(),
+                HttpStatus.OK
+        );
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<CustomResponse<Role>> getOne(@PathVariable("id") Long id){
         return new ResponseEntity<>(

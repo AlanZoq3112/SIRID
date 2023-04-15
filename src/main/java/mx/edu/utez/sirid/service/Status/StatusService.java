@@ -1,4 +1,5 @@
 package mx.edu.utez.sirid.service.Status;
+import mx.edu.utez.sirid.model.Role.Role;
 import mx.edu.utez.sirid.model.Status.Status;
 import mx.edu.utez.sirid.model.Status.IStatusRepository;
 import mx.edu.utez.sirid.utils.inserts.CustomResponse;
@@ -48,6 +49,16 @@ public class StatusService {
                 false,
                 200,
                 "Status registered succesfully"
+        );
+    }
+
+    @Transactional(readOnly = true)
+    public CustomResponse<List<Status>> selectstatus(){
+        return new CustomResponse<>(
+                this.repository.selectstatus(),
+                false,
+                200,
+                "Ok"
         );
     }
 }

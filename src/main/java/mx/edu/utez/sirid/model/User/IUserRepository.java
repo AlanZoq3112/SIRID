@@ -59,6 +59,12 @@ public interface IUserRepository extends JpaRepository<User, Long> {
     @Query(value = "SELECT * from users WHERE role_id =2  and status =true", nativeQuery = true
     ) List<User> lookAllSupportTeam();
 
+    @Query(
+            value = "SELECT id, change_password, contrasena, correo_electronico, (CONCAT(name,\" \",primer_apellido)) AS 'name', primer_apellido, segundo_apellido, status, academic_division_id, role_id FROM users WHERE status=true AND role_id=2 ORDER BY name ASC;",
+            nativeQuery = true
+    )
+    List<User> selectPersonalSuport();
+
 
 }
 
