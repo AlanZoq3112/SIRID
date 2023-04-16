@@ -19,13 +19,16 @@ public class Resources {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false,length = 255)
-    private  String url;
-
+    private String url;
+    @Transient
+    private String filebase64;
+    private String name;
+    private String mimeType;
     @ManyToOne
-    @JoinColumn(name = "incidence_id", referencedColumnName = "id")
+    @JoinColumn(name = "incidence_id",  referencedColumnName= "id",nullable = false)
     @JsonIgnore
     private Incidence incidence;
-
 }
+
+
+

@@ -2,13 +2,21 @@ package mx.edu.utez.sirid.service.Incidence;
 
 import mx.edu.utez.sirid.model.Incidence.IIncidenceRepository;
 import mx.edu.utez.sirid.model.Incidence.Incidence;
+import mx.edu.utez.sirid.model.Incidence.Resources;
+import mx.edu.utez.sirid.model.Incidence.ResourcesRepository;
 import mx.edu.utez.sirid.model.Status.Status;
 import mx.edu.utez.sirid.model.User.IUserRepository;
 import mx.edu.utez.sirid.model.User.User;
 import mx.edu.utez.sirid.utils.inserts.CustomResponse;
 import mx.edu.utez.sirid.utils.messages.IncidenceMessage;
 import mx.edu.utez.sirid.utils.messages.UserMessage;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -16,9 +24,21 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Transactional
@@ -27,10 +47,28 @@ public class IncidenceService {
     private IIncidenceRepository repository;
 
     @Autowired
+    private ResourcesRepository resourcesRepository;
+
+    @Autowired
     private JavaMailSender javaMailSender;
 
     @Autowired
     private IUserRepository userRepository;
+
+    @Value("${spring.os}")
+    private String rootPath;
+
+    private String separator = FileSystems.getDefault().getSeparator();
+    private String BASEURL = "http://localhost:8090/api-sirid/incidence/loadfile/";
+
+    public ResponseEntity<Resource> getImage(String uid) throws IOException {
+        Path path = Paths.get(rootPath + separator + uid);
+        ByteArrayResource resource = new ByteArrayResource(
+                Files.readAllBytes(path)
+        );
+        //consulta ProductImages -> MimeType
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(resource);
+    }
 
     //recuperar todas las incidenias
     @Transactional(readOnly = true)
@@ -53,13 +91,41 @@ public class IncidenceService {
     //registrar una nueva incidencia
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<Incidence> insert(Incidence incidence) {
-        if (this.repository.existsById(incidence.getId()))
-            return new CustomResponse<>(
-                    null, true, 400,
-                    "La incidencia ya se ha registrado"
-            );
+        List<Resources> imagesList = incidence.getResourcesList();
+        incidence.setResourcesList(null);
+        Incidence  newIncidence=this.repository.save(incidence);
+        Stream<Resources> resourcesStream= imagesList.stream().map(image -> {
+            System.out.println("entra aca 88");
+            byte[] bytes = Base64.decodeBase64(image.getFilebase64());
+            System.out.println("entra aca 90");
+            String uid = UUID.randomUUID().toString();
+            System.out.println("entra aca 92");
+            System.out.println(image.getMimeType());
+            image.setIncidence(newIncidence);
+            image.setName(uid);
+            try (OutputStream stream = new FileOutputStream(
+                    rootPath + separator + uid + image.getMimeType())
+
+            ) {
+            System.out.println("entra aca 96");
+                stream.write(bytes);
+            System.out.println("entra aca 98");
+                image.setUrl(BASEURL + uid + image.getMimeType());
+            System.out.println("entra aca 100");
+            } catch (FileNotFoundException e) {
+            System.out.println("entra aca 102");
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+            System.out.println("entra aca 105");
+                throw new RuntimeException(e);
+            }
+            return  image;
+        });
+
+       List<Resources>list=resourcesRepository.saveAllAndFlush(resourcesStream.collect(Collectors.toList()));
+        newIncidence.setResourcesList(list);
         return new CustomResponse<>(
-                this.repository.saveAndFlush(incidence),
+                newIncidence,
                 false, 200,
                 "Incidencia registrada correctamente"
         );

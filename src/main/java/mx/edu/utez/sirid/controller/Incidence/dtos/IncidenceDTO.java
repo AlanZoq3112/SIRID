@@ -38,8 +38,6 @@ public class IncidenceDTO {
     private List<Resources> resources;
 
     public Incidence castToIncidence() {
-        System.out.println("fecha de creacion"+this.getCreated_at());
-        System.out.println("Status de la incidencias "+status);
         status = new Status( (long)1,"Pendiente",null);
         return new Incidence(
                 getId(),
