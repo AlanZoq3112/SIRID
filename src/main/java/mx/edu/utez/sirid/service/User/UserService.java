@@ -115,6 +115,7 @@ public class UserService {
 
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<Integer> changeStatus(User user) {
+        System.out.println("118 -> "+ user.getCorreoElectronico());
         if (!this.repository.existsByCorreoElectronico(user.getCorreoElectronico()))
             return new CustomResponse<>(
                     null, true, 400,
