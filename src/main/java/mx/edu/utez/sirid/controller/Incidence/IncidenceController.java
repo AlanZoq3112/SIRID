@@ -7,6 +7,7 @@ import mx.edu.utez.sirid.model.Incidence.Incidence;
 import mx.edu.utez.sirid.service.Incidence.IncidenceService;
 import mx.edu.utez.sirid.utils.inserts.CustomResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.parameters.P;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -31,6 +33,11 @@ public class IncidenceController {
                 this.service.getAll(),
                 HttpStatus.OK
         );
+    }
+
+    @GetMapping("/loadfile/{uid}")
+    public ResponseEntity<Resource> loadfile(@PathVariable("uid") String uid) throws IOException {
+        return this.service.getImage(uid);
     }
 
     //recuperar una incidencia en especifico

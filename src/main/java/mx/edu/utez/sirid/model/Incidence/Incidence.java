@@ -59,6 +59,4 @@ public class Incidence {
     private List<Resources> resourcesList;
 
 
-
-
 }
