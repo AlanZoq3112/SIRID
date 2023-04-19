@@ -59,7 +59,7 @@ public class IncidenceService {
     private String rootPath;
 
     private String separator = FileSystems.getDefault().getSeparator();
-    private String BASEURL = "http://localhost:8090/api-sirid/incidence/loadfile/";
+    private String BASEURL = "http://44.199.95.221:8090/api-sirid/incidence/loadfile/";
 
     public ResponseEntity<Resource> getImage(String uid) throws IOException {
         Path path = Paths.get(rootPath + separator + uid);
