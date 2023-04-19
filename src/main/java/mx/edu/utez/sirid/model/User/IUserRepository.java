@@ -20,12 +20,12 @@ public interface IUserRepository extends JpaRepository<User, Long> {
     User findByRoles(Role role);
 
     @Modifying
-    @Query(value = "UPDATE User set status =: status WHERE ID =: id",
+    @Query(value = "UPDATE users set status =:statusUser WHERE id =:idUser",
             nativeQuery = true
     )
     Integer updateUserById(
-            @Param("status") Boolean status,
-            @Param("id") Long id
+            @Param("statusUser") Boolean statusUser,
+            @Param("idUser") Long idUser
     );
 
     //query para solicitar la recuperacion de contraseña (contraseña olvidada)"
@@ -48,7 +48,6 @@ public interface IUserRepository extends JpaRepository<User, Long> {
             @Param("id") String  id
     );
 
-
    //Query para ver a todos los profesores
    @Modifying
     @Query(value = "SELECT * from users WHERE role_id =3 and status= true", nativeQuery = true
@@ -64,7 +63,5 @@ public interface IUserRepository extends JpaRepository<User, Long> {
             nativeQuery = true
     )
     List<User> selectPersonalSuport();
-
-
 }
 

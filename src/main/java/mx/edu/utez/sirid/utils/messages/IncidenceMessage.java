@@ -17,13 +17,9 @@ public class IncidenceMessage {
     private IUserRepository repository;
     @Autowired
     private JavaMailSender javaMailSender;
-
     String email;
-
-
     UserMessage message = new UserMessage();
     MimeMessageHelper messageHelper;
-
     public String newAssignment(User personalSupport,Incidence incidence) throws MessagingException {
 
         email="<!DOCTYPE html>\n" +
@@ -237,7 +233,7 @@ public class IncidenceMessage {
                 "                      <td class=\"pad\">\n" +
                 "                        <div\n" +
                 "                                style=\"color:#101112;font-size:16px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:400;line-height:120%;text-align:left;direction:ltr;letter-spacing:0px;mso-line-height-alt:19.2px;\">\n" +
-                "                          <p style=\"margin: 0;\"><strong>Asignacion de incidencia</strong></p>\n" +
+                "                          <p style=\"margin: 0;\"><strong>Asignación de incidencia</strong></p>\n" +
                 "                        </div>\n" +
                 "                      </td>\n" +
                 "                    </tr>\n" +
@@ -555,7 +551,7 @@ public class IncidenceMessage {
                 "                      <td class=\"pad\">\n" +
                 "                        <div\n" +
                 "                                style=\"color:#101112;font-size:16px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:400;line-height:120%;text-align:left;direction:ltr;letter-spacing:0px;mso-line-height-alt:19.2px;\">\n" +
-                "                          <p style=\"margin: 0;\"><strong>Asignacion de incidencia</strong></p>\n" +
+                "                          <p style=\"margin: 0;\"><strong>Asignación de incidencia</strong></p>\n" +
                 "                        </div>\n" +
                 "                      </td>\n" +
                 "                    </tr>\n" +
@@ -568,7 +564,7 @@ public class IncidenceMessage {
                 "                      <td class=\"pad\">\n" +
                 "                        <div\n" +
                 "                                style=\"color:#101112;font-size:16px;font-family:Arial, Helvetica Neue, Helvetica, sans-serif;font-weight:400;line-height:120%;text-align:left;direction:ltr;letter-spacing:0px;mso-line-height-alt:19.2px;\">\n" +
-                "                          <p style=\"margin: 0;\"> Ha cambiado el status de la incidencia:"+incidence.getTitle()+"<br> y ahora un personal de soporte se esta haciendo cargo de ella<br> " +
+                "                          <p style=\"margin: 0;\"> Ha cambiado el status de la incidencia:"+incidence.getTitle()+"<br> y ahora un personal de soporte se está haciendo cargo de ella<br> " +
                 "                               </p>\n" +
                 "                        </div>\n" +
                 "                      </td>\n" +

@@ -165,7 +165,7 @@ public class UserMessage {
                 "                        <h2\n" +
                 "                                style=\"margin: 0; color: #636365; font-size: 30px; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; line-height: 120%; text-align: left; direction: ltr; font-weight: 700; letter-spacing: normal; margin-top: 0; margin-bottom: 0;\">\n" +
                 "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"tinyMce-placeholder\">La contraseña de\n" +
-                "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tsu cuenta fue modificada con exito</span></h2>\n" +
+                "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tsu cuenta fue modificada con éxito</span></h2>\n" +
                 "                      </td>\n" +
                 "                    </tr>\n" +
                 "                  </table>\n" +
@@ -234,10 +234,7 @@ public class UserMessage {
                 "                      <td class=\"pad\">\n" +
                 "                        <div\n" +
                 "                                style=\"color:#101112;font-size:16px;font-family:Arial, Helvetica Neue, Helvetica, sans-serif;font-weight:400;line-height:120%;text-align:left;direction:ltr;letter-spacing:0px;mso-line-height-alt:19.2px;\">\n" +
-                "                          <p style=\"margin: 0;\"> Si usted no\n" +
-                "                            realizo este cambio, pedimos que se ponga en\n" +
-                "                            contacto con el equipo de soporte tecnico de la\n" +
-                "                            universidad</p>\n" +
+                "                          <p style=\"margin: 0;\"> Si usted no realizó este cambió, pedimos que se ponga en contacto con el equipo de soporte técnico de la universidad.</p>\n" +
                 "                        </div>\n" +
                 "                      </td>\n" +
                 "                    </tr>\n" +
@@ -872,8 +869,7 @@ public class UserMessage {
                 "                      <td class=\"pad\">\n" +
                 "                        <div\n" +
                 "                                style=\"color:#101112;font-size:16px;font-family:Arial, Helvetica Neue, Helvetica, sans-serif;font-weight:400;line-height:120%;text-align:left;direction:ltr;letter-spacing:0px;mso-line-height-alt:19.2px;\">\n" +
-                "                          <p style=\"margin: 0;\">Su cuenta para el sistema de reporte de incidencias ya fue activada!!,<br> Esta es la contraseña con la que podra acceder a su cuenta <strong>"+contraseña+"</strong> Se le solicitara que haga la " +
-                "cambie en cuanto acceda por primera vez </p>\n" +
+                "                          <p style=\"margin: 0;\">Su cuenta para el sistema de reporte de incidencias ya fue activada!!,<br> Está es la contraseña con la que podra acceder a su cuenta<strong>"+contraseña+"</strong> Se le solicitará que haga el cambio en cuánto acceda por primera vez. " +
                 "                        </div>\n" +
                 "                      </td>\n" +
                 "                    </tr>\n" +
