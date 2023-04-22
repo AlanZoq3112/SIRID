@@ -24,6 +24,7 @@ public class ReportsService {
     @Autowired
     private DataSource dataSource;
 
+    //listado de profesores en pdf
     @Transactional(rollbackFor = {SQLException.class})
      public ReportDTO generateTeacherListPDF(Map<String,Object> params) throws SQLException, JRException, IOException {
         String name="Listado_de_Docentes";
@@ -34,6 +35,7 @@ public class ReportsService {
         return dto;
     }
 
+    //listado de profesores en excel
     @Transactional(rollbackFor = {SQLException.class})
     public ReportDTO generateTeacherListExcel(Map<String,Object> params) throws SQLException, JRException, IOException {
         String name="Listado_de_Docentes";
@@ -44,6 +46,7 @@ public class ReportsService {
         return dto;
     }
 
+    //listado de personal de soporte en pdf
     @Transactional(rollbackFor = {SQLException.class})
     public ReportDTO generateSupportListPDF(Map<String,Object> params) throws SQLException, JRException, IOException {
         String name="Listado_Personal_Soporte";
@@ -54,6 +57,7 @@ public class ReportsService {
         return dto;
     }
 
+    //lisatdo de personal de soporte en excel
     @Transactional(rollbackFor = {SQLException.class})
     public ReportDTO generateSupportListExcel(Map<String,Object> params) throws SQLException, JRException, IOException {
         String name="Listado_Personal_Soporte";
@@ -64,6 +68,7 @@ public class ReportsService {
         return dto;
     }
 
+    //graficas en pdf (Corregir)
     @Transactional(rollbackFor = {SQLException.class})
     public ReportDTO statisticsReportPDF(Map<String,Object> params) throws SQLException, JRException, IOException {
         String name="ReporteDeEstadisticas";
@@ -74,6 +79,7 @@ public class ReportsService {
         return dto;
     }
 
+    //graficas en excel (Corregir)
     @Transactional(rollbackFor = {SQLException.class})
     public ReportDTO statisticsReportExcel(Map<String,Object> params) throws SQLException, JRException, IOException {
         String name="ReporteDeEstadisticas";

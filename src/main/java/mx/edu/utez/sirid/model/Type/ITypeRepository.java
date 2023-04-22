@@ -15,6 +15,7 @@ public interface ITypeRepository extends JpaRepository<Type, Long> {
     boolean existsByName(String name);
     List<Type> findAll();
 
+    //Tare todos los tipos de aulas ordenados alfabeticamente
     @Query(
             value = " select * from types  ORDER BY name ASC;",
             nativeQuery = true

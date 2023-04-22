@@ -23,12 +23,14 @@ public class AreaController {
     @Autowired
     private AreaService service;
 
+    //trae todos
     @GetMapping("/")
     public  ResponseEntity<CustomResponse<List<Area>>> getAll(){
     return new ResponseEntity<>(this.service.getAll(),
             HttpStatus.OK);
     }
 
+    //trae uno nuevo
     @GetMapping("/{id}")
     public ResponseEntity<CustomResponse<Area>> getOne(@PathVariable("id") Long id){
         return new ResponseEntity<>(
@@ -37,6 +39,7 @@ public class AreaController {
         );
     }
 
+    //inserta uno
     @PostMapping("/")
     public ResponseEntity<CustomResponse<Area>> insert(
             @RequestBody AreaDTO areaDTO, @Valid BindingResult result){
@@ -54,6 +57,7 @@ public class AreaController {
 
     }
 
+    //trae todos ordenados alfabeticamente
     @GetMapping("/select")
     public ResponseEntity<CustomResponse<List<Area>>> select() {
         return new ResponseEntity<>(

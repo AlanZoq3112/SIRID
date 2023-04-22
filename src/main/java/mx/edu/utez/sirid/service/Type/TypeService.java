@@ -17,7 +17,7 @@ public class TypeService {
     private ITypeRepository repository;
 
 
-
+    // trae todos
     @Transactional(readOnly = true)
     public CustomResponse<List<Type>> getAll(){
         return  new CustomResponse<>(
@@ -28,7 +28,7 @@ public class TypeService {
         );
     }
 
-
+    //trae uno
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<Type> getOne(Long id){
         return new CustomResponse<>(
@@ -37,6 +37,7 @@ public class TypeService {
         );
     }
 
+    //inserta uno
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<Type> insert(Type type) {
         if (this.repository.existsByName(type.getName()))
@@ -50,6 +51,7 @@ public class TypeService {
                 "Tipo de usuario  registrado correctamente");
     }
 
+    //trea todos en orden alfabetico
     @Transactional(readOnly = true)
     public CustomResponse<List<Type>> selectType(){
         return  new CustomResponse<>(

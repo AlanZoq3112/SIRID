@@ -15,13 +15,14 @@ import java.util.Optional;
 public interface IIncidenceRepository extends JpaRepository<Incidence, Long> {
 
     boolean existsById(Long id);
+
     @Query(
             value = "select * from incidences where id=:idIncidence",
             nativeQuery = true
     )
-   Incidence findIncidence( @Param("idIncidence") Long id);
+    Incidence findIncidence(@Param("idIncidence") Long id);
 
-    //cambio de status
+    //cambio de status de la incidencia
     @Modifying
     @Query(
             value = "UPDATE incidences SET id_status =:status ,last_modify=now(),finish_at =now() WHERE id =:id",
@@ -37,7 +38,7 @@ public interface IIncidenceRepository extends JpaRepository<Incidence, Long> {
             value = "select * from incidences where id_status=:status AND asigned_at=:support",
             nativeQuery = true
     )
-    List<Incidence> lookIncidenceSupport( @Param("status") Status status, @Param("support") User soporte);
+    List<Incidence> lookIncidenceSupport(@Param("status") Status status, @Param("support") User soporte);
 
     //ver incidencias de acuerdo a su status y el docente involucrado
     @Query(
@@ -49,17 +50,16 @@ public interface IIncidenceRepository extends JpaRepository<Incidence, Long> {
     //Cambio del personal de soporte
     @Modifying
     @Query(
-            value = "Update incidences set asigned_at =:support,id_status =2 ,last_modify=now() where id =:idIncidence",nativeQuery = true
+            value = "Update incidences set asigned_at =:support,id_status =2 ,last_modify=now() where id =:idIncidence", nativeQuery = true
     )
     Integer changePersonalSupport(@Param("support") Long idSuport, @Param("idIncidence") Long idIncidence);
 
- @Modifying
- @Query(
-         value = "Update incidences setid_status =3 ,last_modify=now(),last_modify=now() where id =:idIncidence",nativeQuery = true
- )
- Integer finaliceIncidence(@Param("idIncidence") Long idIncidence);
-
-
+    //cambia el estatus de la incidecnia a finalizado, asi como la fecha y la ultima modificacion
+    @Modifying
+    @Query(
+            value = "Update incidences setid_status =3 ,last_modify=now(),last_modify=now() where id =:idIncidence", nativeQuery = true
+    )
+    Integer finaliceIncidence(@Param("idIncidence") Long idIncidence);
 
 
 }

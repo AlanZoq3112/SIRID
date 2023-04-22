@@ -15,10 +15,12 @@ public interface IUserRepository extends JpaRepository<User, Long> {
 
     User findByCorreoElectronico(String email);
     List<User> findAll();
+
     Boolean existsById(String user);
 
     User findByRoles(Role role);
 
+    //query para cambiar el status de un usuario
     @Modifying
     @Query(value = "UPDATE users set status =:statusUser WHERE id =:idUser",
             nativeQuery = true
@@ -49,19 +51,22 @@ public interface IUserRepository extends JpaRepository<User, Long> {
     );
 
    //Query para ver a todos los profesores
-   @Modifying
     @Query(value = "SELECT * from users WHERE role_id =3 and status= true", nativeQuery = true
    ) List<User> lookAllTeachers();
 
-    //Query para ver a todos el personal de soporte
-    @Modifying
+    //Query para ver a todo el personal de soporte
     @Query(value = "SELECT * from users WHERE role_id =2  and status =true", nativeQuery = true
     ) List<User> lookAllSupportTeam();
 
+    //query que trae a todo el personal de soporte activo ordenado alfabeticamente
     @Query(
             value = "SELECT id, change_password, contrasena, correo_electronico, (CONCAT(name,\" \",primer_apellido)) AS 'name', primer_apellido, segundo_apellido, status, academic_division_id, role_id FROM users WHERE status=true AND role_id=2 ORDER BY name ASC;",
             nativeQuery = true
     )
     List<User> selectPersonalSuport();
+
+    //Query para ver a todos los profesores
+    @Query(value = "SELECT * FROM users WHERE status=true AND role_id NOT IN (1);", nativeQuery = true
+    ) List<User> lookUsers();
 }
 

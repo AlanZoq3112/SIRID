@@ -16,8 +16,9 @@ public interface RoleRepository extends JpaRepository<Role, Long> {
 
     boolean findById(long Id);
 
+    //trae todos los roles menos el de superAdmin ordenados alfabeticamente
     @Query(
-            value = "select * from roles ORDER BY name ASC;",
+            value = "select * from roles where id NOT IN (1) ORDER BY name ASC;",
             nativeQuery = true
     )
     List<Role> selectRoles();

@@ -128,7 +128,7 @@ public class UserController {
         );
     }
 
-    //Trae a todo el personal de soporte activo(User este parea los selects o listad desplegables)
+    //Trae a todo el personal de soporte activo(usar este para los selects)
     @GetMapping("/users/support")
     public  ResponseEntity<CustomResponse<List<User>>> enablePersonalSupport(){
         return  new ResponseEntity<>(
@@ -137,7 +137,7 @@ public class UserController {
         );
     }
 
-    //Trae a todos los docentes activos(User si es necesario e el los selects)
+    //Trae a todos los docentes activos
     @GetMapping("/users/teachers")
     public  ResponseEntity<CustomResponse<List<User>>> enableTeachers(){
         return  new ResponseEntity<>(
@@ -145,6 +145,7 @@ public class UserController {
                 HttpStatus.OK
         );
     }
+
     //Solicitud de cambios para los usuarios(falta probar pero eso ya es en el servidor)
     @GetMapping("/requestChanges")
     public  ResponseEntity<CustomResponse<Boolean>> requestChanges(@Valid @RequestBody UserDTO userDTO,BindingResult result) throws MessagingException {
@@ -159,6 +160,7 @@ public class UserController {
         );
     }
 
+    //hace lo mismo que el de enable personal support, no me di cuneta que lo duplique xd
     @GetMapping("/select")
     public ResponseEntity<CustomResponse<List<User>>> selectPersonalSupport(){
         return new ResponseEntity<>(

@@ -16,6 +16,7 @@ public class AcademicDivisionService {
     @Autowired
     private IacademicDivisionRepository repository;
 
+    //obtener todas divisiones academicas
     @Transactional(readOnly = true)
     public CustomResponse<List<AcademicDivision>> getAll() {
         return new CustomResponse<>(
@@ -26,6 +27,7 @@ public class AcademicDivisionService {
         );
     }
 
+    //trae todas las divisiones academicas ordenadas alfabeticamente
     @Transactional(readOnly = true)
     public CustomResponse<List<AcademicDivision>> selectAcademic() {
         return new CustomResponse<>(
@@ -36,6 +38,7 @@ public class AcademicDivisionService {
         );
     }
 
+    //trae una sola division
     @Transactional(readOnly = true)
     public CustomResponse<AcademicDivision> getOne(Long id) {
         return new CustomResponse<>(
@@ -46,6 +49,7 @@ public class AcademicDivisionService {
         );
     }
 
+    //insertya una nueva division
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<AcademicDivision> insert(AcademicDivision academicDivision) {
         if (this.repository.existsByName(academicDivision.getName()))

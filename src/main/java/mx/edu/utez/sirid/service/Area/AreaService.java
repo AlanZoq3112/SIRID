@@ -18,6 +18,7 @@ public class AreaService {
     @Autowired
     private IAreaRepository repository;
 
+    //trae todos
     @Transactional(readOnly = true)
     public CustomResponse<List<Area>> getAll(){
         return new CustomResponse<>(
@@ -26,6 +27,7 @@ public class AreaService {
         );
     }
 
+    //trae solo uno
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<Area> getOne(Long id){
         return new CustomResponse<>(
@@ -34,6 +36,7 @@ public class AreaService {
         );
     }
 
+    //inserta uno nuevo
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<Area> insert(Area area){
         if (this.repository.existsByName(area.getName())){
@@ -51,6 +54,7 @@ public class AreaService {
         );
     }
 
+    //trae todas las areas ordenadas alfabeticamente
     @Transactional(readOnly = true)
     public CustomResponse<List<Area>> selectAreas(){
         return new CustomResponse<>(

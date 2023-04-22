@@ -26,7 +26,7 @@ public class IncidenceController {
     @Autowired
     private IncidenceService service;
 
-    //recuperar todas las incidencias FUNCIONA
+    //recuperar todas las incidencias
     @GetMapping("/")
     public ResponseEntity<CustomResponse<List<Incidence>>> getAll(){
         return new ResponseEntity<>(
@@ -35,6 +35,7 @@ public class IncidenceController {
         );
     }
 
+    //trae las imagenes de la incidencia
     @GetMapping("/loadfile/{uid}")
     public ResponseEntity<Resource> loadfile(@PathVariable("uid") String uid) throws IOException {
         return this.service.getImage(uid);

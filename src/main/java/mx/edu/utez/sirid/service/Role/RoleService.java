@@ -16,6 +16,7 @@ public class RoleService {
     @Autowired
     private RoleRepository repository;
 
+    //trae todos
     @Transactional(readOnly = true)
     public CustomResponse<List<Role>> getAll(){
         return new CustomResponse<>(
@@ -26,7 +27,7 @@ public class RoleService {
         );
     }
 
-
+    //trae uno
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<Role> getOne(Long id){
         return new CustomResponse<>(
@@ -35,7 +36,7 @@ public class RoleService {
         );
     }
 
-
+    //inserta uno nuevo
     @Transactional(rollbackFor =  {SQLException.class})
     public CustomResponse<Role> insert(Role role){
         if(this.repository.existsByName(role.getName()))
@@ -53,6 +54,7 @@ public class RoleService {
         );
     }
 
+    //trae todos en orden alfabetico
     @Transactional(readOnly = true)
     public CustomResponse<List<Role>> selectRole(){
         return new CustomResponse<>(

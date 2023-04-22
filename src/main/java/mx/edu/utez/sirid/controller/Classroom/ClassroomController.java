@@ -20,6 +20,7 @@ public class ClassroomController {
     @Autowired
     private ClassroomService service;
 
+    //trae todos
     @GetMapping("/")
     public ResponseEntity<CustomResponse<List<Classroom>>> getAll() {
         return new ResponseEntity<>(
@@ -28,6 +29,7 @@ public class ClassroomController {
         );
     }
 
+    //trae todos los saolnes en orden edificio -> salon, activos ordenados alfabeticamente
     @GetMapping("/select")
     public ResponseEntity<CustomResponse<List<Classroom>>> select() {
         return new ResponseEntity<>(
@@ -36,6 +38,7 @@ public class ClassroomController {
         );
     }
 
+    //trae uno por su id
     @GetMapping("/{id}")
     public ResponseEntity<CustomResponse<Classroom>> getOne(@PathVariable("id") Long id) {
         return new ResponseEntity<>(
@@ -44,6 +47,7 @@ public class ClassroomController {
         );
     }
 
+    //guarda uno nuevo
     @PostMapping("/")
     public ResponseEntity<CustomResponse<Classroom>> insert(@Valid @RequestBody ClassroomDTO category, @Valid BindingResult result
     ) {
@@ -52,6 +56,7 @@ public class ClassroomController {
                 HttpStatus.CREATED);
     }
 
+    //actualiza uno de acuerdo a su nombre
     @PutMapping("/")
     public ResponseEntity<CustomResponse<Classroom>> update(@RequestBody ClassroomDTO classroomDTO, @Valid BindingResult result) {
         if (result.hasErrors()) {
@@ -66,6 +71,7 @@ public class ClassroomController {
         );
     }
 
+    //Cambia su estatus (Activo o inactivi)
     @PatchMapping("/")
     public ResponseEntity<CustomResponse<Integer>> enableOrDisable(
             @RequestBody ClassroomDTO classroom

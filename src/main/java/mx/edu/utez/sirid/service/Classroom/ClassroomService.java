@@ -16,6 +16,7 @@ public class ClassroomService {
     @Autowired
     private IClassroomRepository repository;
 
+    //trae todos
     @Transactional(readOnly = true)
     public CustomResponse<List<Classroom>> getAll(){
         return new CustomResponse<>(
@@ -24,6 +25,7 @@ public class ClassroomService {
         );
     }
 
+    //trae uno
     @Transactional(readOnly = true)
     public CustomResponse<Classroom> getOne(Long id){
         return new CustomResponse<>(
@@ -32,6 +34,7 @@ public class ClassroomService {
         );
     }
 
+    //inserta uno
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<Classroom> insert(Classroom classroom) {
         if (this.repository.existsByName(classroom.getName()))
@@ -46,6 +49,7 @@ public class ClassroomService {
         );
     }
 
+    //actualiza uno
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<Classroom> update(Classroom classroom) {
         if (!this.repository.existsById(classroom.getId()))
@@ -60,6 +64,7 @@ public class ClassroomService {
         );
     }
 
+    //cambia el status
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<Integer> changeStatus(Classroom classroom) {
         if (!this.repository.existsById(classroom.getId()))
@@ -75,6 +80,7 @@ public class ClassroomService {
         );
     }
 
+    //trae todos los activos ordenados alfabeticamente
     @Transactional(readOnly = true)
     public CustomResponse<List<Classroom>> selectClassroms(){
         return new CustomResponse<>(

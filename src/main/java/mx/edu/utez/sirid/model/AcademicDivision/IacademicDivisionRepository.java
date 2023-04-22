@@ -16,6 +16,7 @@ public interface IacademicDivisionRepository extends JpaRepository<AcademicDivis
     boolean existsByName(String name);
 
 
+    //Este query solo trae las Divisiones academicas ordenadas alfabeticamente
     @Query(
             value = "select * from academic_divisions ORDER BY name ASC;",
             nativeQuery = true
