@@ -95,28 +95,19 @@ public class IncidenceService {
         incidence.setResourcesList(null);
         Incidence  newIncidence=this.repository.save(incidence);
         Stream<Resources> resourcesStream= imagesList.stream().map(image -> {
-            System.out.println("entra aca 88");
             byte[] bytes = Base64.decodeBase64(image.getFilebase64());
-            System.out.println("entra aca 90");
             String uid = UUID.randomUUID().toString();
-            System.out.println("entra aca 92");
             System.out.println(image.getMimeType());
             image.setIncidence(newIncidence);
             image.setName(uid);
             try (OutputStream stream = new FileOutputStream(
                     rootPath + separator + uid + image.getMimeType())
-
             ) {
-            System.out.println("entra aca 96");
                 stream.write(bytes);
-            System.out.println("entra aca 98");
                 image.setUrl(BASEURL + uid + image.getMimeType());
-            System.out.println("entra aca 100");
             } catch (FileNotFoundException e) {
-            System.out.println("entra aca 102");
                 throw new RuntimeException(e);
             } catch (IOException e) {
-            System.out.println("entra aca 105");
                 throw new RuntimeException(e);
             }
             return  image;
@@ -193,6 +184,7 @@ public class IncidenceService {
                 );
     }
 
+    //finalizar una incidencia
     @Transactional(rollbackFor = {SQLException.class})
     public  CustomResponse<Integer> finalizeIncident(Incidence incidence) throws MessagingException {
         if(!this.repository.existsById(incidence.getId()))
@@ -224,6 +216,7 @@ public class IncidenceService {
                 false,200,"Se finalizo la incicencia: "+incidence.getTitle()
         );
     }
+
     //Historial de incidencias
     @Transactional(readOnly = true)
     public  CustomResponse<List<Incidence>> GetAllMyIncidences(User user){
@@ -250,7 +243,7 @@ public class IncidenceService {
 
     }
 
-    //ver las incidencias en las que participa el personal de soporte de acuerdo a su status
+    //ver las incidencias en las que participa el docente de acuerdo a su status
     @Transactional(readOnly = true)
     public CustomResponse<List<Incidence>> lookIncidenceDocente(Status status,User docente){
         System.out.println("incidence -> "+docente.getCorreoElectronico());

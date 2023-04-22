@@ -869,7 +869,7 @@ public class UserMessage {
                 "                      <td class=\"pad\">\n" +
                 "                        <div\n" +
                 "                                style=\"color:#101112;font-size:16px;font-family:Arial, Helvetica Neue, Helvetica, sans-serif;font-weight:400;line-height:120%;text-align:left;direction:ltr;letter-spacing:0px;mso-line-height-alt:19.2px;\">\n" +
-                "                          <p style=\"margin: 0;\">Su cuenta para el sistema de reporte de incidencias ya fue activada!!,<br> Está es la contraseña con la que podra acceder a su cuenta<strong>"+contraseña+"</strong> Se le solicitará que haga el cambio en cuánto acceda por primera vez. " +
+                "                          <p style=\"margin: 0;\">Su cuenta para el sistema de reporte de incidencias ya fue activada!!,<br> Está es la contraseña con la que podra acceder a su cuenta <strong>"+contraseña+"</strong> Se le solicitará que haga el cambio en cuánto acceda por primera vez. " +
                 "                        </div>\n" +
                 "                      </td>\n" +
                 "                    </tr>\n" +
@@ -881,7 +881,11 @@ public class UserMessage {
                 "                    <tr>\n" +
                 "                      <td class=\"pad\"\n" +
                 "                          style=\"text-align:left;padding-top:10px;padding-right:15px;padding-bottom:10px;padding-left:30px;\">\n" +
-                "                      </td>\n" +
+                "                           <td class=\"pad\"\n" +
+                "                               style=\"text-align:left;padding-top:10px;padding-right:15px;padding-bottom:10px;padding-left:30px;\">\n" +
+                "                               <a href=\"http://44.205.171.247:3000/auth\"><button type=\"button\" style=\"color:#ffffff;background-color:#009475;border-radius:4px;width:auto;border-top:1px solid transparent;font-weight:400;border-right:1px solid transparent;border-bottom:1px solid transparent;border-left:1px solid transparent;\">Ir al sistema</button></a>\n" +
+                "                           </td>\n"+
+        "                               </td>\n" +
                 "                    </tr>\n" +
                 "                  </table>\n" +
                 "                </td>\n" +
@@ -918,9 +922,6 @@ public class UserMessage {
                 "                                 style=\"mso-table-lspace: 0pt; mso-table-rspace: 0pt;\"\n" +
                 "                                 width=\"100%\">\n" +
                 "                            <tr>\n" +
-                "                              <td class=\"divider_inner\"\n" +
-                "                                  style=\"font-size: 1px; line-height: 1px; border-top: 1px solid #dddddd;\">\n" +
-                "                                <span> </span></td>\n" +
                 "                            </tr>\n" +
                 "                          </table>\n" +
                 "                        </div>\n" +
@@ -1171,7 +1172,7 @@ public class UserMessage {
                 "                      <td class=\"pad\">\n" +
                 "                        <div\n" +
                 "                                style=\"color:#101112;font-size:16px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight:400;line-height:120%;text-align:left;direction:ltr;letter-spacing:0px;mso-line-height-alt:19.2px;\">\n" +
-                "                          <p style=\"margin: 0;\"><strong>Nueva solictud de Cambios</strong></p>\n" +
+                "                          <p style=\"margin: 0;\"><strong>El usuario"+user.getName()+" "+user.getPrimerApellido()+" desea que hagas algunas modificaciones en sus datos personales</strong></p>\n" +
                 "                        </div>\n" +
                 "                      </td>\n" +
                 "                    </tr>\n" +

@@ -21,6 +21,7 @@ public class AcademicDivisionController {
     @Autowired
     private AcademicDivisionService service;
 
+    // trae todos
     @GetMapping("/")
     public ResponseEntity<CustomResponse<List<AcademicDivision>>> getAll() {
         return new ResponseEntity<>(
@@ -29,6 +30,7 @@ public class AcademicDivisionController {
         );
     }
 
+    //trae todos ordenados alfaabeticamente
     @GetMapping("/select")
     public ResponseEntity<CustomResponse<List<AcademicDivision>>> selectAcademics() {
         return new ResponseEntity<>(
@@ -37,6 +39,7 @@ public class AcademicDivisionController {
         );
     }
 
+    //trae un por su id
     @GetMapping("/{id}")
     public ResponseEntity<CustomResponse<AcademicDivision>> getOne(@PathVariable("id") Long id) {
         return new ResponseEntity<>(
@@ -45,6 +48,7 @@ public class AcademicDivisionController {
         );
     }
 
+    //guarda uno nuevo
     @PostMapping("/")
     public ResponseEntity<CustomResponse<AcademicDivision>> insert(
             @RequestBody AcademicDivisionDTO academicDivisionDTO, @Valid BindingResult result) {

@@ -19,6 +19,8 @@ import java.util.List;
 public class RoleController {
     @Autowired
     private RoleService service;
+
+    //trae todos
     @GetMapping("/")
     public ResponseEntity<CustomResponse<List<Role>>> getAll() {
         return new ResponseEntity<>(
@@ -27,6 +29,7 @@ public class RoleController {
         );
     }
 
+    //trae todos ordenados alfabeticamente
     @GetMapping("/select")
     public ResponseEntity<CustomResponse<List<Role>>> select() {
         return new ResponseEntity<>(
@@ -35,6 +38,7 @@ public class RoleController {
         );
     }
 
+    //trae solo uno
     @GetMapping("/{id}")
     public ResponseEntity<CustomResponse<Role>> getOne(@PathVariable("id") Long id){
         return new ResponseEntity<>(
@@ -43,6 +47,7 @@ public class RoleController {
         );
     }
 
+    //guarda uno nuevo
     @PostMapping("/")
     public ResponseEntity<CustomResponse<Role>> insert(
             @RequestBody RoleDTO roleDto, @Valid BindingResult result) {

@@ -48,7 +48,7 @@ public class User {
 
 
     @ManyToOne
-    @JoinColumn(name = "role_id", nullable = false, referencedColumnName = "id")
+    @JoinColumn(name = "role_id", nullable = true, referencedColumnName = "id")
     private Role roles;
 
     @ManyToOne

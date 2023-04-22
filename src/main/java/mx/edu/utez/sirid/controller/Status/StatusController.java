@@ -19,6 +19,7 @@ public class StatusController {
     @Autowired
     private StatusService service;
 
+    //trae todos
     @GetMapping("/")
     public ResponseEntity<CustomResponse<List<Status>>> getAll() {
         return new ResponseEntity<>(
@@ -27,6 +28,7 @@ public class StatusController {
         );
     }
 
+    //trae solo uno por su id
     @GetMapping("/{id}")
     public ResponseEntity<CustomResponse<Status>> getOne(@PathVariable("id") Long id) {
         return new ResponseEntity<>(
@@ -35,6 +37,7 @@ public class StatusController {
         );
     }
 
+    //guarda uno nuevo
     @PostMapping("/")
     public ResponseEntity<CustomResponse<Status>> insert(
             @RequestBody StatusDTO statusDTO, @Valid BindingResult result) {
@@ -50,6 +53,7 @@ public class StatusController {
         );
     }
 
+    //trae todos alfabeticamente
     @GetMapping("/select")
     public ResponseEntity<CustomResponse<List<Status>>> select() {
         return new ResponseEntity<>(

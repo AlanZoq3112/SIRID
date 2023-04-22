@@ -14,6 +14,7 @@ public interface IStatusRepository extends JpaRepository<Status, Long>{
     boolean existsById(Long id);
     boolean existsByName(String name);
 
+    //Trae todos los status ordenados alfabeticamente
     @Query(
             value = "select * from status ORDER BY name ASC;",
             nativeQuery = true

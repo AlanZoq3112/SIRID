@@ -15,6 +15,7 @@ public class StatusService {
     @Autowired
     private IStatusRepository repository;
 
+    //trae todos
     @Transactional(readOnly = true)
     public CustomResponse<List<Status>> getAll() {
         return new CustomResponse<>(
@@ -25,6 +26,7 @@ public class StatusService {
         );
     }
 
+    //trae uno
     @Transactional(readOnly = true)
     public CustomResponse<Status> getOne(Long id) {
         return new CustomResponse<>(
@@ -35,6 +37,7 @@ public class StatusService {
         );
     }
 
+    //inserta uno nuevo
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<Status> insert(Status status) {
         if (this.repository.existsByName(status.getName()))
@@ -52,6 +55,7 @@ public class StatusService {
         );
     }
 
+    //trae todos en orden alfabetico
     @Transactional(readOnly = true)
     public CustomResponse<List<Status>> selectstatus(){
         return new CustomResponse<>(

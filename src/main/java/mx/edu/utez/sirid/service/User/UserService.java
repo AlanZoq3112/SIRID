@@ -10,6 +10,7 @@ import mx.edu.utez.sirid.utils.messages.UserMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,6 +27,8 @@ import java.util.List;
 public class UserService {
     private final static Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
+    @Value("spring.mail.username")
+    private String mail;
     @Autowired
     private JavaMailSender javaMailSender;
     @Autowired
@@ -34,16 +37,18 @@ public class UserService {
     @Autowired
     private PasswordEncoder encoder;
 
+    //trae todos los usuarios
     @Transactional(readOnly = true)
     public CustomResponse<List<User>> getALll() {
         return new CustomResponse<>(
-                this.repository.findAll(),
+                this.repository.lookUsers(),
                 false,
                 200,
                 "Ok"
         );
     }
 
+    //trea un solo usuario
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<User> getOne(String email) {
         return new CustomResponse<>(
@@ -52,6 +57,7 @@ public class UserService {
         );
     }
 
+    //inserta un nuevo usuario
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<User> insert(User user) throws MessagingException {
         if (this.repository.existsByCorreoElectronico(user.getCorreoElectronico())) {
@@ -82,7 +88,7 @@ public class UserService {
         MimeMessageHelper messageHelper= new MimeMessageHelper(mimeMessage, true, "UTF-8");
         UserMessage message = new UserMessage();
         messageHelper.setTo(user.getCorreoElectronico());
-        messageHelper.setFrom("20213tn014@utez.edu.mx");
+        messageHelper.setFrom(mail);
         messageHelper.setSubject("Confirmación: tu cuenta ha sido creada");
         messageHelper.setText(message.newAccount(user.getName(), firstPassword),true);
         this.javaMailSender.send(mimeMessage);
@@ -95,6 +101,7 @@ public class UserService {
         );
     }
 
+    //actualiza un usuario
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<User> update(User user) {
         if (!this.repository.existsByCorreoElectronico(user.getCorreoElectronico()))
@@ -113,6 +120,7 @@ public class UserService {
         );
     }
 
+    //cambia el status de un usuario
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<Integer> changeStatus(User user) {
         System.out.println("118 -> "+ user.getCorreoElectronico());
@@ -129,12 +137,14 @@ public class UserService {
         );
     }
 
+    //trae un usuario por medio de su gmail
     @Transactional(readOnly = true)
     public User getUserByemail(String email){
         System.out.println(email);
         return repository.findByCorreoElectronico(email);
     }
 
+    //cambia la contraseña por la que el usuario establezca
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<Integer> changePassword(User user) {
         if (!this.repository.existsByCorreoElectronico(user.getCorreoElectronico()))
@@ -153,6 +163,7 @@ public class UserService {
         );
     }
 
+    //Genera una contraseña nueva que se le envia a su correo para que pueda volver a acceder a su cuenta
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<Integer> recoverPassword(User user) throws MessagingException {
         if (!this.repository.existsByCorreoElectronico(user.getCorreoElectronico()))
@@ -183,6 +194,7 @@ public class UserService {
         System.out.println("newPassword" + newPassword);
         newPassword= encoder.encode(newPassword);
         System.out.println("newPassword" + newPassword);
+
         return new CustomResponse<>(
                 this.repository.recoverPassword(
                         newPassword, user.getCorreoElectronico()),
@@ -192,6 +204,7 @@ public class UserService {
 
     }
 
+    //trae a todo el personal de soporte activo
     @Transactional(readOnly = true)
     public  CustomResponse<List<User>> enablePersonalSupport(){
         return  new CustomResponse<>(
@@ -199,12 +212,15 @@ public class UserService {
         );
     }
 
+    //trae a todos los docentes
     @Transactional(readOnly = true)
     public  CustomResponse<List<User>> enableTeachers(){
         return  new CustomResponse<>(
                 this.repository.lookAllTeachers(), false,200,"Docentes Activos"
         );
     }
+
+    //Solicitud de cambios de los usuarios (Aun no la completo)
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<Boolean> requestChanges(User user) throws MessagingException {
         Role admin= new Role((long) 1,"SuperAdmin",null);
@@ -227,6 +243,7 @@ public class UserService {
 
     }
 
+    //trae a todo el personal de soporte activo ordenado alfabeticamente
     @Transactional(readOnly = true)
     public CustomResponse<List<User>> selectPersonalSupport() {
         return new CustomResponse<>(

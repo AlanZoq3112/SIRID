@@ -24,12 +24,14 @@ public class TypeController {
     @Autowired
     private TypeService service;
 
+    //trae todos
     @GetMapping("/")
-    public  ResponseEntity<CustomResponse<List<mx.edu.utez.sirid.model.Type.Type>>> getAll(){
+    public  ResponseEntity<CustomResponse<List<Type>>> getAll(){
         return new ResponseEntity<>(
                 this.service.getAll(), HttpStatus.OK);
     }
 
+    //trae uno por su id
     @GetMapping("/{id}")
     public ResponseEntity<CustomResponse<Type>> getOne(@PathVariable("id") Long id){
         return new ResponseEntity<>(
@@ -37,6 +39,7 @@ public class TypeController {
         );
     }
 
+    //inserta uno nuevo
     @PostMapping("/")
     public ResponseEntity<CustomResponse<Type>> insert(
             @RequestBody TypeDto typeDto, @Valid BindingResult result) {
@@ -52,6 +55,7 @@ public class TypeController {
         );
     }
 
+    //trae todos ordenados alfabeticamente
     @GetMapping("/select")
     public  ResponseEntity<CustomResponse<List<Type>>> select(){
         return new ResponseEntity<>(

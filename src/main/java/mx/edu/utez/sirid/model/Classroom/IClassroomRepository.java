@@ -14,6 +14,7 @@ import java.util.List;
 @Repository
 public interface IClassroomRepository extends JpaRepository<Classroom, Long> {
 
+    //Cambia el estatus de los salones
    @Modifying
     @Query(
             value = "UPDATE classrooms SET status =:status " +
@@ -25,8 +26,9 @@ public interface IClassroomRepository extends JpaRepository<Classroom, Long> {
             @Param("id") Long id
     );
 
+   //trae los salones en orden division academica -> salon ordenados alfabeticamente
    @Query(
-          value = " select c.id,CONCAT(c.name,' ',a.name) AS 'name',c.status,c.area_id,c.type_id from classrooms c inner join areas a on c.area_id=a.id where status=true ORDER BY c.name ASC",
+          value = " select c.id,CONCAT(a.name,' ',c.name) AS 'name',c.status,c.area_id,c.type_id from classrooms c inner join areas a on c.area_id=a.id where status=true ORDER BY c.name ASC",
           nativeQuery = true
   )
    List<Classroom> selectClassroms();
