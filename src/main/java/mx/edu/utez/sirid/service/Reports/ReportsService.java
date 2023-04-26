@@ -71,6 +71,7 @@ public class ReportsService {
     //graficas en pdf (Corregir)
     @Transactional(rollbackFor = {SQLException.class})
     public ReportDTO statisticsReportPDF(Map<String,Object> params) throws SQLException, JRException, IOException {
+        System.out.println(params);
         String name="ReporteDeEstadisticas";
         String extension=".pdf";
         ByteArrayOutputStream stream= reportManager.export(name, "pdf",params, dataSource.getConnection());
