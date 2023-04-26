@@ -125,6 +125,22 @@ public class IncidenceController {
         );
     }
 
+    @PostMapping("/messageTeacher")
+    public  ResponseEntity<String> MessageTeacher(@RequestBody IncidenceDTO incidenceDTO) throws MessagingException {
+        return  new ResponseEntity<>(
+                this.service.newMessageTeacher(incidenceDTO.castToIncidence()),
+                HttpStatus.OK
+        );
+    }
+
+    @PostMapping("/messageSupport")
+    public  ResponseEntity<String> Messagesupport(@RequestBody IncidenceDTO incidenceDTO) throws MessagingException {
+        return  new ResponseEntity<>(
+                this.service.newMessageSupport(incidenceDTO.castToIncidence()),
+                HttpStatus.OK
+        );
+    }
+
 
 
 

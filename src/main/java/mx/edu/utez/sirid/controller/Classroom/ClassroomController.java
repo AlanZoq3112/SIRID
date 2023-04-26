@@ -81,4 +81,12 @@ public class ClassroomController {
                 HttpStatus.OK
         );
     }
+
+    @GetMapping("/count/{id}")
+    public ResponseEntity<CustomResponse<Long>> countIncidences(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(
+                this.service.countIncidences(id),
+                HttpStatus.OK
+        );
+    }
 }

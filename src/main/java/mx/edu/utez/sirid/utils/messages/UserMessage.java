@@ -565,6 +565,7 @@ public class UserMessage {
                 "                    <tr>\n" +
                 "                      <td class=\"pad\"\n" +
                 "                          style=\"text-align:left;padding-top:10px;padding-right:15px;padding-bottom:10px;padding-left:30px;\">\n" +
+                "                               <a href=\"http://44.205.171.247:3000/auth\"><button type=\"button\" style=\"color:#ffffff;background-color:#009475;border-radius:4px;width:auto;border-top:1px solid transparent;font-weight:400;border-right:1px solid transparent;border-bottom:1px solid transparent;border-left:1px solid transparent;\">Iniciar Sesion</button></a>\n" +
                 "                      </td>\n" +
                 "                    </tr>\n" +
                 "                  </table>\n" +
@@ -883,9 +884,9 @@ public class UserMessage {
                 "                          style=\"text-align:left;padding-top:10px;padding-right:15px;padding-bottom:10px;padding-left:30px;\">\n" +
                 "                           <td class=\"pad\"\n" +
                 "                               style=\"text-align:left;padding-top:10px;padding-right:15px;padding-bottom:10px;padding-left:30px;\">\n" +
-                "                               <a href=\"http://44.205.171.247:3000/auth\"><button type=\"button\" style=\"color:#ffffff;background-color:#009475;border-radius:4px;width:auto;border-top:1px solid transparent;font-weight:400;border-right:1px solid transparent;border-bottom:1px solid transparent;border-left:1px solid transparent;\">Ir al sistema</button></a>\n" +
+                "                               <a href=\"http://44.205.171.247:3000/auth\"><button type=\"button\" style=\"color:#ffffff;background-color:#009475;border-radius:4px;width:auto;border-top:1px solid transparent;font-weight:400;border-right:1px solid transparent;border-bottom:1px solid transparent;border-left:1px solid transparent;\">Iniciar Sesion</button></a>\n" +
                 "                           </td>\n"+
-        "                               </td>\n" +
+                "                        </td>\n" +
                 "                    </tr>\n" +
                 "                  </table>\n" +
                 "                </td>\n" +
@@ -1199,7 +1200,6 @@ public class UserMessage {
                 "                      <td class=\"pad\"\n" +
                 "                          style=\"text-align:left;padding-top:10px;padding-right:15px;padding-bottom:10px;padding-left:30px;\">\n" +
                                            "<a href=\"https://www.youtube.com/watch?v=x3D56fCKHcs\"><button type=\"button\" style=\"color:#ffffff;background-color:#029475;border-radius:4px;width:auto;border-top:1px solid transparent;font-weight:400;border-right:1px solid transparent;border-bottom:1px solid transparent;border-left:1px solid transparent;\">Aprobar solicitud</button></a>\n" +
-                                            "\t<a href=\"https://www.youtube.com/watch?v=x3D56fCKHcs\"><button type=\"button\" style=\"color:#ffffff;background-color:#ec0606;border-radius:4px;width:auto;border-top:1px solid transparent;font-weight:400;border-right:1px solid transparent;border-bottom:1px solid transparent;border-left:1px solid transparent; margin-top:16px;\">Rechazar solicitud</button></a>"+
                 "                      </td>\n" +
                 "                    </tr>\n" +
                 "                  </table>\n" +
