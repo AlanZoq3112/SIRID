@@ -59,7 +59,7 @@ public class IncidenceService {
     private String rootPath;
 
     private String separator = FileSystems.getDefault().getSeparator();
-    private String BASEURL = "http://44.199.95.221:8090/api-sirid/incidence/loadfile/";
+    private String BASEURL = "http://localhost:8090/api-sirid/incidence/loadfile/";
 
     public ResponseEntity<Resource> getImage(String uid) throws IOException {
         Path path = Paths.get(rootPath + separator + uid);
@@ -156,6 +156,7 @@ public class IncidenceService {
     //Cambiar personal de soporte
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<Integer> changePersonalSupport(Incidence incidence) throws MessagingException {
+        System.out.println("159->"+incidence.getPersonalSoporte().getId());
         if (!this.repository.existsById(incidence.getId()))
             return new CustomResponse<>(null,true,400,"Esta incidencia no existe");
 
@@ -169,12 +170,14 @@ public class IncidenceService {
         String email= message1.newAssignment(incidence.getPersonalSoporte(),Description);
         messageHelper.setText(email,true);
         this.javaMailSender.send(mimeMessage);
+        User support = this.userRepository.getById(incidence.getPersonalSoporte().getId());
+        System.out.println(support.getName());
 
         messageHelper.setTo(Description.getDocente().getCorreoElectronico());
         messageHelper.setFrom("soportetecnicoutezmorelos@gmail.com");
         messageHelper.setSubject("Nueva actividad en la incidencia "+incidence.getId()+":"+incidence.getTitle());
         IncidenceMessage message2 = new IncidenceMessage();
-        String email2= message2.newActivity(Description.getDocente(),Description);
+        String email2= message2.newActivity(Description.getDocente(),incidence,support);
         messageHelper.setText(email2,true);
         this.javaMailSender.send(mimeMessage);
 
@@ -246,7 +249,6 @@ public class IncidenceService {
     //ver las incidencias en las que participa el docente de acuerdo a su status
     @Transactional(readOnly = true)
     public CustomResponse<List<Incidence>> lookIncidenceDocente(Status status,User docente){
-        System.out.println("incidence -> "+docente.getCorreoElectronico());
         if ((!this.userRepository.existsByCorreoElectronico(docente.getCorreoElectronico())))
             return new CustomResponse<>(
                     null, true, 400,
@@ -258,6 +260,39 @@ public class IncidenceService {
                 false,200,"Lista de incidencias recuperado con exito"
         );
 
+    }
+
+    @Transactional(readOnly = true)
+    public String newMessageTeacher(Incidence incidence) throws MessagingException {
+        incidence = repository.getById(incidence.getId());
+        MimeMessage mimeMessage=javaMailSender.createMimeMessage();
+        MimeMessageHelper messageHelper= new MimeMessageHelper(mimeMessage, true, "UTF-8");
+        messageHelper.setTo(incidence.getPersonalSoporte().getCorreoElectronico());
+        messageHelper.setFrom("soportetecnicoutezmorelos@gmail.com");
+        messageHelper.setSubject("Tienes nuevos mensajes por leer en la incidencia "+incidence.getId()+":"+incidence.getTitle());
+        IncidenceMessage message1 = new IncidenceMessage();
+        String email= message1.newMessagechat(incidence.getPersonalSoporte(),incidence);
+        messageHelper.setText(email,true);
+        this.javaMailSender.send(mimeMessage);
+
+        return "Correo enviado con exito";
+    }
+
+    @Transactional(readOnly = true)
+    public String newMessageSupport(Incidence incidence) throws MessagingException {
+        incidence = repository.getById(incidence.getId());
+        System.out.println(incidence.getTitle());
+        MimeMessage mimeMessage=javaMailSender.createMimeMessage();
+        MimeMessageHelper messageHelper= new MimeMessageHelper(mimeMessage, true, "UTF-8");
+        messageHelper.setTo(incidence.getDocente().getCorreoElectronico());
+        messageHelper.setFrom("soportetecnicoutezmorelos@gmail.com");
+        messageHelper.setSubject("Tienes nuevos mensajes por leer en la incidencia "+incidence.getId()+":"+incidence.getTitle());
+        IncidenceMessage message1 = new IncidenceMessage();
+        String email= message1.newMessagechat(incidence.getDocente(),incidence);
+        messageHelper.setText(email,true);
+        this.javaMailSender.send(mimeMessage);
+
+        return "Correo enviado con exito";
     }
 
 

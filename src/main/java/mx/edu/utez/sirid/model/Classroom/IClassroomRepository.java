@@ -37,4 +37,11 @@ public interface IClassroomRepository extends JpaRepository<Classroom, Long> {
     boolean existsById(Long id);
 
     boolean existsByName(String name);
+
+    @Query(
+            value = "SELECT COUNT(id_classroom) FROM incidences where id_classroom=:id",
+            nativeQuery = true
+    )
+    Long incidencesForClassroom(@Param("id") Long idClassroom);
+
 }

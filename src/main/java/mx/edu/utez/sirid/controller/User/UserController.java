@@ -85,6 +85,14 @@ public class UserController {
         );
     }
 
+    @DeleteMapping("/")
+    public ResponseEntity<CustomResponse<User>> deleteUser(@RequestBody UserDTO userDTO){
+        return new ResponseEntity<>(
+                this.userService.deleteUserAndIncidences(userDTO.getUser()),
+                HttpStatus.ACCEPTED
+        );
+    }
+
     //recuperar cuenta
     @PatchMapping("/recoverPassword")
     public ResponseEntity<CustomResponse<Integer>> recoverpasword( @Valid @RequestBody UserDTO userDTO, BindingResult result) throws MessagingException

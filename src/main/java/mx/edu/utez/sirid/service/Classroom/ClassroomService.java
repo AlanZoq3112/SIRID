@@ -88,4 +88,13 @@ public class ClassroomService {
                 false, 200, "OK"
         );
     }
+
+    //
+    @Transactional(readOnly = true)
+    public CustomResponse<Long> countIncidences(Long id){
+        return new CustomResponse<>(
+                this.repository.incidencesForClassroom(id),
+                false, 200, "OK"
+        );
+    }
 }

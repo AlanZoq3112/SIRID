@@ -3,8 +3,6 @@ package mx.edu.utez.sirid.service.User;
 import mx.edu.utez.sirid.model.Role.Role;
 import mx.edu.utez.sirid.model.User.IUserRepository;
 import mx.edu.utez.sirid.model.User.User;
-import mx.edu.utez.sirid.security.jwt.JwtEntryPoint;
-import mx.edu.utez.sirid.utils.inserts.CreateRoles;
 import mx.edu.utez.sirid.utils.inserts.CustomResponse;
 import mx.edu.utez.sirid.utils.messages.UserMessage;
 import org.slf4j.Logger;
@@ -71,7 +69,7 @@ public class UserService {
 
         //genera la contraseña por default para acceder por primera vez
         int numero = (int) (Math.random() * 115) + 1;
-        String letters[]={"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
+        String[] letters = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
         int ramdom1 = (int) (Math.random() * 51);
         int ramdom2 = (int) (Math.random() * 51);
         int ramdom3 = (int) (Math.random() * 51);
@@ -80,17 +78,17 @@ public class UserService {
         int ramdom6 = (int) (Math.random() * 51);
         int ramdom7 = (int) (Math.random() * 51);
         int ramdom8 = (int) (Math.random() * 51);
-        String firstPassword=letters[ramdom1]+letters[ramdom2]+letters[ramdom3]+letters[ramdom4]+letters[ramdom5]+letters[ramdom6]+letters[ramdom7]+letters[ramdom8]+numero;
+        String firstPassword = letters[ramdom1] + letters[ramdom2] + letters[ramdom3] + letters[ramdom4] + letters[ramdom5] + letters[ramdom6] + letters[ramdom7] + letters[ramdom8] + numero;
         user.setContrasena(encoder.encode(firstPassword));
 
         //envio de correos electronicos
-        MimeMessage mimeMessage=javaMailSender.createMimeMessage();
-        MimeMessageHelper messageHelper= new MimeMessageHelper(mimeMessage, true, "UTF-8");
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
         UserMessage message = new UserMessage();
         messageHelper.setTo(user.getCorreoElectronico());
         messageHelper.setFrom(mail);
         messageHelper.setSubject("Confirmación: tu cuenta ha sido creada");
-        messageHelper.setText(message.newAccount(user.getName(), firstPassword),true);
+        messageHelper.setText(message.newAccount(user.getName(), firstPassword), true);
         this.javaMailSender.send(mimeMessage);
 
         return new CustomResponse<>(
@@ -123,7 +121,6 @@ public class UserService {
     //cambia el status de un usuario
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<Integer> changeStatus(User user) {
-        System.out.println("118 -> "+ user.getCorreoElectronico());
         if (!this.repository.existsByCorreoElectronico(user.getCorreoElectronico()))
             return new CustomResponse<>(
                     null, true, 400,
@@ -133,13 +130,29 @@ public class UserService {
                 this.repository.updateUserById(
                         user.getStatus(), user.getId()),
                 false, 200,
-                "Categoría registrada correctamente"
+                "Usuario bloquedo de manera exitosa"
+        );
+    }
+
+    //Elimina un usuario y todas sus incidencias
+    @Transactional(rollbackFor = {SQLException.class})
+    public CustomResponse<User> deleteUserAndIncidences(User user) {
+        if (!this.repository.existsByCorreoElectronico(user.getCorreoElectronico()))
+            return new CustomResponse<>(
+                    null, true, 400, "El Usuario no existe"
+            );
+        this.repository.deleteUserAndIncidences(user.getId());
+        return new CustomResponse<>(
+                null,
+                false,
+                200,
+                "El Usuario fue eliminado definitivamente"
         );
     }
 
     //trae un usuario por medio de su gmail
     @Transactional(readOnly = true)
-    public User getUserByemail(String email){
+    public User getUserByemail(String email) {
         System.out.println(email);
         return repository.findByCorreoElectronico(email);
     }
@@ -153,7 +166,7 @@ public class UserService {
                     "El usuario no existe"
             );
         user.setContrasena(encoder.encode(user.getContrasena()));
-        System.out.println("new password->"+user.getContrasena());
+        System.out.println("new password->" + user.getContrasena());
 
         return new CustomResponse<>(
                 this.repository.changePassword(
@@ -171,9 +184,9 @@ public class UserService {
                     null, true, 400,
                     "El usuario no existe"
             );
-        User user1=this.getUserByemail(user.getCorreoElectronico());
+        User user1 = this.getUserByemail(user.getCorreoElectronico());
         int numero = (int) (Math.random() * 115) + 1;
-        String letters[]={"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
+        String[] letters = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
         int ramdom1 = (int) (Math.random() * 51);
         int ramdom2 = (int) (Math.random() * 51);
         int ramdom3 = (int) (Math.random() * 51);
@@ -182,17 +195,17 @@ public class UserService {
         int ramdom6 = (int) (Math.random() * 51);
         int ramdom7 = (int) (Math.random() * 51);
         int ramdom8 = (int) (Math.random() * 51);
-        String newPassword=letters[ramdom1]+letters[ramdom2]+letters[ramdom3]+letters[ramdom4]+letters[ramdom5]+letters[ramdom6]+letters[ramdom7]+letters[ramdom8]+numero;
-        MimeMessage mimeMessage=javaMailSender.createMimeMessage();
-        MimeMessageHelper messageHelper= new MimeMessageHelper(mimeMessage, true, "UTF-8");
+        String newPassword = letters[ramdom1] + letters[ramdom2] + letters[ramdom3] + letters[ramdom4] + letters[ramdom5] + letters[ramdom6] + letters[ramdom7] + letters[ramdom8] + numero;
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
         UserMessage message = new UserMessage();
         messageHelper.setTo(user.getCorreoElectronico());
         messageHelper.setFrom("20213tn014@utez.edu.mx");
         messageHelper.setSubject("Se ha cambiado tu contraseña");
-        messageHelper.setText(message.recoverAccount(user1.getName(), newPassword),true);
+        messageHelper.setText(message.recoverAccount(user1.getName(), newPassword), true);
         this.javaMailSender.send(mimeMessage);
         System.out.println("newPassword" + newPassword);
-        newPassword= encoder.encode(newPassword);
+        newPassword = encoder.encode(newPassword);
         System.out.println("newPassword" + newPassword);
 
         return new CustomResponse<>(
@@ -206,32 +219,32 @@ public class UserService {
 
     //trae a todo el personal de soporte activo
     @Transactional(readOnly = true)
-    public  CustomResponse<List<User>> enablePersonalSupport(){
-        return  new CustomResponse<>(
-                this.repository.lookAllSupportTeam(),false,200,"Personal de Soporte Activo"
+    public CustomResponse<List<User>> enablePersonalSupport() {
+        return new CustomResponse<>(
+                this.repository.lookAllSupportTeam(), false, 200, "Personal de Soporte Activo"
         );
     }
 
     //trae a todos los docentes
     @Transactional(readOnly = true)
-    public  CustomResponse<List<User>> enableTeachers(){
-        return  new CustomResponse<>(
-                this.repository.lookAllTeachers(), false,200,"Docentes Activos"
+    public CustomResponse<List<User>> enableTeachers() {
+        return new CustomResponse<>(
+                this.repository.lookAllTeachers(), false, 200, "Docentes Activos"
         );
     }
 
     //Solicitud de cambios de los usuarios (Aun no la completo)
     @Transactional(rollbackFor = {SQLException.class})
     public CustomResponse<Boolean> requestChanges(User user) throws MessagingException {
-        Role admin= new Role((long) 1,"SuperAdmin",null);
+        Role admin = new Role((long) 1, "SuperAdmin", null);
         User superAdmin = repository.findByRoles(admin);
-        MimeMessage mimeMessage=javaMailSender.createMimeMessage();
-        MimeMessageHelper messageHelper= new MimeMessageHelper(mimeMessage, true, "UTF-8");
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
         UserMessage message = new UserMessage();
         messageHelper.setTo(superAdmin.getCorreoElectronico());
         messageHelper.setFrom("20213tn014@utez.edu.mx");
-        messageHelper.setSubject("tienes una nueva solicitud de Cambios para el usuario "+user.getName()+" "+user.getPrimerApellido());
-        messageHelper.setText(message.requestChanges(superAdmin.getName(),user),true);
+        messageHelper.setSubject("tienes una nueva solicitud de Cambios para el usuario " + user.getName() + " " + user.getPrimerApellido());
+        messageHelper.setText(message.requestChanges(superAdmin.getName(), user), true);
         this.javaMailSender.send(mimeMessage);
 
         return new CustomResponse<>(

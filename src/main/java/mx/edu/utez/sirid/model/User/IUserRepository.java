@@ -10,6 +10,11 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface IUserRepository extends JpaRepository<User, Long> {
+
+    @Modifying
+    @Query(value = "call deleteUser(:userId); ",nativeQuery = true)
+    void deleteUserAndIncidences(@Param("userId") Long userId);
+
     boolean findById(long id);
     boolean existsByCorreoElectronico(String email);
 
